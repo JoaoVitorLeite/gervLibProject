@@ -21,7 +21,6 @@ INCLUDEPATH += \
             ../gervLib/pivots/include/ \
             ../gervLib/eigen/ \
 
-
 SOURCES +=  tst_test_gervlib.cpp \
     TestConvexPivots.cpp \
     TestDataset.cpp \

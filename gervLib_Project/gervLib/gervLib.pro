@@ -37,7 +37,6 @@ HEADERS += \
         VpTree/Node/Node.h \
         VpTree/QueueItem.h \
         VpTree/VpTree.h \
-    index/Index.h \
         kdtree/DirectoryNodeKdTree.h \
         kdtree/KdTree.h \
         kdtree/LeafNodeKdTree.h \

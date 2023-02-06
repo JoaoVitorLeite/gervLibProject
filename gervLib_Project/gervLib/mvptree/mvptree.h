@@ -568,12 +568,128 @@
 
 namespace mvp {
 
+    template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
+    struct MVPPartition
+    {
+
+
+        MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node;
+        double min, max;
+
+        MVPPartition()
+        {
+
+
+
+        }
+
+        MVPPartition(MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node_, double min_, double max_)
+        {
+
+            node = node_;
+            min = min_;
+            max = max_;
+
+        }
+
+    };
+
+    template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
+    struct CompareMVPPartition
+    {
+
+        bool operator()(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS> const& a, MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS> const& b)
+        {
+
+            bool ans;
+
+            if(a.min != b.min)
+            {
+
+                ans = a.min > b.min;
+
+            }
+            else
+            {
+
+                ans = a.max > b.max;
+
+            }
+
+            return ans;
+
+        }
+
+
+    };
+
+    template <class T>
+    struct KnnEntryMVP
+    {
+
+        T element;
+        double distance;
+
+        KnnEntryMVP(T& element_, double distance_)
+        {
+
+            element = element_;
+            distance = distance_;
+
+        }
+
+        KnnEntryMVP()
+        {
+
+
+
+        }
+
+        bool operator<(const KnnEntryMVP<T>& item) const
+        {
+
+            return distance < item.distance;
+
+        }
+
+        bool operator>(const KnnEntryMVP<T>& item) const
+        {
+
+            return distance > item.distance;
+
+        }
+
+    };
+
+    template<class Type, class Comp>
+    std::vector<Type> dequeueInOrderMVP_Results(std::priority_queue<Type, std::vector<Type>, Comp> pq)
+    {
+
+        std::vector<Type> ans;
+        std::priority_queue<Type, std::vector<Type>, Comp> pqClone = pq;
+
+        while(!pqClone.empty())
+        {
+
+            ans.push_back(pqClone.top());
+            pqClone.pop();
+
+        }
+
+        return ans;
+
+    }
+
     template<typename T,class F,class PVT, class DT,int BF=2, int PL=8, int LC=30, int LPN=2, int FO=4, int NS=2>
     class MVPTree {
     private:
         std::vector<datapoint_t<T,PL>> m_arrivals;
 
         MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS> *m_top;
+
+        F* df;
+
+        size_t leafNodeAccess;
 
         int n_sync;
 
@@ -590,6 +706,7 @@ namespace mvp {
         MVPTree(F* distanceFunction, PVT* pivotMethod)/*:m_top(NULL),n_sync(100)*/{
             n_sync = 100;
             m_top = new MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>();
+            df = distanceFunction;
             //m_top->setDistanceFunction(distanceFunction);
             //m_top->setPivotMethod(pivotMethod);
         };
@@ -625,79 +742,83 @@ namespace mvp {
 
         }
 
-        double minDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node);
+        double minDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2);
 
-        double maxDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node);
+        double maxDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2);
 
-    };
-
-    struct DistBrowsingEntry
-    {
-
-        double lo, up;
-        int pivot_index;
-
-        DistBrowsingEntry()
-        {
-
-
-
-        }
-
-        DistBrowsingEntry(int pivot_index_, double lo_, double up_)
-        {
-
-            pivot_index = pivot_index_;
-            lo = lo_;
-            up = up_;
-
-        }
-
-        bool operator<(const DistBrowsingEntry& item) const
-        {
-
-            bool ans;
-
-            if(lo != item.lo)
-            {
-
-                ans = lo < item.lo;
-
-            }
-            else
-            {
-
-                ans = up < item.up;
-
-            }
-
-            return ans;
-
-        }
-
-        bool operator>(const DistBrowsingEntry& item) const
-        {
-
-            bool ans;
-
-            if(lo != item.lo)
-            {
-
-                ans = lo > item.lo;
-
-            }
-            else
-            {
-
-                ans = up > item.up;
-
-            }
-
-            return ans;
-
-        }
+        void knn(T query, size_t k, std::vector<KnnEntryMVP<T>> &ans);
 
     };
+
+//    struct DistBrowsingEntry
+//    {
+
+//        double ct1, ct2;
+//        int pivot_index;
+
+//        DistBrowsingEntry()
+//        {
+
+
+
+//        }
+
+//        DistBrowsingEntry(int pivot_index_, double ct1_, double ct2_)
+//        {
+
+//            pivot_index = pivot_index_;
+//            ct1 = ct1_;
+//            ct2 = ct2_;
+
+//        }
+
+//        bool operator<(const DistBrowsingEntry& item) const
+//        {
+
+//            bool ans;
+
+//            if(ct1 != item.ct1)
+//            {
+
+//                ans = ct1 < item.ct1;
+
+//            }
+//            else
+//            {
+
+//                ans = ct2 < item.ct2;
+
+//            }
+
+//            return ans;
+
+//        }
+
+//        bool operator>(const DistBrowsingEntry& item) const
+//        {
+
+//            bool ans;
+
+//            if(ct1 != item.ct1)
+//            {
+
+//                ans = ct1 > item.ct1;
+
+//            }
+//            else
+//            {
+
+//                ans = ct2 > item.ct2;
+
+//            }
+
+//            return ans;
+
+//        }
+
+//    };
+
+
 
 }
 
@@ -970,7 +1091,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::SetSync(int n){
 }
 
 template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
-double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::minDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node)
+double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::minDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2)
 {
 
     return 0.0;
@@ -978,10 +1099,27 @@ double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::minDist(T query, MVPNode<T,F
 }
 
 template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
-double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::maxDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node)
+double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::maxDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2)
 {
 
     return 0.0;
+
+}
+
+template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
+void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::vector<KnnEntryMVP<T>> &ans)
+{
+
+    df->resetStatistics();
+    leafNodeAccess = 0;
+
+    std::priority_queue<MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>, std::vector<MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>>, CompareMVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>> nodeQueue;
+    std::priority_queue<KnnEntryMVP<T>, std::vector<KnnEntryMVP<T>>, std::greater<KnnEntryMVP<T>>> candidatesQueue;
+    std::priority_queue<KnnEntryMVP<T>, std::vector<KnnEntryMVP<T>>, std::less<KnnEntryMVP<T>>> resultQueue;
+    nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(getRoot(), 0.0, 0.0));
+    MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node = nullptr;
+    MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS> partition;
+
 
 }
 

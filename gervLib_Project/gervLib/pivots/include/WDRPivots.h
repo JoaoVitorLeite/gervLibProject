@@ -102,6 +102,8 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     size_t stack[NUUM], fa[NUUM];
     size_t num = NUUM;
     size_t pnum = nPivots;
+    CandA = std::min(NUUM, CandA);
+    ctop = CandA;
 
     top=0;
     for(int i=0;i<ctop;i++){

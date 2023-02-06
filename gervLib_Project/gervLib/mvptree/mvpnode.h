@@ -1340,6 +1340,10 @@ namespace mvp {
                           std::vector<item_t<T>> &results);
 
         const std::vector<datapoint_t<T,PL>> PurgeDataPoints();
+
+        //JOAO
+        std::array<std::array<double,NS>,LPN> getSplits(){ return m_splits; }
+
     };
 
     template<typename T, class F, class PVT, class DT, int BF=2,int PL=8,int LC=30,int LPN=2, int FO=4, int NS=2>

@@ -230,7 +230,7 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     else
         sample = dataset;
 
-    size_t o_num = sample->getCardinality()/2, num_cand = 300, q_num = num_cand;
+    size_t o_num = sample->getCardinality()/2, num_cand = std::min(o_num, (size_t)300), q_num = num_cand;
     size_t *cand = new size_t[num_cand];
 
     double** O_P_matrix = maxPrunning(sample, df, o_num, num_cand, cand);

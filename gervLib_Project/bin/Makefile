@@ -30,7 +30,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = gervLib_Project1.0.0
-DISTDIR = /home/joaovictor/Documents/TCC/Code/gervLib_Project/bin/.tmp/gervLib_Project1.0.0
+DISTDIR = /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/bin/.tmp/gervLib_Project1.0.0
 SUBTARGETS    =  \
 		sub----UnitTest \
 		sub----gervLib
@@ -38,54 +38,54 @@ SUBTARGETS    =  \
 
 sub----UnitTest-qmake_all:  FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
+	cd ../UnitTest/ && $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 	cd ../UnitTest/ && $(MAKE) -f Makefile qmake_all
 sub----UnitTest: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile
 sub----UnitTest-make_first: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile 
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile 
 sub----UnitTest-all: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile all
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile all
 sub----UnitTest-clean: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile clean
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile clean
 sub----UnitTest-distclean: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile distclean
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile distclean
 sub----UnitTest-install_subtargets: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile install
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile install
 sub----UnitTest-uninstall_subtargets: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile uninstall
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile uninstall
 sub----gervLib-qmake_all:  FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
+	cd ../gervLib/ && $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 	cd ../gervLib/ && $(MAKE) -f Makefile qmake_all
 sub----gervLib: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile
 sub----gervLib-make_first: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile 
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile 
 sub----gervLib-all: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile all
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile all
 sub----gervLib-clean: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile clean
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile clean
 sub----gervLib-distclean: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile distclean
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile distclean
 sub----gervLib-install_subtargets: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile install
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile install
 sub----gervLib-uninstall_subtargets: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile uninstall
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile uninstall
 
 Makefile: ../gervLib_Project/gervLib_Project.pro /home/joaovictor/Qt/6.0.1/gcc_64/mkspecs/linux-g++/qmake.conf /home/joaovictor/Qt/6.0.1/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/joaovictor/Qt/6.0.1/gcc_64/mkspecs/common/unix.conf \
@@ -336,18 +336,18 @@ uninstall_subtargets: sub----UnitTest-uninstall_subtargets sub----gervLib-uninst
 
 sub----UnitTest-check:
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile check
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile check
 sub----gervLib-check:
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile check
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile check
 check: sub----UnitTest-check sub----gervLib-check
 
 sub----UnitTest-benchmark:
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile benchmark
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile benchmark
 sub----gervLib-benchmark:
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile benchmark
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -f Makefile benchmark
 benchmark: sub----UnitTest-benchmark sub----gervLib-benchmark
 install:install_subtargets  FORCE
 
@@ -364,9 +364,9 @@ distdir: sub----UnitTest-distdir sub----gervLib-distdir FORCE
 
 sub----UnitTest-distdir: FORCE
 	@test -d ../UnitTest/ || mkdir -p ../UnitTest/
-	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/../UnitTest
+	cd ../UnitTest/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/UnitTest.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/../UnitTest
 
 sub----gervLib-distdir: FORCE
 	@test -d ../gervLib/ || mkdir -p ../gervLib/
-	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/../gervLib
+	cd ../gervLib/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/../gervLib
 
