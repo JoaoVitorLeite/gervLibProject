@@ -106,7 +106,6 @@ std::string selectFolderName(std::string directory, std::string startwith)
    else
    {
 
-       std::cout << std::filesystem::current_path() << std::endl;
        throw std::invalid_argument("Could not open directory");
 
    }

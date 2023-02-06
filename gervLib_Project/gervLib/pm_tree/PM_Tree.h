@@ -1448,7 +1448,7 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
     std::priority_queue<PM_Partition<DType>, std::vector<PM_Partition<DType>>, Compare_PM_Nodes<DType>> nodeQueue;
     std::priority_queue<KnnEntry<DType>, std::vector<KnnEntry<DType>>, std::greater<KnnEntry<DType>>> candidatesQueue;
     std::priority_queue<KnnEntry<DType>, std::vector<KnnEntry<DType>>, std::less<KnnEntry<DType>>> resultQueue;
-    nodeQueue.push(PM_Partition(get_root(), minDistNode(get_root(), query), maxDistNode(get_root(), query)));
+    nodeQueue.push(PM_Partition<DType>(get_root(), minDistNode(get_root(), query), maxDistNode(get_root(), query)));
     PM_Node<DType>* node = nullptr;
     PM_Partition<DType> partition;
     std::vector<double> query_to_pivot;

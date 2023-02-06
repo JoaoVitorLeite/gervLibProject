@@ -29,10 +29,10 @@ void TestDataset::test1()
     Dataset<double> data2;
     Dataset<double>::loadNumericDataset(&data2, "../../gervLib/datasets/open2/Dataset1.csv", ",");
 
-    QCOMPARE(data.getCardinality(), 10);
-    QCOMPARE(data.getDimensionality(), 2);
-    QCOMPARE(data2.getCardinality(), 10);
-    QCOMPARE(data2.getDimensionality(), 2);
+    QCOMPARE(data.getCardinality(), (size_t)10);
+    QCOMPARE(data.getDimensionality(), (size_t)2);
+    QCOMPARE(data2.getCardinality(), (size_t)10);
+    QCOMPARE(data2.getDimensionality(), (size_t)2);
     QCOMPARE(data.isEqual(&data2), true);
 
     Dataset<double> data3 = Dataset<double>();
@@ -52,10 +52,10 @@ void TestDataset::test2()
     Dataset<double> data2;
     Dataset<double>::loadNumericDataset(&data2, "../../gervLib/datasets/open2/Dataset2.csv", ",");
 
-    QCOMPARE(data.getCardinality(), 15);
-    QCOMPARE(data.getDimensionality(), 3);
-    QCOMPARE(data2.getCardinality(), 15);
-    QCOMPARE(data2.getDimensionality(), 3);
+    QCOMPARE(data.getCardinality(), (size_t)15);
+    QCOMPARE(data.getDimensionality(), (size_t)3);
+    QCOMPARE(data2.getCardinality(), (size_t)15);
+    QCOMPARE(data2.getDimensionality(), (size_t)3);
     QCOMPARE(data.isEqual(&data2), true);
 
     Dataset<double> data3 = Dataset<double>();
@@ -76,10 +76,10 @@ void TestDataset::test3()
     Dataset<double> data2;
     Dataset<double>::loadNumericDataset(&data2, "../../gervLib/datasets/open2/Dataset3.csv", ",");
 
-    QCOMPARE(data.getCardinality(), 20);
-    QCOMPARE(data.getDimensionality(), 4);
-    QCOMPARE(data2.getCardinality(), 20);
-    QCOMPARE(data2.getDimensionality(), 4);
+    QCOMPARE(data.getCardinality(), (size_t)20);
+    QCOMPARE(data.getDimensionality(), (size_t)4);
+    QCOMPARE(data2.getCardinality(), (size_t)20);
+    QCOMPARE(data2.getDimensionality(), (size_t)4);
     QCOMPARE(data.isEqual(&data2), true);
 
     Dataset<double> data3 = Dataset<double>();
