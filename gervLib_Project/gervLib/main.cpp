@@ -73,13 +73,15 @@ int main(int argc, char *argv[])
 //    file.close();
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_nasa.csv", ",");
+    Dataset<double>::loadNumericDataset(train, "/home/joaovictor/Documents/TCC/Code/Project/gervLib/datasets/train_nasa.csv", ",");
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
     RandomPivots<double>* pvt = new RandomPivots<double>();
     pvt->setSampleSize(0.2);
     pvt->generatePivots(train, df, 2);
 
     OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, 360);
+
+    cout << "OI\n";
 
 //    Dataset<double>* sample = train->sampleDataset(std::ceil(train->getCardinality()*0.2), false, 0);
 

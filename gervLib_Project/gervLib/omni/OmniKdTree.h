@@ -34,7 +34,7 @@ class OmniKdTree
             while(check == -1)
             {
 
-                std::string directory = "../../gervLib/omni/omni_files/",
+                std::string directory = "../omni/omni_files/",
                         name = selectFolderName(directory, "omni");
 
                 path = directory + name + "/";
