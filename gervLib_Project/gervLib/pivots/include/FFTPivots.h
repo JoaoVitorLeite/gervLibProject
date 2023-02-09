@@ -60,50 +60,50 @@ void FFTPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     else
         sample = dataset;
 
-    size_t p1, currentPivot = 0;
-    size_t* pvtIndex = new size_t[this->getNumberOfPivots()];
-    double *dist = new double[sample->getCardinality()];
-    bool *bitmap = new bool[sample->getCardinality()];
+
+    size_t drop = 1, currentPivot = 0;
+    size_t* aux = uniqueRandomNumber(0, sample->getCardinality(), 1, this->getSeed());
+    size_t* pvtIndex = new size_t[this->getNumberOfPivots()+drop];
+    bool* bitmap = new bool[sample->getCardinality()];
+    double* dist = new double[sample->getCardinality()];
 
     for(size_t x = 0; x < sample->getCardinality(); x++)
-        bitmap[x] = false;
-
-    for(size_t x = 0; x < (this->getNumberOfPivots()); x++)
-        pvtIndex[x] = 0;
-
-    size_t* aux = uniqueRandomNumber(0, sample->getCardinality(), 1, this->getSeed());
-    p1 = aux[0];
-    bitmap[p1] = true;
-    pvtIndex[currentPivot] = p1;
-    currentPivot++;
-
-    for(size_t i = 0; i < sample->getCardinality(); i++)
     {
 
-        dist[i] = df->getDistance(*sample->instance(p1), *sample->instance(i));
+        bitmap[x] = true;
 
     }
 
-    double max = 0.0;
-    size_t pos = 0;
+    pvtIndex[currentPivot++] = aux[0];
+    bitmap[aux[0]] = false;
 
-    for(size_t i = 0; i < this->getNumberOfPivots(); i++)
+    for(size_t x = 0; x < sample->getCardinality(); x++)
     {
 
-        max = 0.0;
-        pos = -1;
+        dist[x] = df->getDistance(*sample->instance(pvtIndex[0]), *sample->instance(x));
 
-        for(size_t i = 0; i < sample->getCardinality(); i++)
+    }
+
+    size_t pos = 0;
+    double max = std::numeric_limits<double>::min();
+
+    for(size_t x = 0; x < this->getNumberOfPivots(); x++)
+    {
+
+        pos = 0;
+        max = std::numeric_limits<double>::min();
+
+        for(size_t y = 0; y < sample->getCardinality(); y++)
         {
 
-            if(!bitmap[i])
+            if(bitmap[y])
             {
 
-                if(dist[i] > max)
+                if(dist[y] > max)
                 {
 
-                    max = dist[i];
-                    pos = i;
+                    max = dist[y];
+                    pos = y;
 
                 }
 
@@ -111,25 +111,101 @@ void FFTPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
         }
 
-        pvtIndex[currentPivot] = pos;
-        currentPivot++;
-        bitmap[pos] = true;
+        pvtIndex[currentPivot++] = pos;
+        bitmap[pos] = false;
 
-        for(size_t j = 0; j < sample->getCardinality(); j++)
-            dist[j] = std::min(dist[j], max);
+        for(size_t z = 0; z < sample->getCardinality(); z++)
+        {
+
+            dist[z] = std::min(dist[z], df->getDistance(*sample->instance(z), *sample->instance(pos)));
+
+        }
 
     }
 
-    for(size_t x = 0; x < (this->getNumberOfPivots()); x++)
-        this->setPivot(sample->instance(pvtIndex[x]), x);
+    for(size_t x = drop; x < (this->getNumberOfPivots()+drop); x++)
+        this->setPivot(sample->instance(pvtIndex[x]), x-drop);
 
     if(this->sample_size == -1.0)
         sample = nullptr;
 
     delete sample;
-    delete [] (bitmap);
-    delete [] (pvtIndex);
-    delete [] (dist);
+    delete [] bitmap;
+    delete [] dist;
+    delete [] aux;
+    delete [] pvtIndex;
+
+//********************************************************************************************************************************
+//    size_t p1, currentPivot = 0;
+//    size_t* pvtIndex = new size_t[this->getNumberOfPivots()];
+//    double *dist = new double[sample->getCardinality()];
+//    bool *bitmap = new bool[sample->getCardinality()];
+
+//    for(size_t x = 0; x < sample->getCardinality(); x++)
+//        bitmap[x] = false;
+
+//    for(size_t x = 0; x < (this->getNumberOfPivots()); x++)
+//        pvtIndex[x] = 0;
+
+//    size_t* aux = uniqueRandomNumber(0, sample->getCardinality(), 1, this->getSeed());
+//    p1 = aux[0];
+//    bitmap[p1] = true;
+//    pvtIndex[currentPivot] = p1;
+//    currentPivot++;
+
+//    for(size_t i = 0; i < sample->getCardinality(); i++)
+//    {
+
+//        dist[i] = df->getDistance(*sample->instance(p1), *sample->instance(i));
+
+//    }
+
+//    double max = 0.0;
+//    size_t pos = 0;
+
+//    for(size_t i = 0; i < this->getNumberOfPivots(); i++)
+//    {
+
+//        max = 0.0;
+//        pos = -1;
+
+//        for(size_t i = 0; i < sample->getCardinality(); i++)
+//        {
+
+//            if(!bitmap[i])
+//            {
+
+//                if(dist[i] > max)
+//                {
+
+//                    max = dist[i];
+//                    pos = i;
+
+//                }
+
+//            }
+
+//        }
+
+//        pvtIndex[currentPivot] = pos;
+//        currentPivot++;
+//        bitmap[pos] = true;
+
+//        for(size_t j = 0; j < sample->getCardinality(); j++)
+//            dist[j] = std::min(dist[j], max);
+
+//    }
+
+//    for(size_t x = 0; x < (this->getNumberOfPivots()); x++)
+//        this->setPivot(sample->instance(pvtIndex[x]), x);
+
+//    if(this->sample_size == -1.0)
+//        sample = nullptr;
+
+//    delete sample;
+//    delete [] (bitmap);
+//    delete [] (pvtIndex);
+//    delete [] (dist);
 
 }
 

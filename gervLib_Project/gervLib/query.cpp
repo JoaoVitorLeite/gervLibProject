@@ -421,7 +421,7 @@ int main(int argc, char *argv[])
                  << ","
                  << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
                  << ","
-                 << pvt->getPivotType()
+                 << *pivot_type
                  << ","
                  << pvt->getNumberOfPivots()
                  << ","
@@ -492,7 +492,7 @@ int main(int argc, char *argv[])
                  << ","
                  << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
                  << ","
-                 << pvt->getPivotType()
+                 << *pivot_type
                  << ","
                  << pvt->getNumberOfPivots()
                  << ","
@@ -565,7 +565,7 @@ int main(int argc, char *argv[])
                  << ","
                  << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
                  << ","
-                 << pvt->getPivotType()
+                 << *pivot_type
                  << ","
                  << pvt->getNumberOfPivots()
                  << ","

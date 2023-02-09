@@ -803,7 +803,7 @@ class BasicArrayObject{
 
                     }
 
-                    str << "]";
+                    //str << "]";
 
                     if(x != (getSize()-1))
                     {

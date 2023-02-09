@@ -557,109 +557,8 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 
 ####### Compile
 
-bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qtestcase.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qttestglobal.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qglobal.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qconfig.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtcore-config.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsystemdetection.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qprocessordetection.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcompilerdetection.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtypeinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontainerfwd.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsysinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qlogging.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qflags.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbasicatomic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qgenericatomic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic_msvc.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qglobalstatic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmutex.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qnumeric.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qversiontagging.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qttestlib-config.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstring.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qchar.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearray.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qrefcount.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qnamespace.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qarraydata.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qpair.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qarraydataops.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontainertools_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearrayalgorithms.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearrayview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringliteral.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringalgorithms.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qanystringview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qutf8stringview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringtokenizer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringbuilder.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmetatype.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcompare.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qvarlengtharray.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qalgorithms.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdatastream.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qscopedpointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiodevicebase.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiterable.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmetacontainer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontainerinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtaggedpointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmath.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmetaobject.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qvariant.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qlist.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiterator.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringlist.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringmatcher.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmap.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qshareddata.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qshareddata_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qhash.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobject.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcoreevent.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobject_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qproperty.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qpropertyprivate.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdebug.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtextstream.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringconverter.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qset.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontiguouscache.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsharedpointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtemporarydir.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdir.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qfile.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qfiledevice.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiodevice.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qfileinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdatetime.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcalendar.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qlocale.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qthread.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdeadlinetimer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qelapsedtimer.h \
-		mvptree/mvptree.h \
-		mvptree/mvpnode.h \
-		mvptree/datapoint.h \
-		Distance/BasicArrayObject.h \
-		dataset/include/Dataset.h \
+bin/main.o: main.cpp Distance/Hermes.h \
 		Distance/DistanceFunction.h \
-		utils/include/Util.h \
-		Distance/Hermes.h \
 		Distance/MetricHistogramDistance.h \
 		Distance/MetricHistogramDistance-inl.h \
 		Distance/WarpDistance.h \
@@ -698,6 +597,9 @@ bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qtestcase.h
 		Distance/EditDistance-inl.h \
 		pivots/include/Pivots.h \
 		pivots/include/Pivot.h \
+		dataset/include/Dataset.h \
+		Distance/BasicArrayObject.h \
+		utils/include/Util.h \
 		pivots/include/RandomPivots.h \
 		pivots/include/GnatPivots.h \
 		pivots/include/ConvexPivots.h \
