@@ -680,6 +680,8 @@ namespace mvp {
 
     }
 
+    enum cases{R0, R1, R2, R3, R4};
+
     template<typename T,class F,class PVT, class DT,int BF=2, int PL=8, int LC=30, int LPN=2, int FO=4, int NS=2>
     class MVPTree {
     private:
@@ -742,9 +744,11 @@ namespace mvp {
 
         }
 
-        double minDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2);
+        size_t getLeafNodeAccess(){ return leafNodeAccess; }
 
-        double maxDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2);
+        double minDist(cases nodeCase, cases sqCase, double d_sq_p1, double d_sq_p2, double p1_ct1, double p1_ct2, double p2_ct1, double p2_ct2);
+
+        double maxDist(cases nodeCase, cases sqCase, double d_sq_p1, double d_sq_p2, double p1_ct1, double p1_ct2, double p2_ct1, double p2_ct2);
 
         void knn(T query, size_t k, std::vector<KnnEntryMVP<T>> &ans);
 
@@ -1091,18 +1095,387 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::SetSync(int n){
 }
 
 template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
-double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::minDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2)
+double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::minDist(cases sqCase, cases nodeCase, double d_sq_p1, double d_sq_p2, double p1_ct1, double p1_ct2, double p2_ct1, double p2_ct2)
 {
 
-    return 0.0;
+//    return 0.0;
+    double ans;
+
+    switch(sqCase)
+    {
+
+        case R0:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = 0.0;
+                    break;
+                }
+
+                case R1:{
+                    ans = fabs(d_sq_p2 - p2_ct1);
+                    break;
+                }
+
+                case R2:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct2)));
+                    break;
+                }
+
+                case R3:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct2)));
+                    break;
+                }
+
+                case R4:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct2), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R1:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = fabs(d_sq_p2 - p2_ct1);
+                    break;
+                }
+
+                case R1:{
+                    ans = 0.0;
+                    break;
+                }
+
+                case R2:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct2)));
+                    break;
+                }
+
+                case R3:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct2)));
+                    break;
+                }
+
+                case R4:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct2), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R2:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct1)));//
+                    break;
+                }
+
+                case R1:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct1)));
+                    break;
+                }
+
+                case R2:{
+                    ans = 0.0;
+                    break;
+                }
+
+                case R3:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+                case R4:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct2), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R3:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct1)));
+                    break;
+                }
+
+                case R1:{
+                    ans = std::max(fabs(d_sq_p1 - p1_ct1), std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct1)));
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+                case R3:{
+                    ans = 0.0;
+                    break;
+                }
+
+                case R4:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct2), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R4:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct1));
+                    break;
+                }
+
+                case R1:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct1), fabs(d_sq_p2 - p2_ct1));
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct2), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+                case R3:{
+                    ans = std::min(fabs(d_sq_p1 - p1_ct2), fabs(d_sq_p2 - p2_ct2));
+                    break;
+                }
+
+                case R4:{
+                    ans = 0.0;
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+    }
+
+    //std::cout << "MIN DIST = " << ans << " / " << sqCase << " / " << nodeCase << " / " << d_sq_p1 << "/" << d_sq_p2 << "/" << p1_ct1 << "/" << p1_ct2 << "/" << p2_ct1 << "/" << p2_ct2 << "\n";
+    return ans;
 
 }
 
 template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
-double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::maxDist(T query, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node, double p1CT1, double p1CT2, double p2CT1, double p2CT2)
+double mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::maxDist(cases sqCase, cases nodeCase, double d_sq_p1, double d_sq_p2, double p1_ct1, double p1_ct2, double p2_ct1, double p2_ct2)
 {
 
-    return 0.0;
+//    return 0.0;
+    double ans;
+
+    switch(sqCase)
+    {
+
+        case R0:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::min(d_sq_p1 + p1_ct1, d_sq_p2 + p2_ct1);
+                    break;
+                }
+
+                case R1:{
+                    ans = d_sq_p1 + p1_ct1;
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(d_sq_p1 + p1_ct2, d_sq_p2 + p2_ct2);
+                    break;
+                }
+
+                case R3:{
+                    ans = d_sq_p1 + p1_ct2;
+                    break;
+                }
+
+                case R4:{
+                    ans = -1.0; //!!!!!
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R1:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::min(d_sq_p1 + p1_ct1, d_sq_p2 + p2_ct1);
+                    break;
+                }
+
+                case R1:{
+                    ans = d_sq_p1 + p1_ct1;
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(d_sq_p1 + p1_ct2, d_sq_p2 + p2_ct2);
+                    break;
+                }
+
+                case R3:{
+                    ans = d_sq_p1 + p1_ct2;
+                    break;
+                }
+
+                case R4:{
+                    ans = -1.0; //!!!!!
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R2:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::min(d_sq_p1 + p1_ct1, d_sq_p2 + p2_ct1);
+                    break;
+                }
+
+                case R1:{
+                    ans = d_sq_p1 + p1_ct1;
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(d_sq_p1 + p1_ct2, d_sq_p2 + p2_ct2);
+                    break;
+                }
+
+                case R3:{
+                    ans = d_sq_p1 + p1_ct2;
+                    break;
+                }
+
+                case R4:{
+                    ans = -1.0; //!!!!!
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R3:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::min(d_sq_p1 + p1_ct1, d_sq_p2 + p2_ct1);
+                    break;
+                }
+
+                case R1:{
+                    ans = d_sq_p1 + p1_ct1;
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(d_sq_p1 + p1_ct2, d_sq_p2 + p2_ct2);
+//                    ans = d_sq_p1 + p1_ct2;
+                    break;
+                }
+
+                case R3:{
+                    ans = d_sq_p1 + p1_ct2;
+                    break;
+                }
+
+                case R4:{
+                    ans = -1.0; //!!!!!
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+        case R4:{
+
+            switch(nodeCase)
+            {
+
+                case R0:{
+                    ans = std::min(d_sq_p1 + p1_ct1, d_sq_p2 + p2_ct1);
+                    break;
+                }
+
+                case R1:{
+                    ans = ans = d_sq_p1 + p1_ct1;
+                    break;
+                }
+
+                case R2:{
+                    ans = std::min(d_sq_p1 + p1_ct2, d_sq_p2 + p2_ct2);
+                    break;
+                }
+
+                case R3:{
+                    ans = d_sq_p1 + p1_ct2;
+                    break;
+                }
+
+                case R4:{
+                    ans = -1.0; //!!!!!
+                    break;
+                }
+
+            }
+            break;
+
+        }
+
+    }
+
+    //std::cout << "MAX DIST = " << ans << " / " << sqCase << " / " << nodeCase << " / " << d_sq_p1 << "/" << d_sq_p2 << "/" << p1_ct1 << "/" << p1_ct2 << "/" << p2_ct1 << "/" << p2_ct2 << "\n";
+    return ans;
 
 }
 
@@ -1112,14 +1485,231 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
 
     df->resetStatistics();
     leafNodeAccess = 0;
+//    size_t cnt = 0;
 
     std::priority_queue<MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>, std::vector<MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>>, CompareMVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>> nodeQueue;
     std::priority_queue<KnnEntryMVP<T>, std::vector<KnnEntryMVP<T>>, std::greater<KnnEntryMVP<T>>> candidatesQueue;
     std::priority_queue<KnnEntryMVP<T>, std::vector<KnnEntryMVP<T>>, std::less<KnnEntryMVP<T>>> resultQueue;
-    nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(getRoot(), 0.0, 0.0));
+    nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(getRoot(), 0.0, std::numeric_limits<double>::max()));
     MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node = nullptr;
     MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS> partition;
+    MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* leaf;
+    MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* internal;
 
+    while(!nodeQueue.empty() || candidatesQueue.size() > 0)
+    {
+
+        //std::cout << "CAND QUEUE SIZE = " << candidatesQueue.size() << std::endl;
+//        if(!nodeQueue.empty() && candidatesQueue.size() > 0 && !resultQueue.empty())
+//            std::cout << "AUX = " << nodeQueue.top().min << " / " << candidatesQueue.top().distance << " / " << resultQueue.size() << "\n";
+
+        if(candidatesQueue.size() == 0)
+        {
+
+            partition = nodeQueue.top();
+            node = partition.node;
+            nodeQueue.pop();
+
+            if(node->IsLeaf())
+            {
+
+                //std::cout << "LEAF\n";
+                leafNodeAccess++;
+                leaf = static_cast<MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*>(node);
+                std::vector<datapoint_t<T,PL>> datapointsLeaf = leaf->GetDataPoints();
+                std::vector<vp_t<T>> datavpsLeaf = leaf->GetVantagePoints();
+
+//                cnt += datapointsLeaf.size();
+//                cnt += datavpsLeaf.size();
+
+//                std::cout << datapointsLeaf.size() + datavpsLeaf.size() << "\n";
+
+                for(size_t x = 0; x < datapointsLeaf.size(); x++)
+                {
+
+                    candidatesQueue.push(KnnEntryMVP<T>(datapointsLeaf[x].key, df->getDistance(query, datapointsLeaf[x].key)));
+
+                }
+
+                for(size_t x = 0; x < datavpsLeaf.size(); x++)
+                {
+
+                    candidatesQueue.push(KnnEntryMVP<T>(datavpsLeaf[x].key, df->getDistance(query, datavpsLeaf[x].key)));
+
+                }
+
+            }
+            else
+            {
+
+                //std::cout << "INTERNAL\n";
+                internal = static_cast<MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*>(node);
+                std::array<std::array<double,NS>,LPN> splits = internal->getSplits();
+                std::vector<vp_t<T>> datavpsInternal = internal->GetVantagePoints();
+
+//                for(size_t x = 0; x < datavpsInternal.size(); x++)
+//                {
+
+//                    candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[x].key, df->getDistance(query, datavpsInternal[x].key)));
+
+//                }
+
+                cases sqCase;
+                double d_sq_p1 = df->getDistance(query, datavpsInternal[0].key);
+                double d_sq_p2 = df->getDistance(query, datavpsInternal[1].key);
+
+//                cnt += datavpsInternal.size();
+
+                candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[0].key, d_sq_p1));
+                candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[1].key, d_sq_p2));
+
+                if(d_sq_p1 <= splits[0][0] && d_sq_p2 <= splits[1][0])
+                    sqCase = R0;
+                else if(d_sq_p1 <= splits[0][0] && d_sq_p2 > splits[1][0])
+                    sqCase = R1;
+                else if(d_sq_p1 > splits[0][0] && d_sq_p2 <= splits[1][1])
+                    sqCase = R2;
+                else if(d_sq_p1 > splits[0][0] && d_sq_p2 > splits[1][1])
+                    sqCase = R3;
+                else
+                    sqCase = R4;
+
+                if(node->GetChildNode(0) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(0), minDist(sqCase, R0, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R0, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+                if(node->GetChildNode(1) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(1), minDist(sqCase, R1, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R1, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+                if(node->GetChildNode(2) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(2), minDist(sqCase, R2, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R2, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+                if(node->GetChildNode(3) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(3), minDist(sqCase, R3, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R3, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+
+            }
+
+        }
+        else if((nodeQueue.size() > 0) && nodeQueue.top().min < candidatesQueue.top().distance)
+        {
+
+            partition = nodeQueue.top();
+            node = partition.node;
+            nodeQueue.pop();
+
+            if(node->IsLeaf())
+            {
+
+                leafNodeAccess++;
+                leaf = static_cast<MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*>(node);
+                std::vector<datapoint_t<T,PL>> datapointsLeaf = leaf->GetDataPoints();
+                std::vector<vp_t<T>> datavpsLeaf = leaf->GetVantagePoints();
+
+//                cnt += datapointsLeaf.size();
+//                cnt += datavpsLeaf.size();
+
+                //std::cout << datapointsLeaf.size() + datavpsLeaf.size() << "\n";
+
+                for(size_t x = 0; x < datapointsLeaf.size(); x++)
+                {
+
+                    candidatesQueue.push(KnnEntryMVP<T>(datapointsLeaf[x].key, df->getDistance(query, datapointsLeaf[x].key)));
+
+                }
+
+                for(size_t x = 0; x < datavpsLeaf.size(); x++)
+                {
+
+                    candidatesQueue.push(KnnEntryMVP<T>(datavpsLeaf[x].key, df->getDistance(query, datavpsLeaf[x].key)));
+
+                }
+
+            }
+            else
+            {
+
+                internal = static_cast<MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*>(node);
+                std::array<std::array<double,NS>,LPN> splits = internal->getSplits();
+                std::vector<vp_t<T>> datavpsInternal = internal->GetVantagePoints();
+
+//                for(size_t x = 0; x < datavpsInternal.size(); x++)
+//                {
+
+//                    candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[x].key, df->getDistance(query, datavpsInternal[x].key)));
+
+//                }
+//                cnt += datavpsInternal.size();
+
+
+                cases sqCase;
+                double d_sq_p1 = df->getDistance(query, datavpsInternal[0].key);
+                double d_sq_p2 = df->getDistance(query, datavpsInternal[1].key);
+
+                candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[0].key, d_sq_p1));
+                candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[1].key, d_sq_p2));
+
+                if(d_sq_p1 <= splits[0][0] && d_sq_p2 <= splits[1][0])
+                    sqCase = R0;
+                else if(d_sq_p1 <= splits[0][0] && d_sq_p2 > splits[1][0])
+                    sqCase = R1;
+                else if(d_sq_p1 > splits[0][0] && d_sq_p2 <= splits[1][1])
+                    sqCase = R2;
+                else if(d_sq_p1 > splits[0][0] && d_sq_p2 > splits[1][1])
+                    sqCase = R3;
+                else
+                    sqCase = R4;
+
+                if(node->GetChildNode(0) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(0), minDist(sqCase, R0, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R0, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+                if(node->GetChildNode(1) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(1), minDist(sqCase, R1, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R1, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+                if(node->GetChildNode(2) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(2), minDist(sqCase, R2, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R2, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+                if(node->GetChildNode(3) != NULL) nodeQueue.push(MVPPartition<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>(node->GetChildNode(3), minDist(sqCase, R3, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1]), maxDist(sqCase, R3, d_sq_p1, d_sq_p2, splits[0][0], partition.max, splits[1][0], splits[1][1])));
+
+            }
+
+        }
+        else
+        {
+
+            //std::cout << "RES\n";
+
+            if(!resultQueue.empty() && !candidatesQueue.empty() && resultQueue.size() >= k && candidatesQueue.top().distance > resultQueue.top().distance)
+            {
+
+                break;
+
+            }
+
+            resultQueue.push(candidatesQueue.top());
+            candidatesQueue.pop();
+
+            while(resultQueue.size() > k)
+            {
+
+                resultQueue.pop();
+
+            }
+
+        }
+
+    }
+
+    ans = dequeueInOrderMVP_Results(resultQueue);
+    std::reverse(ans.begin(), ans.end());
+
+    while(!candidatesQueue.empty())
+    {
+
+        candidatesQueue.pop();
+
+    }
+
+    while(!resultQueue.empty())
+    {
+
+        resultQueue.pop();
+
+    }
+
+    while(!nodeQueue.empty())
+    {
+
+        nodeQueue.pop();
+
+    }
+
+//    std::cout << "DIST IN = " << cnt << "\n";
 
 }
 
