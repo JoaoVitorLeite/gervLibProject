@@ -705,7 +705,7 @@ namespace mvp {
                                                    std::map<int, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*> &childnodes,
                                                    std::map<int, std::vector<datapoint_t<T,PL>>*> &childpoints);
     public:
-        MVPTree(F* distanceFunction, PVT* pivotMethod)/*:m_top(NULL),n_sync(100)*/{
+        MVPTree(F* distanceFunction)/*:m_top(NULL),n_sync(100)*/{
             n_sync = 100;
             m_top = new MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>();
             df = distanceFunction;

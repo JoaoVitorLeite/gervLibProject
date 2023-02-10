@@ -5,9 +5,18 @@
 #include <OmniKdTree.h>
 #include <VpTree.h>
 #include <PM_Tree.h>
+#include <mvptree.h>
 #include <chrono>
 
 using namespace std;
+using namespace mvp;
+
+const int BF = 2;   //branchfactor
+const int PL = 8;   // pathlength
+const int LC = -1; // leafcap
+const int LPN = 2;  // levelspernode
+const int FO = 4; //fanout bf^lpn
+const int NS = 2; //numsplits (bf-1)^lpn
 
 /*Keywords
 
@@ -616,6 +625,2980 @@ int main(int argc, char *argv[])
             }
 
             file.close();
+
+        }
+        else if(*index == "MVPTREE")
+        {
+
+            if(LC == -1)
+            {
+
+                throw std::invalid_argument("MVPTREE LEAF CAPACITY EQUALS -1 !_!");
+
+            }
+
+
+            if(*distanceFunction == "EUCLIDEAN")
+            {
+
+                if(*pivot_type == "RANDOM")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "GNAT")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, GnatPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, GnatPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "CONVEX")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, ConvexPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, ConvexPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "KMEDOIDS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "MAXSEPARETED")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "MAXVARIANCE")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "SELECTION")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, SelectionPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, SelectionPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "PCA")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "SSS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, SSSPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, SSSPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "FFT")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, FFTPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, FFTPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "HFI")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, HFIPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, HFIPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "IS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, ISPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, ISPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "WDR")
+                {
+
+                    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, WDRPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, WDRPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else
+                {
+                    throw std::invalid_argument("Pivot selection not find !_! " + *pivot_type);
+                }
+
+
+            }
+            else if(*distanceFunction == "CHEBYSHEV")
+            {
+
+                if(*pivot_type == "RANDOM")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "GNAT")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, GnatPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, GnatPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "CONVEX")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, ConvexPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, ConvexPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "KMEDOIDS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "MAXSEPARETED")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "MAXVARIANCE")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "SELECTION")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, SelectionPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, SelectionPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "PCA")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "SSS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, SSSPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, SSSPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "FFT")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, FFTPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, FFTPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "HFI")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, HFIPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, HFIPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "IS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, ISPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, ISPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "WDR")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, WDRPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ChebyshevDistance<BasicArrayObject<double>>, WDRPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ChebyshevDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else
+                {
+                    throw std::invalid_argument("Pivot selection not find !_! " + *pivot_type);
+                }
+
+
+            }
+            else if(*distanceFunction == "MANHATTAN")
+            {
+
+                if(*pivot_type == "RANDOM")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "GNAT")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, GnatPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, GnatPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "CONVEX")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, ConvexPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, ConvexPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "KMEDOIDS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "MAXSEPARETED")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "MAXVARIANCE")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "SELECTION")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, SelectionPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, SelectionPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "PCA")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "SSS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, SSSPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, SSSPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "FFT")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, FFTPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, FFTPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "HFI")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, HFIPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, HFIPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "IS")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, ISPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, ISPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else if(*pivot_type == "WDR")
+                {
+
+                    MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, WDRPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> *index_query =
+                            new MVPTree<BasicArrayObject<double>, ManhattanDistance<BasicArrayObject<double>>, WDRPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((ManhattanDistance<BasicArrayObject<double>>*)df);
+
+                    std::vector<datapoint_t<BasicArrayObject<double>,PL>> addPoints;
+                    for(size_t i = 0; i < train->getCardinality(); i++)
+                    {
+
+                        addPoints.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+                    }
+                    index_query->Add(addPoints);
+
+                    std::string fileName = *path_save_results + names[pvt->getPivotType()] + ".csv";
+                    std::ofstream file(fileName);
+
+                    file << *index
+                         << ","
+                         << (distanceFunction == nullptr ? "EUCLIDEANDISTANCE" : *distanceFunction)
+                         << ","
+                         << *pivot_type
+                         << ","
+                         << pvt->getNumberOfPivots()
+                         << ","
+                         << (num_query == nullptr ? test->getCardinality() : *num_query)
+                         << ","
+                         << *seed
+                         << "\n";
+
+                    file << "k,time,count,disk\n";
+
+                    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+                    for(size_t k = 5; k <= *k_max; k += 5)
+                    {
+
+                        size_t max_query = test->getCardinality();
+
+                        if(num_query != nullptr)
+                        {
+
+                            max_query = std::min(*num_query, test->getCardinality());
+
+                        }
+
+
+                        for(size_t x = 0; x < max_query; x++)
+                        {
+
+                            df->resetStatistics();
+                            auto start = std::chrono::steady_clock::now();
+                            index_query->knn(test->getFeatureVector(x), k, ans);
+                            auto end = std::chrono::steady_clock::now();
+                            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+                            file << k
+                                 << ","
+                                 << elapsed.count()
+                                 << ","
+                                 << df->getDistanceCount()
+                                 << ","
+                                 << index_query->getLeafNodeAccess()
+                                 << "\n";
+
+                            ans.clear();
+
+                        }
+
+                    }
+
+                    file.close();
+
+                }
+                else
+                {
+                    throw std::invalid_argument("Pivot selection not find !_! " + *pivot_type);
+                }
+
+            }
+            else
+            {
+
+                throw std::invalid_argument("Not find distance function !_!");
+
+            }
+
 
         }
         else

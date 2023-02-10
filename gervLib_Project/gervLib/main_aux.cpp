@@ -187,11 +187,11 @@ int main(int argc, char *argv[])
     Dataset<double>::loadNumericDataset(train, "../datasets/train_nasa.csv", ",");
     Dataset<double>* test = new Dataset<double>();
     Dataset<double>::loadNumericDataset(test, "../datasets/test_nasa.csv", ",");
-    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
     RandomPivots<double>* pvt = new RandomPivots<double>();
     pvt->generatePivots(train, df, 2);
 
-    MVPTREE_DOUBLE_RANDOM mvp = MVPTREE_DOUBLE_RANDOM(df, pvt);
+    MVPTREE_DOUBLE_RANDOM mvp = MVPTREE_DOUBLE_RANDOM((EuclideanDistance<BasicArrayObject<double>>*)df);
     std::vector<datapoint_t<BasicArrayObject<double>, PL>> addPoints;
     for(size_t x = 0; x < train->getCardinality(); x++)
     {
@@ -200,88 +200,88 @@ int main(int argc, char *argv[])
 
     }
     mvp.Add(addPoints);
-    size_t k = 100;
+//    size_t k = 100;
 
-    vector<size_t> distcnt, leafcnt;
+//    vector<size_t> distcnt, leafcnt;
 
-    for(size_t j = 0; j < test->getCardinality(); j++)
-    {
+//    for(size_t j = 0; j < test->getCardinality(); j++)
+//    {
 
-        std::vector<std::pair<size_t, double>> dist;
-        for(size_t i = 0; i < train->getCardinality(); i++)
-            dist.push_back(std::make_pair(i, df->getDistance(*test->instance(j), *train->instance(i))));
-        std::sort(dist.begin(), dist.end(), [](std::pair<size_t, double> &a, std::pair<size_t, double> &b){
-            return a.second < b.second;
-        });
+//        std::vector<std::pair<size_t, double>> dist;
+//        for(size_t i = 0; i < train->getCardinality(); i++)
+//            dist.push_back(std::make_pair(i, df->getDistance(*test->instance(j), *train->instance(i))));
+//        std::sort(dist.begin(), dist.end(), [](std::pair<size_t, double> &a, std::pair<size_t, double> &b){
+//            return a.second < b.second;
+//        });
 
-        std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
-        df->resetStatistics();
-        mvp.knn(test->getFeatureVector(j), k, ans);
+//        std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+//        df->resetStatistics();
+//        mvp.knn(test->getFeatureVector(j), k, ans);
 
-        for(size_t z = 0; z < k; z++)
-        {
+//        for(size_t z = 0; z < k; z++)
+//        {
 
-            if(ans[z].distance != dist[z].second)
-                cout << "ERRO EM : " << j << endl;
+//            if(ans[z].distance != dist[z].second)
+//                cout << "ERRO EM : " << j << endl;
 
-        }
+//        }
 
-        distcnt.push_back(df->getDistanceCount());
-        leafcnt.push_back(mvp.getLeafNodeAccess());
+//        distcnt.push_back(df->getDistanceCount());
+//        leafcnt.push_back(mvp.getLeafNodeAccess());
 
-    }
+//    }
 
-    if(distcnt.size() % 2 == 0)
-    {
+//    if(distcnt.size() % 2 == 0)
+//    {
 
-        nth_element(distcnt.begin(),
-                            distcnt.begin() + distcnt.size() / 2,
-                            distcnt.end());
+//        nth_element(distcnt.begin(),
+//                            distcnt.begin() + distcnt.size() / 2,
+//                            distcnt.end());
 
-        nth_element(distcnt.begin(),
-                            distcnt.begin() + (distcnt.size() - 1) / 2,
-                            distcnt.end());
-
-
-        cout << "DIST MEDIAN : " << (double)(distcnt[(distcnt.size() - 1) / 2]+ distcnt[distcnt.size() / 2])/ 2.0 << endl;
-
-    }
-    else
-    {
-
-        nth_element(distcnt.begin(),
-                            distcnt.begin() + distcnt.size() / 2,
-                            distcnt.end());
-
-        cout << "DIST MEDIAN : " << (double)distcnt[distcnt.size() / 2] << endl;
-
-    }
-
-    if(leafcnt.size() % 2 == 0)
-    {
-
-        nth_element(leafcnt.begin(),
-                            leafcnt.begin() + leafcnt.size() / 2,
-                            leafcnt.end());
-
-        nth_element(leafcnt.begin(),
-                            leafcnt.begin() + (leafcnt.size() - 1) / 2,
-                            leafcnt.end());
+//        nth_element(distcnt.begin(),
+//                            distcnt.begin() + (distcnt.size() - 1) / 2,
+//                            distcnt.end());
 
 
-        cout << "LEAF MEDIAN : " << (double)(leafcnt[(leafcnt.size() - 1) / 2]+ leafcnt[leafcnt.size() / 2])/ 2.0 << endl;
+//        cout << "DIST MEDIAN : " << (double)(distcnt[(distcnt.size() - 1) / 2]+ distcnt[distcnt.size() / 2])/ 2.0 << endl;
 
-    }
-    else
-    {
+//    }
+//    else
+//    {
 
-        nth_element(leafcnt.begin(),
-                            leafcnt.begin() + leafcnt.size() / 2,
-                            leafcnt.end());
+//        nth_element(distcnt.begin(),
+//                            distcnt.begin() + distcnt.size() / 2,
+//                            distcnt.end());
 
-        cout << "LEAF MEDIAN : " << (double)leafcnt[leafcnt.size() / 2] << endl;
+//        cout << "DIST MEDIAN : " << (double)distcnt[distcnt.size() / 2] << endl;
 
-    }
+//    }
+
+//    if(leafcnt.size() % 2 == 0)
+//    {
+
+//        nth_element(leafcnt.begin(),
+//                            leafcnt.begin() + leafcnt.size() / 2,
+//                            leafcnt.end());
+
+//        nth_element(leafcnt.begin(),
+//                            leafcnt.begin() + (leafcnt.size() - 1) / 2,
+//                            leafcnt.end());
+
+
+//        cout << "LEAF MEDIAN : " << (double)(leafcnt[(leafcnt.size() - 1) / 2]+ leafcnt[leafcnt.size() / 2])/ 2.0 << endl;
+
+//    }
+//    else
+//    {
+
+//        nth_element(leafcnt.begin(),
+//                            leafcnt.begin() + leafcnt.size() / 2,
+//                            leafcnt.end());
+
+//        cout << "LEAF MEDIAN : " << (double)leafcnt[leafcnt.size() / 2] << endl;
+
+//    }
 
 //    Dataset<vector<char>>* train = new Dataset<vector<char>>();
 //    Dataset<vector<char>>::loadTextDataset(train, "../datasets/names.csv", " ");
