@@ -15,7 +15,6 @@ class Pivot{
         size_t currentPivot;
         size_t seed;
         size_t nPivots;
-        double sample_size = -1.0;
         PIVOT_TYPE pivotType;
         Dataset<DType>* pivots;
 
@@ -24,6 +23,7 @@ class Pivot{
 
         //Public functions
     public:
+        static double sample_size;
         //Constructors and destructors
         Pivot();
         virtual ~Pivot();
@@ -52,6 +52,7 @@ class Pivot{
         //            std::vector<BasicArrayObject<DType>> &getPivots() const;
         PIVOT_TYPE getPivotType() const;
         size_t getSerializedSize();
+        double getSampleSize(){ return sample_size; }
 
         //Métodos virtuais públicos
         virtual void generatePivots(Dataset<DType> *sample, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args = std::vector<std::string>()) = 0;
@@ -70,7 +71,8 @@ class Pivot{
 
 //------------------------------------------------------------------------------------------------------------
 
-
+template <class DType>
+double Pivot<DType>::sample_size = -1.0;
 
 template <class DType>
 void Pivot<DType>::clearPivots()
