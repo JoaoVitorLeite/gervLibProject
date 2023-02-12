@@ -1574,17 +1574,54 @@ mvp::MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::MVPInternal(){
 
 template<typename T,class F,class PVT,class DT,int BF,int PL,int LC,int LPN,int FO,int NS>
 void mvp::MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::CalcSplitPoints(const std::vector<double> &dists, int n, int split_index){
+//    int lengthM = BF - 1;
+//    if (dists.size() > 0){
+//        if (m_splits[n][split_index*lengthM] == -1){
+//            std::vector<double> tmpdists = dists;
+//            sort(tmpdists.begin(), tmpdists.end());
+//            double factor = (double)tmpdists.size()/(double)BF;
+//            for (int i=0;i<lengthM;i++){
+//                double pos = (i+1)*factor;
+//                int lo = floor(pos);
+//                int hi = (pos <= tmpdists.size()-1) ? ceil(pos) : 0;
+//                m_splits[n][split_index*lengthM+i] = (tmpdists[lo] + tmpdists[hi])/2.0;
+//            }
+//        }
+//    }
     int lengthM = BF - 1;
     if (dists.size() > 0){
-        if (m_splits[n][split_index*lengthM] == -1){
-            std::vector<double> tmpdists = dists;
-            sort(tmpdists.begin(), tmpdists.end());
-            double factor = (double)tmpdists.size()/(double)BF;
-            for (int i=0;i<lengthM;i++){
-                double pos = (i+1)*factor;
-                int lo = floor(pos);
-                int hi = (pos <= tmpdists.size()-1) ? ceil(pos) : 0;
-                m_splits[n][split_index*lengthM+i] = (tmpdists[lo] + tmpdists[hi])/2.0;
+        if(lengthM == 1)
+        {
+
+            if (m_splits[n][split_index*lengthM] == -1){
+                std::vector<double> tmpdists = dists;
+                sort(tmpdists.begin(), tmpdists.end());
+                if(tmpdists.size() % 2 == 0)
+                    m_splits[n][split_index*lengthM] = (tmpdists[tmpdists.size()/2 - 1] + tmpdists[tmpdists.size()/2])/2.0;
+                else
+                    m_splits[n][split_index*lengthM] = tmpdists[tmpdists.size()/2];
+
+//                double factor = (double)tmpdists.size()/(double)BF;
+//                for (int i=0;i<lengthM;i++){
+//                    double pos = (i+1)*factor;
+//                    int lo = floor(pos);
+//                    int hi = (pos <= tmpdists.size()-1) ? ceil(pos) : 0;
+//                    m_splits[n][split_index*lengthM+i] = (tmpdists[lo] + tmpdists[hi])/2.0;
+//                }
+            }
+
+        }
+        else{
+            if (m_splits[n][split_index*lengthM] == -1){
+                std::vector<double> tmpdists = dists;
+                sort(tmpdists.begin(), tmpdists.end());
+                double factor = (double)tmpdists.size()/(double)BF;
+                for (int i=0;i<lengthM;i++){
+                    double pos = (i+1)*factor;
+                    int lo = floor(pos);
+                    int hi = (pos <= tmpdists.size()-1) ? ceil(pos) : 0;
+                    m_splits[n][split_index*lengthM+i] = (tmpdists[lo] + tmpdists[hi])/2.0;
+                }
             }
         }
     }
