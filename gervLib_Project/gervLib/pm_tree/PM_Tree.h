@@ -197,8 +197,8 @@ class PM_Tree
         bool is_rounting_node(const PM_Node<DType>* node_);
         void sub_traverse_get_volumem(PM_Node<DType>* cur_node_, double & volume_);
         double cal_hypersphere_volume(double radius_, size_t dim_);
-        double minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element);
-        double maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element);
+        double minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element, std::vector<double> dist_to_query);
+        double maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element, std::vector<double> dist_to_query);
 //        double minLimInf(PM_Node<DType>* cur_node_);
 //        double maxLimSup(PM_Node<DType>* cur_node_);
 
@@ -969,7 +969,7 @@ double PM_Tree<DType>::cal_hypersphere_volume(double radius_, size_t dim_)
 }
 
 template <class DType>
-double PM_Tree<DType>::minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element)
+double PM_Tree<DType>::minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element, std::vector<double> dist_to_query)
 {
 
 //    double dist = df->getDistance(cur_node_->feature_val, element), ans;
@@ -997,7 +997,8 @@ double PM_Tree<DType>::minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<D
     for(size_t i = 0; i < pivot_vec.getCardinality(); i++)
     {
 
-        dist_p_i_q = df->getDistance(pivot_vec.getFeatureVector(i), element);
+//        dist_p_i_q = df->getDistance(pivot_vec.getFeatureVector(i), element);
+        dist_p_i_q = dist_to_query[i];
         d_hr_max = std::max(d_hr_max, dist_p_i_q - cur_node_->hyper_rings[i].second);
         d_hr_min = std::max(d_hr_min, cur_node_->hyper_rings[i].first - dist_p_i_q);
 
@@ -1008,7 +1009,7 @@ double PM_Tree<DType>::minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<D
 }
 
 template <class DType>
-double PM_Tree<DType>::maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element)
+double PM_Tree<DType>::maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element, std::vector<double> dist_to_query)
 {
 
     //return df->getDistance(cur_node_->feature_val, element) + cur_node_->range;
@@ -1018,7 +1019,8 @@ double PM_Tree<DType>::maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<D
     for(size_t i = 0; i < pivot_vec.getCardinality(); i++)
     {
 
-        d_hr = std::min(d_hr, df->getDistance(pivot_vec.getFeatureVector(i), element) + cur_node_->hyper_rings[i].second);
+//        d_hr = std::min(d_hr, df->getDistance(pivot_vec.getFeatureVector(i), element) + cur_node_->hyper_rings[i].second);
+        d_hr = std::min(d_hr, dist_to_query[i] + cur_node_->hyper_rings[i].second);
 
     }
 
@@ -1448,11 +1450,11 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
     std::priority_queue<PM_Partition<DType>, std::vector<PM_Partition<DType>>, Compare_PM_Nodes<DType>> nodeQueue;
     std::priority_queue<KnnEntry<DType>, std::vector<KnnEntry<DType>>, std::greater<KnnEntry<DType>>> candidatesQueue;
     std::priority_queue<KnnEntry<DType>, std::vector<KnnEntry<DType>>, std::less<KnnEntry<DType>>> resultQueue;
-    nodeQueue.push(PM_Partition<DType>(get_root(), minDistNode(get_root(), query), maxDistNode(get_root(), query)));
     PM_Node<DType>* node = nullptr;
     PM_Partition<DType> partition;
     std::vector<double> query_to_pivot;
     update_pivot_distance(query_to_pivot, query);
+    nodeQueue.push(PM_Partition<DType>(get_root(), minDistNode(get_root(), query, query_to_pivot), maxDistNode(get_root(), query, query_to_pivot)));
 
     while(!nodeQueue.empty() || candidatesQueue.size() > 0)
     {
@@ -1483,7 +1485,7 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
                 for(size_t i = 0; i < node->ptr_sub_tree.size(); i++)
                 {
 
-                    nodeQueue.push(PM_Partition<DType>(node->ptr_sub_tree[i], minDistNode(node->ptr_sub_tree[i], query), maxDistNode(node->ptr_sub_tree[i], query)));
+                    nodeQueue.push(PM_Partition<DType>(node->ptr_sub_tree[i], minDistNode(node->ptr_sub_tree[i], query, query_to_pivot), maxDistNode(node->ptr_sub_tree[i], query, query_to_pivot)));
 
                 }
 
@@ -1516,7 +1518,7 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
                 for(size_t i = 0; i < node->ptr_sub_tree.size(); i++)
                 {
 
-                    nodeQueue.push(PM_Partition<DType>(node->ptr_sub_tree[i], minDistNode(node->ptr_sub_tree[i], query), maxDistNode(node->ptr_sub_tree[i], query)));
+                    nodeQueue.push(PM_Partition<DType>(node->ptr_sub_tree[i], minDistNode(node->ptr_sub_tree[i], query, query_to_pivot), maxDistNode(node->ptr_sub_tree[i], query, query_to_pivot)));
 
                 }
 
