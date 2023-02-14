@@ -60,10 +60,8 @@ void PCAPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     else
         sample = dataset;
 
-    double max = std::numeric_limits<double>::min();
-    double min = std::numeric_limits<double>::max();
 
-    Eigen::MatrixXd A;
+    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> A, centered_matrix, covariance_matrix;
     A.resize(sample->getCardinality(), sample->getCardinality());
 
     for(size_t i = 0; i < sample->getCardinality(); i++)
@@ -78,28 +76,12 @@ void PCAPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
                 A(i,j) = df->getDistance(*sample->instance(i), *sample->instance(j));
                 A(j,i) = A(i,j);
 
-                if(A(i,j) > max) max = A(i,j);
-                if(A(i,j) < min) min = A(i,j);
-
             }
 
-            if(i == j) A(i,j) = 0.0;
-
-        }
-
-    }
-
-    for(size_t i = 0; i < sample->getCardinality(); i++)
-    {
-
-        for(size_t j = 0; j < sample->getCardinality(); j++)
-        {
-
-            if(i < j)
+            if(i == j)
             {
 
-                A(i,j) = (A(i,j) - min)/(max - min);
-                A(j,i) = A(i,j);
+                A(i,j) = 0.0;
 
             }
 
@@ -107,15 +89,18 @@ void PCAPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     }
 
-    Eigen::EigenSolver<Eigen::MatrixXd> s(A);
-    Eigen::VectorXd eigenValues = s.eigenvalues().real();
+    centered_matrix = A.rowwise() - A.colwise().mean();
+    covariance_matrix = (centered_matrix.adjoint() * centered_matrix)/(double)(A.rows() - 1);
+    Eigen::SelfAdjointEigenSolver<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> eigen_solver(covariance_matrix);
+
+    Eigen::Matrix<double, 1, Eigen::Dynamic> eigen_values = eigen_solver.eigenvalues().real();
 
     std::vector<std::pair<double, long>> v;
 
-    for(long i = 0; i < eigenValues.size(); i++)
+    for(long i = 0; i < eigen_values.cols(); i++)
     {
 
-        std::pair<double, long> tupleAux(eigenValues[i], i);
+        std::pair<double, long> tupleAux(eigen_values(0,i), i);
         v.push_back(tupleAux);
 
     }
@@ -129,6 +114,77 @@ void PCAPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
         sample = nullptr;
 
     delete sample;
+
+
+//    double max = std::numeric_limits<double>::min();
+//    double min = std::numeric_limits<double>::max();
+
+//    Eigen::MatrixXd A;
+//    A.resize(sample->getCardinality(), sample->getCardinality());
+
+//    for(size_t i = 0; i < sample->getCardinality(); i++)
+//    {
+
+//        for(size_t j = 0; j < sample->getCardinality(); j++)
+//        {
+
+//            if(i < j)
+//            {
+
+//                A(i,j) = df->getDistance(*sample->instance(i), *sample->instance(j));
+//                A(j,i) = A(i,j);
+
+//                if(A(i,j) > max) max = A(i,j);
+//                if(A(i,j) < min) min = A(i,j);
+
+//            }
+
+//            if(i == j) A(i,j) = 0.0;
+
+//        }
+
+//    }
+
+//    for(size_t i = 0; i < sample->getCardinality(); i++)
+//    {
+
+//        for(size_t j = 0; j < sample->getCardinality(); j++)
+//        {
+
+//            if(i < j)
+//            {
+
+//                A(i,j) = (A(i,j) - min)/(max - min);
+//                A(j,i) = A(i,j);
+
+//            }
+
+//        }
+
+//    }
+
+//    Eigen::EigenSolver<Eigen::MatrixXd> s(A);
+//    Eigen::VectorXd eigenValues = s.eigenvalues().real();
+
+//    std::vector<std::pair<double, long>> v;
+
+//    for(long i = 0; i < eigenValues.size(); i++)
+//    {
+
+//        std::pair<double, long> tupleAux(eigenValues[i], i);
+//        v.push_back(tupleAux);
+
+//    }
+
+//    std::sort(v.begin(), v.end(), [](const std::pair<double, long>& a, const std::pair<double, long>& b){ return std::get<0>(a) > std::get<0>(b); });
+
+//    for(size_t x = 0; x < this->getNumberOfPivots(); x++)
+//        this->setPivot(sample->instance(v[x].second), x);
+
+//    if(this->sample_size == -1.0)
+//        sample = nullptr;
+
+//    delete sample;
 
 }
 
