@@ -29,6 +29,19 @@ typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<dou
 int main(int argc, char *argv[])
 {
 
+    Dataset<double>* train = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    WDRPivots<double> pvt1 = WDRPivots<double>();
+    pvt1.setSeed(94819);
+//    pvt1.setAlpha(0.1);
+
+    //pvt1.setSampleSize(0.5);
+    pvt1.generatePivots(train, df, 6);
+
+    for(size_t i = 0; i < 6; i++)
+        cout << pvt1.getPivot(i)->getOID() << "\n";
+
 //    Dataset<double>* train = new Dataset<double>();
 //    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
 //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
@@ -207,17 +220,17 @@ int main(int argc, char *argv[])
 
 /////////////////////////////////////////////MVP
 
-    Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../datasets/train_nasa.csv", ",");
-    Dataset<double>* test = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(test, "../datasets/test_nasa.csv", ",");
-    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    PCAPivots<double> pvt1 = PCAPivots<double>();
-    pvt1.setSampleSize(0.01);
-    pvt1.generatePivots(train, df, 7);
+//    Dataset<double>* train = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(train, "../datasets/train_nasa.csv", ",");
+//    Dataset<double>* test = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(test, "../datasets/test_nasa.csv", ",");
+//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    PCAPivots<double> pvt1 = PCAPivots<double>();
+//    pvt1.setSampleSize(0.01);
+//    pvt1.generatePivots(train, df, 7);
 
-    for(size_t i = 0; i < 7; i++)
-        cout << pvt1.getPivot(i)->toStringWithOID() << "\n";
+//    for(size_t i = 0; i < 7; i++)
+//        cout << pvt1.getPivot(i)->toStringWithOID() << "\n";
 
 
 //    PCAPivots<double>* pvt = new PCAPivots<double>();

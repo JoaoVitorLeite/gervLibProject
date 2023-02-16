@@ -76,6 +76,8 @@ void MaxSeparetedPivots<DType>::generatePivots(Dataset<DType> *dataset, Distance
     pvtIndex[currentPivot] = p1;
     currentPivot++;
 
+    //std::cout << "AUX : " << p1 << std::endl;
+
     for(size_t x = 0; x < sample->getCardinality(); x++)
     {
 
@@ -94,6 +96,8 @@ void MaxSeparetedPivots<DType>::generatePivots(Dataset<DType> *dataset, Distance
     bitmap[pos] = true;
     pvtIndex[currentPivot] = pos;
     currentPivot++;
+
+    //std::cout << "AUX : " << pos << std::endl;
 
     while((currentPivot-drop) < this->getNumberOfPivots())
     {

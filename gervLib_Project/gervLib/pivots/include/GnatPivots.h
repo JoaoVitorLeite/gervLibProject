@@ -81,6 +81,8 @@ void GnatPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction
     pvtIndex[currentPivot] = p1;
     currentPivot++;
 
+//    std::cout << "AUX: " << p1 << std::endl;
+
     for(size_t x = 0; x < sample->getCardinality(); x++)
     {
 
@@ -99,6 +101,8 @@ void GnatPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction
     bitmap[pos] = true;
     pvtIndex[currentPivot] = pos;
     currentPivot++;
+
+//    std::cout << "AUX: " << pos << std::endl;
 
     while((currentPivot - drop) < this->getNumberOfPivots())
     {

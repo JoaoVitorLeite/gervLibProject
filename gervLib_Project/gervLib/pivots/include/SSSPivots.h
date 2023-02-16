@@ -14,13 +14,13 @@ class SSSPivots : public Pivot<DType>
     public:
 
         SSSPivots();
-        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, double alpha = 0.35) : Pivot<DType>(){
+        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, double alpha = 0.15) : Pivot<DType>(){
 
             this->setPivotType(PIVOT_TYPE::SSS);
             generatePivots(sample,function,nPivots,alpha);
 
         }
-        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, size_t seed, double alpha = 0.35) : Pivot<DType>(){
+        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, size_t seed, double alpha = 0.15) : Pivot<DType>(){
 
             this->setPivotType(PIVOT_TYPE::SSS);
             this->setSeed(seed);
@@ -119,6 +119,8 @@ void SSSPivots<DType>::generatePivots(Dataset<DType>* dataset, DistanceFunction<
     pvtIndex[currentPivot] = p1;
     currentPivot++;
 
+    //std::cout << "AUX : " << p1 << std::endl;
+
     while(index < sample->getCardinality())
     {
 
@@ -148,6 +150,8 @@ void SSSPivots<DType>::generatePivots(Dataset<DType>* dataset, DistanceFunction<
             index++;
 
     }
+
+    //std::cout << "AUX : " << pvtIndex[1] << std::endl;
 
     for(size_t x = drop; x < (this->getNumberOfPivots()+drop); x++)
         this->setPivot(sample->instance(pvtIndex[x]), x-drop);

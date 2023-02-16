@@ -75,9 +75,15 @@ double WDRPivots<DType>::objr(size_t ctop, size_t stop, size_t num_cand)
 
         }
 
+//        std::cout << "MAX = " << max << std::endl;
+
         sum += p * pow(1-max/p, alpha)/num_cand;
 
+        //std::cout << "SUM = " << sum << std::endl;
+
     }
+
+    //std::cout << "SUM = " << sum << std::endl;
 
     return sum;
 
@@ -184,7 +190,9 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
         s_p[stop-1] = j;
         double tt = objr(ctop, stop, top);
 
-        if(tt < min - 0.00000001)
+        //std::cout << "MIN PVT 1 = " << tt << " / " << j << std::endl;
+
+        if(tt < min)
         {
 
             pos = j;
@@ -195,8 +203,12 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     }
 
     s_p[0] = pos;
+    //std::cout << "p1 = " << pos << "\n";
     stop = 1;
     size_t iter = 50;
+    bool* bitmap = new bool[top];
+    for(size_t i = 0; i < top; i++)
+        bitmap[i] = true;
 
     while(iter--)
     {
@@ -213,8 +225,9 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
                 s_p[stop-1] = j;
                 double tt = objr(ctop, stop, top);
+                //std::cout << "MIN PVT=  " << tt << " / " << j << std::endl;
 
-                if(tt < min - 0.00000001)
+                if(tt < min && tt != min && bitmap[j])
                 {
 
                     pos = j;
@@ -225,6 +238,8 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
             }
 
             s_p[stop-1] = pos;
+            bitmap[pos] = false;
+            //std::cout << "pi = " << pos << std::endl;
 
             if(pos == UINT_MAX)
                 break;
@@ -246,9 +261,10 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
                 s_p[j] = i;
                 double tt = objr(ctop, stop, top);
 
-                if(tt < min - 0.00000001)
+                if(tt < min && tt != min)
                 {
 
+                    //std::cout << "OI\n";
                     flag = true;
                     q = i;
 
@@ -316,6 +332,7 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     delete [] distsim;
     delete [] s_p;
+    delete [] bitmap;
 
     for(size_t x = 0; x < ctop; x++)
     {

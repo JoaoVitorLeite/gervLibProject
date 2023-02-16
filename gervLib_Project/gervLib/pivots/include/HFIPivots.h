@@ -490,6 +490,15 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     }
 
+    for(size_t x = 0; x < sample->getCardinality(); x++)
+    {
+
+        delete [] O_P_matrix[x];
+
+    }
+
+    delete [] O_P_matrix;
+
     if(this->sample_size == -1.0)
         sample = nullptr;
 
@@ -509,16 +518,6 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     delete [] Q_O_matrix;
     delete [] Q_P_matrix;
     delete [] esti;
-
-    for(size_t x = 0; x < sample->getCardinality(); x++)
-    {
-
-        delete [] O_P_matrix[x];
-
-    }
-
-    delete [] O_P_matrix;
-
 
 //*******************************************************************************************************************************
 //    size_t o_num = sample->getCardinality()/2, num_cand = std::min(o_num, (size_t)300), q_num = num_cand;
