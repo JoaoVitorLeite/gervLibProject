@@ -380,6 +380,8 @@ template <class DType>
 void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args)
 {
 
+    auto start = std::chrono::steady_clock::now();
+
     this->setNumberOfPivots(nPivots);
 
     Dataset<DType>* sample = nullptr;
@@ -518,6 +520,9 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     delete [] Q_O_matrix;
     delete [] Q_P_matrix;
     delete [] esti;
+
+    auto end = std::chrono::steady_clock::now();
+    this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
 
 //*******************************************************************************************************************************
 //    size_t o_num = sample->getCardinality()/2, num_cand = std::min(o_num, (size_t)300), q_num = num_cand;

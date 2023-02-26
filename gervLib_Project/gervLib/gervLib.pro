@@ -73,6 +73,7 @@ HEADERS += \
 SOURCES += \
         main.cpp \
         utils/include/Util.cpp \
+#        query.cpp
 
 
 

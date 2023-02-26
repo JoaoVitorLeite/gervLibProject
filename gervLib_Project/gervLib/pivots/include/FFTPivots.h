@@ -52,6 +52,8 @@ template <class DType>
 void FFTPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args)
 {
 
+    auto start = std::chrono::steady_clock::now();
+
     this->setNumberOfPivots(nPivots);
 
     Dataset<DType>* sample = nullptr;
@@ -134,6 +136,9 @@ void FFTPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     delete [] dist;
     delete [] aux;
     delete [] pvtIndex;
+
+    auto end = std::chrono::steady_clock::now();
+    this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
 
 //********************************************************************************************************************************
 //    size_t p1, currentPivot = 0;

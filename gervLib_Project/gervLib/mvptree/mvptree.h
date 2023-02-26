@@ -705,10 +705,30 @@ namespace mvp {
                                                    std::map<int, MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*> &childnodes,
                                                    std::map<int, std::vector<datapoint_t<T,PL>>*> &childpoints);
     public:
+        MVPTree(F* distanceFunction, DT* train)/*:m_top(NULL),n_sync(100)*/{
+            n_sync = 100;
+            m_top = new MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>();
+            df = distanceFunction;
+
+            std::vector<datapoint_t<T, PL>> points;
+            for(size_t x = 0; x < train->getCardinality(); x++)
+            {
+
+                points.push_back({static_cast<long long>(x), train->getFeatureVector(x)});
+
+            }
+
+            Add(points);
+
+            //m_top->setDistanceFunction(distanceFunction);
+            //m_top->setPivotMethod(pivotMethod);
+        };
+
         MVPTree(F* distanceFunction)/*:m_top(NULL),n_sync(100)*/{
             n_sync = 100;
             m_top = new MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>();
             df = distanceFunction;
+
             //m_top->setDistanceFunction(distanceFunction);
             //m_top->setPivotMethod(pivotMethod);
         };

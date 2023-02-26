@@ -127,6 +127,8 @@ template <class DType>
 void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args)
 {
 
+    auto start = std::chrono::steady_clock::now();
+
     this->setNumberOfPivots(nPivots);
 
     Dataset<DType>* sample = nullptr;
@@ -352,6 +354,9 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
         sample = nullptr;
 
     delete sample;
+
+    auto end = std::chrono::steady_clock::now();
+    this->elapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
 
 //**********************************************************************************************************************************
 //    size_t NUUM = sample->getCardinality()/2;

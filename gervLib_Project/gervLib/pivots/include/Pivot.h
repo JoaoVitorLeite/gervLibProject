@@ -5,6 +5,7 @@
 #include <limits.h>
 #include <Util.h>
 #include <Hermes.h>
+#include <chrono>
 
 enum PIVOT_TYPE{RANDOM, GNAT, CONVEX, KMEDOIDS, MAXSEPARETED, MAXVARIANCE, SELECTION, PCA, SSS, FFT, HFI, IS, WDR};
 
@@ -17,6 +18,8 @@ class Pivot{
         size_t nPivots;
         PIVOT_TYPE pivotType;
         Dataset<DType>* pivots;
+        long long elapsedTime;
+        std::string path;
 
     private:
         void clearPivots();
@@ -38,6 +41,8 @@ class Pivot{
         void setPivots(std::vector<BasicArrayObject<DType>> value);
         void setPivotType(PIVOT_TYPE pvtType);
         void setSampleSize(double sample_size_);
+        void setElapsedTime(long long _elapsedTime);
+        void setPath(std::string _path);
 
         //Getters
         BasicArrayObject<DType> get(const size_t pos){
@@ -53,6 +58,8 @@ class Pivot{
         PIVOT_TYPE getPivotType() const;
         size_t getSerializedSize();
         double getSampleSize(){ return sample_size; }
+        long long getElapsedTime(){ return elapsedTime; }
+        std::string getPath(){ return path; }
 
         //Métodos virtuais públicos
         virtual void generatePivots(Dataset<DType> *sample, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args = std::vector<std::string>()) = 0;
@@ -64,6 +71,8 @@ class Pivot{
 
         void saveToFile(std::string fileName);
         void loadFromFile(std::string fileName);
+        void writePivotsToFile();
+        void writePivotsIdsToFile();
 
         void printPivots();
 
@@ -184,6 +193,22 @@ void Pivot<DType>::setSampleSize(double sample_size_)
 {
 
     sample_size = sample_size_;
+
+}
+
+template <class DType>
+void Pivot<DType>::setElapsedTime(long long _elapsedTime)
+{
+
+    elapsedTime = _elapsedTime;
+
+}
+
+template <class DType>
+void Pivot<DType>::setPath(std::string _path)
+{
+
+    path = _path;
 
 }
 
@@ -472,7 +497,72 @@ void Pivot<DType>::loadFromFile(std::string fileName)
 
 }
 
+template <class DType>
+void Pivot<DType>::writePivotsToFile()
+{
 
+    std::fstream file;
+    file.open(path, std::fstream::in | std::fstream::out | std::fstream::app);
+    std::string aux;
+
+    for(size_t x = 0; x < pivots->getCardinality(); x++)
+    {
+
+        aux = pivots->getFeatureVector(x).toString();
+        file << aux.substr(1, aux.size() - 2) << "\n";
+
+    }
+
+//    if(file)
+//    {
+
+//        for(size_t x = 0; x < pivots->getCardinality(); x++)
+//        {
+
+//            aux = pivots->getFeatureVector(x).toString();
+//            file << aux.substr(1, aux.size() - 2) << "\n";
+
+//        }
+
+//    }
+//    else
+//        throw std::runtime_error("Could not open the file !_!");
+
+    file.close();
+
+}
+
+template <class DType>
+void Pivot<DType>::writePivotsIdsToFile()
+{
+
+    std::fstream file;
+    file.open(path, std::fstream::in | std::fstream::out | std::fstream::app);
+
+    for(size_t x = 0; x < pivots->getCardinality(); x++)
+    {
+
+        file << pivots->getFeatureVector(x).getOID() << "\n";
+
+    }
+
+//    if(file)
+//    {
+
+//        for(size_t x = 0; x < pivots->getCardinality(); x++)
+//        {
+
+//            file << pivots->getFeatureVector(x).getOID() << "\n";
+
+//        }
+
+//    }
+//    else
+//        throw std::runtime_error("Could not open the file !_!");
+
+    file.close();
+
+}
 
 template <class DType>
 void Pivot<DType>::printPivots()

@@ -53,6 +53,8 @@ template <class DType>
 void ConvexPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args)
 {
 
+    auto start = std::chrono::steady_clock::now();
+
     this->setNumberOfPivots(nPivots);
 
     Dataset<DType>* sample = nullptr;
@@ -185,6 +187,9 @@ void ConvexPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFuncti
     delete[] bitmap;
     delete[] pvtIndex;
     delete[] aux;
+
+    auto end = std::chrono::steady_clock::now();
+    this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
 
 }
 

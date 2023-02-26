@@ -10,13 +10,14 @@
 #include <PM_Tree.h>
 #include <chrono>
 #include <unistd.h>
+#include <typeinfo>
 
 using namespace std;
 using namespace mvp;
 
 const int BF = 2;   //branchfactor
 const int PL = 8;   // pathlength
-const int LC = 360; // leafcap
+const int LC = 5; // leafcap
 const int LPN = 2;  // levelspernode
 const int FO = 4; //fanout bf^lpn
 const int NS = 2; //numsplits (bf-1)^lpn
@@ -29,24 +30,52 @@ typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<dou
 int main(int argc, char *argv[])
 {
 
-    Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
-    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    WDRPivots<double> pvt1 = WDRPivots<double>();
-    pvt1.setSeed(94819);
-//    pvt1.setAlpha(0.1);
-
-    //pvt1.setSampleSize(0.5);
-    pvt1.generatePivots(train, df, 6);
-
-    for(size_t i = 0; i < 6; i++)
-        cout << pvt1.getPivot(i)->getOID() << "\n";
-
 //    Dataset<double>* train = new Dataset<double>();
 //    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
 //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-//    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
-//    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
+//    WDRPivots<double> pvt1 = WDRPivots<double>();
+//    pvt1.setSeed(94819);
+////    pvt1.setAlpha(0.1);
+
+//    //pvt1.setSampleSize(0.5);
+//    pvt1.generatePivots(train, df, 6);
+
+//    for(size_t i = 0; i < 6; i++)
+//        cout << pvt1.getPivot(i)->getOID() << "\n";
+
+    Dataset<double>* train = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+    Dataset<double>* test = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+    pvt->generatePivots(train, df, 3);
+
+    for(size_t x = 0; x < 3; x++)
+        cout << pvt->getPivot(x)->toString() << endl;
+
+    pvt->setPath("../results/maxvar.pvt");
+    pvt->writePivotsToFile();
+
+
+////    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
+
+//    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
+//            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df, train);
+
+//    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+//    query.set(0, 6.0);
+//    query.set(1, 3.0);
+
+////    Dataset<double>* ans3 = new Dataset<double>();
+////    index.kNNInc(query, 3, index.getRoot(), ans3, df);
+
+//    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+//    index.knn(query, 3, ans);
+//    cout << index.getLeafNodeAccess() << endl;
+
+//    for(size_t x = 0; x < ans.size(); x++)
+//        cout << ans[x].element.toStringWithOID() << endl;
 
 //    Dataset<double>* train = new Dataset<double>();
 //    Dataset<double>::loadNumericDataset(train, "/home/joaovictor/Documents/TCC/Code/Project/gervLib/datasets/cities_norm.csv", ",");
@@ -64,6 +93,7 @@ int main(int argc, char *argv[])
 //    //VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, numPerLeaf, pvt, train, df);
 //    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, numPerLeaf, 2);
 
+//    std::vector<std::pair<double, size_t>> ansVec;
 //    for(size_t x = 0; x < test->getCardinality(); x++)
 //    {
 
@@ -82,7 +112,7 @@ int main(int argc, char *argv[])
 
 //    }
 
-//    std::ofstream file("/home/joaovictor/Documents/TCC/Code/cities_pmtree.csv");
+//    std::ofstream file("/home/joaovictor/Documents/TCC/Code/cities_pmtree_range.csv");
 //    file << "k,Time,Count,Leaf\n";
 
 //    for(size_t k = 5; k <= 100; k+=5)
@@ -98,7 +128,8 @@ int main(int argc, char *argv[])
 //            auto start = std::chrono::steady_clock::now();
 ////            index.kNN(train, test->instance(i), k, ans);
 ////            index.kNNInc(test->getFeatureVector(i), k, index.getRoot(), ans3, df);
-//            index.kNN(test->getFeatureVector(i), k, ans2);
+//            //index.kNN(test->getFeatureVector(i), k, ans2);
+//            index.rang
 //            auto end = std::chrono::steady_clock::now();
 //            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
 

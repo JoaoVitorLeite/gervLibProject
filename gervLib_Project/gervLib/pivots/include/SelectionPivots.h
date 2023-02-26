@@ -80,6 +80,8 @@ template <class DType>
 void SelectionPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args)
 {
 
+    auto start = std::chrono::steady_clock::now();
+
     Dataset<DType>* sample = nullptr;
     if(this->sample_size != -1.0)
         sample = dataset->sampleDataset(std::ceil(dataset->getCardinality()*this->sample_size), false, this->getSeed());
@@ -140,6 +142,9 @@ void SelectionPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFun
         sample = nullptr;
 
     delete sample;
+
+    auto end = std::chrono::steady_clock::now();
+    this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
 
 }
 

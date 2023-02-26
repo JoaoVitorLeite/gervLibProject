@@ -102,11 +102,19 @@ class Node{
         double getCoverage();
 
         bool operator <(const Node &node) const{
-            return dMin < node.dMin;
+            //return dMin < node.dMin;
+            if(dMin != node.dMin)
+                return dMin < node.dMin;
+            else
+                return dMax < node.dMax;
         }
 
         bool operator >(const Node &node) const{
-            return dMin > node.dMin;
+            //return dMin > node.dMin;
+            if(dMin != node.dMin)
+                return dMin > node.dMin;
+            else
+                return dMax > node.dMax;
         }
 };
 
