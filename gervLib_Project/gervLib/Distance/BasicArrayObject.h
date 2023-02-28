@@ -172,6 +172,11 @@ class BasicArrayObject{
 
     public:
 
+        //SPB-TREE
+        unsigned* key;
+        int keysize;
+        std::string keycomp;
+
         /**
         * Constructor Method.
         * Sets data and size to empty and 0, respectively.
@@ -860,7 +865,148 @@ class BasicArrayObject{
 
             return std::to_string(this->OID) + " -> " + toString(separator);
 
-        }        
+        }
+
+        void compress()
+        {
+
+            for(int i=0;i<keysize;i++)
+            {
+                std::stringstream ss;
+                std::string t;
+                ss<<key[i];
+                ss>>t;
+                keycomp.append(t);
+            }
+
+        }
+
+        int write_to_buffer(char* buffer)
+        {
+
+            size_t size = getSize();
+            memcpy(buffer, &OID, sizeof(size_t));
+            memcpy(buffer + sizeof(size_t), &size, sizeof(size_t));
+            for (size_t x = 0; x < size; x++){
+                memcpy(buffer + sizeof(size_t) + sizeof(size_t)+(sizeof(DType)*x), &data[x], sizeof(DType));
+            }
+
+            return GetSerializedSize();
+
+        }
+
+        int read_from_buffer(char* buffer)
+        {
+
+            memcpy(&OID, buffer, sizeof(size_t));
+
+//            if (dataSize != 0) {
+//                size_vector = (dataSize - sizeof(size_t) - sizeof(size_t)) / sizeof(DType);
+//            } else {
+//                memcpy(&size_vector, dataIn + sizeof(size_t), sizeof(size_t));
+//            }
+
+            size_t size_vector;
+
+            memcpy(&size_vector, buffer + sizeof(size_t), sizeof(size_t));
+
+            DType* d = new DType[size_vector];
+
+            for (size_t x = 0; x < size_vector; x++){
+                memcpy(&d[x], buffer + sizeof(size_t) + sizeof(size_t) + (sizeof(DType)*x), sizeof(DType));
+            }
+
+            data.clear();
+
+            for (size_t x = 0; x < size_vector; x++){
+                data.push_back(d[x]);
+            }
+
+            return GetSerializedSize();
+
+        }
+
+        bool operator < (const BasicArrayObject<DType> &a) const
+        {
+
+            bool flag = true;
+            for(int i =keysize -1;i>=0;i--)
+            {
+                if(key[i] < a.key[i])
+                {
+                    break;
+                }
+                if(key[i]>a.key[i])
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+
+        }
+
+        bool operator > (const BasicArrayObject<DType> &a) const
+        {
+
+            bool flag = false;
+            for(int i =keysize-1;i>=0;i--)
+            {
+                if(key[i] < a.key[i])
+                {
+                    break;
+                }
+                if(key[i]>a.key[i])
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            return flag;
+
+        }
+
+        unsigned* getKey()
+        {
+
+            return key;
+
+        }
+
+        void setKey(unsigned* _key)
+        {
+
+            key = _key;
+
+        }
+
+        int getKeySize()
+        {
+
+            return keysize;
+
+        }
+
+        void setKeySize(int _keySize)
+        {
+
+            keysize = _keySize;
+
+        }
+
+        std::string getKeyComp()
+        {
+
+            return keycomp;
+
+        }
+
+        void setKeyComp(std::string _keycomp)
+        {
+
+            keycomp = _keycomp;
+
+        }
 
 };
 

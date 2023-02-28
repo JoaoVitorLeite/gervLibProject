@@ -53,8 +53,30 @@ OBJECTS_DIR   = bin/
 ####### Files
 
 SOURCES       = main.cpp \
+		spb_tree/RAF.cpp \
+		spb_tree/blockfile/blk_file.cpp \
+		spb_tree/blockfile/cache.cpp \
+		spb_tree/blockfile/f_def.cpp \
+		spb_tree/btree/b-entry.cpp \
+		spb_tree/btree/b-node.cpp \
+		spb_tree/btree/b-tree.cpp \
+		spb_tree/gadget/gadget.cpp \
+		spb_tree/heap/binheap.cpp \
+		spb_tree/heap/heap.cpp \
+		spb_tree/pb_tree.cpp \
 		utils/include/Util.cpp bin/qrc_qmake_qmake_qm_files.cpp
 OBJECTS       = bin/main.o \
+		bin/RAF.o \
+		bin/blk_file.o \
+		bin/cache.o \
+		bin/f_def.o \
+		bin/b-entry.o \
+		bin/b-node.o \
+		bin/b-tree.o \
+		bin/gadget.o \
+		bin/binheap.o \
+		bin/heap.o \
+		bin/pb_tree.o \
 		bin/Util.o \
 		bin/qrc_qmake_qmake_qm_files.o
 DIST          = hermes/gervLib.cflags \
@@ -215,7 +237,32 @@ DIST          = hermes/gervLib.cflags \
 		pivots/include/SelectionPivots.h \
 		pivots/include/WDRPivots.h \
 		pm_tree/PM_Tree.h \
+		spb_tree/RAF.h \
+		spb_tree/SortEntry.h \
+		spb_tree/blockfile/blk_file.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/btree/b-def.h \
+		spb_tree/btree/b-entry.h \
+		spb_tree/btree/b-node.h \
+		spb_tree/btree/b-tree.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h \
+		spb_tree/heap/heap.h \
+		spb_tree/pb-tree.h \
+		spb_tree/spb_config.h \
 		utils/include/Util.h main.cpp \
+		spb_tree/RAF.cpp \
+		spb_tree/blockfile/blk_file.cpp \
+		spb_tree/blockfile/cache.cpp \
+		spb_tree/blockfile/f_def.cpp \
+		spb_tree/btree/b-entry.cpp \
+		spb_tree/btree/b-node.cpp \
+		spb_tree/btree/b-tree.cpp \
+		spb_tree/gadget/gadget.cpp \
+		spb_tree/heap/binheap.cpp \
+		spb_tree/heap/heap.cpp \
+		spb_tree/pb_tree.cpp \
 		utils/include/Util.cpp
 QMAKE_TARGET  = gervLib
 DESTDIR       = bin/
@@ -495,8 +542,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents gervLib_en_US.ts $(DISTDIR)/
 	$(COPY_FILE) --parents bin/qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/joaovictor/Qt/6.0.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents VpTree/Node/Bucket/Bucket.h VpTree/Node/Bucket/Pair.h VpTree/Node/DirectorNode.h VpTree/Node/LeafNodeVPTree.h VpTree/Node/Node.h VpTree/QueueItem.h VpTree/VpTree.h kdtree/DirectoryNodeKdTree.h kdtree/KdTree.h kdtree/LeafNodeKdTree.h kdtree/NodeKdTree.h mvptree/datapoint.h mvptree/mvpnode.h mvptree/mvptree.h omni/OmniKdTree.h pivots/include/Cluster.h pivots/include/ConvexPivots.h pivots/include/FFTPivots.h pivots/include/GnatPivots.h dataset/include/Dataset.h Distance/BasicArrayObject.h pivots/include/HFIPivots.h pivots/include/ISPivots.h pivots/include/Kmedoids.h pivots/include/KmedoidsPivots.h pivots/include/MaxSeparetedPivots.h pivots/include/MaxVariancePivots.h pivots/include/PCAPivots.h pivots/include/Pivot.h pivots/include/Pivots.h pivots/include/RandomPivots.h pivots/include/SSSPivots.h pivots/include/SelectionPivots.h pivots/include/WDRPivots.h pm_tree/PM_Tree.h utils/include/Util.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp utils/include/Util.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents VpTree/Node/Bucket/Bucket.h VpTree/Node/Bucket/Pair.h VpTree/Node/DirectorNode.h VpTree/Node/LeafNodeVPTree.h VpTree/Node/Node.h VpTree/QueueItem.h VpTree/VpTree.h kdtree/DirectoryNodeKdTree.h kdtree/KdTree.h kdtree/LeafNodeKdTree.h kdtree/NodeKdTree.h mvptree/datapoint.h mvptree/mvpnode.h mvptree/mvptree.h omni/OmniKdTree.h pivots/include/Cluster.h pivots/include/ConvexPivots.h pivots/include/FFTPivots.h pivots/include/GnatPivots.h dataset/include/Dataset.h Distance/BasicArrayObject.h pivots/include/HFIPivots.h pivots/include/ISPivots.h pivots/include/Kmedoids.h pivots/include/KmedoidsPivots.h pivots/include/MaxSeparetedPivots.h pivots/include/MaxVariancePivots.h pivots/include/PCAPivots.h pivots/include/Pivot.h pivots/include/Pivots.h pivots/include/RandomPivots.h pivots/include/SSSPivots.h pivots/include/SelectionPivots.h pivots/include/WDRPivots.h pm_tree/PM_Tree.h spb_tree/RAF.h spb_tree/SortEntry.h spb_tree/blockfile/blk_file.h spb_tree/blockfile/cache.h spb_tree/blockfile/f_def.h spb_tree/btree/b-def.h spb_tree/btree/b-entry.h spb_tree/btree/b-node.h spb_tree/btree/b-tree.h spb_tree/gadget/gadget.h spb_tree/heap/binheap.h spb_tree/heap/heap.h spb_tree/pb-tree.h spb_tree/spb_config.h utils/include/Util.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp spb_tree/RAF.cpp spb_tree/blockfile/blk_file.cpp spb_tree/blockfile/cache.cpp spb_tree/blockfile/f_def.cpp spb_tree/btree/b-entry.cpp spb_tree/btree/b-node.cpp spb_tree/btree/b-tree.cpp spb_tree/gadget/gadget.cpp spb_tree/heap/binheap.cpp spb_tree/heap/heap.cpp spb_tree/pb_tree.cpp utils/include/Util.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents gervLib_en_US.ts $(DISTDIR)/
 
 
@@ -557,109 +604,23 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 
 ####### Compile
 
-bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qtestcase.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qttestglobal.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qglobal.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qconfig.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtcore-config.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsystemdetection.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qprocessordetection.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcompilerdetection.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtypeinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontainerfwd.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsysinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qlogging.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qflags.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbasicatomic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qgenericatomic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qatomic_msvc.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qglobalstatic.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmutex.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qnumeric.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qversiontagging.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qttestlib-config.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstring.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qchar.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearray.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qrefcount.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qnamespace.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qarraydata.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qpair.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qarraydataops.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontainertools_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearrayalgorithms.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearrayview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringliteral.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringalgorithms.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qanystringview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qutf8stringview.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringtokenizer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringbuilder.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmetatype.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcompare.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qvarlengtharray.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qalgorithms.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdatastream.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qscopedpointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiodevicebase.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiterable.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmetacontainer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontainerinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtaggedpointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmath.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmetaobject.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qvariant.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qlist.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiterator.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringlist.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringmatcher.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qmap.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qshareddata.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qshareddata_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qhash.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobject.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcoreevent.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qobject_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qproperty.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qpropertyprivate.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdebug.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtextstream.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qstringconverter.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qset.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcontiguouscache.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsharedpointer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qtemporarydir.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdir.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qfile.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qfiledevice.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qiodevice.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qfileinfo.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdatetime.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qcalendar.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qlocale.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qthread.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qdeadlinetimer.h \
-		/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore/qelapsedtimer.h \
-		mvptree/mvptree.h \
-		mvptree/mvpnode.h \
-		mvptree/datapoint.h \
+bin/main.o: main.cpp spb_tree/blockfile/blk_file.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/spb_config.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h \
+		spb_tree/heap/heap.h \
 		Distance/BasicArrayObject.h \
-		dataset/include/Dataset.h \
-		Distance/DistanceFunction.h \
-		utils/include/Util.h \
+		spb_tree/RAF.h \
+		spb_tree/pb-tree.h \
+		spb_tree/btree/b-tree.h \
+		spb_tree/btree/b-def.h \
+		spb_tree/btree/b-node.h \
+		spb_tree/btree/b-entry.h \
+		spb_tree/SortEntry.h \
 		Distance/Hermes.h \
+		Distance/DistanceFunction.h \
 		Distance/MetricHistogramDistance.h \
 		Distance/MetricHistogramDistance-inl.h \
 		Distance/WarpDistance.h \
@@ -696,6 +657,361 @@ bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qtestcase.h
 		Distance/MorositaDistance-inl.h \
 		Distance/EditDistance.h \
 		Distance/EditDistance-inl.h \
+		dataset/include/Dataset.h \
+		utils/include/Util.h \
+		pivots/include/Pivots.h \
+		pivots/include/Pivot.h \
+		pivots/include/RandomPivots.h \
+		pivots/include/GnatPivots.h \
+		pivots/include/ConvexPivots.h \
+		pivots/include/KmedoidsPivots.h \
+		pivots/include/Kmedoids.h \
+		pivots/include/Cluster.h \
+		pivots/include/MaxVariancePivots.h \
+		pivots/include/MaxSeparetedPivots.h \
+		pivots/include/SelectionPivots.h \
+		pivots/include/SSSPivots.h \
+		pivots/include/PCAPivots.h \
+		eigen/Eigenvalues \
+		eigen/Core \
+		eigen/src/Core/util/DisableStupidWarnings.h \
+		eigen/src/Core/util/Macros.h \
+		eigen/src/Core/util/MKL_support.h \
+		eigen/src/misc/blas.h \
+		eigen/src/Core/util/Constants.h \
+		eigen/src/Core/util/Meta.h \
+		eigen/src/Core/util/ForwardDeclarations.h \
+		eigen/src/Core/util/StaticAssert.h \
+		eigen/src/Core/util/XprHelper.h \
+		eigen/src/Core/util/Memory.h \
+		eigen/src/Core/NumTraits.h \
+		eigen/src/Core/MathFunctions.h \
+		eigen/src/Core/GenericPacketMath.h \
+		eigen/src/Core/MathFunctionsImpl.h \
+		eigen/src/Core/arch/Default/ConjHelper.h \
+		eigen/src/Core/arch/SSE/PacketMath.h \
+		eigen/src/Core/arch/SSE/MathFunctions.h \
+		eigen/src/Core/arch/AVX/PacketMath.h \
+		eigen/src/Core/arch/AVX/MathFunctions.h \
+		eigen/src/Core/arch/AVX512/PacketMath.h \
+		eigen/src/Core/arch/AVX512/MathFunctions.h \
+		eigen/src/Core/arch/SSE/Complex.h \
+		eigen/src/Core/arch/AVX/Complex.h \
+		eigen/src/Core/arch/AVX/TypeCasting.h \
+		eigen/src/Core/arch/SSE/TypeCasting.h \
+		eigen/src/Core/arch/AltiVec/PacketMath.h \
+		eigen/src/Core/arch/AltiVec/MathFunctions.h \
+		eigen/src/Core/arch/AltiVec/Complex.h \
+		eigen/src/Core/arch/NEON/PacketMath.h \
+		eigen/src/Core/arch/NEON/MathFunctions.h \
+		eigen/src/Core/arch/NEON/Complex.h \
+		eigen/src/Core/arch/ZVector/PacketMath.h \
+		eigen/src/Core/arch/ZVector/MathFunctions.h \
+		eigen/src/Core/arch/ZVector/Complex.h \
+		eigen/src/Core/arch/CUDA/Half.h \
+		eigen/src/Core/arch/CUDA/PacketMathHalf.h \
+		eigen/src/Core/arch/CUDA/TypeCasting.h \
+		eigen/src/Core/arch/CUDA/PacketMath.h \
+		eigen/src/Core/arch/CUDA/MathFunctions.h \
+		eigen/src/Core/arch/Default/Settings.h \
+		eigen/src/Core/functors/TernaryFunctors.h \
+		eigen/src/Core/functors/BinaryFunctors.h \
+		eigen/src/Core/functors/UnaryFunctors.h \
+		eigen/src/Core/functors/NullaryFunctors.h \
+		eigen/src/Core/functors/StlFunctors.h \
+		eigen/src/Core/functors/AssignmentFunctors.h \
+		eigen/src/Core/arch/CUDA/Complex.h \
+		eigen/src/Core/IO.h \
+		eigen/src/Core/DenseCoeffsBase.h \
+		eigen/src/Core/DenseBase.h \
+		eigen/src/plugins/BlockMethods.h \
+		eigen/src/Core/MatrixBase.h \
+		eigen/src/plugins/CommonCwiseUnaryOps.h \
+		eigen/src/plugins/CommonCwiseBinaryOps.h \
+		eigen/src/plugins/MatrixCwiseUnaryOps.h \
+		eigen/src/plugins/MatrixCwiseBinaryOps.h \
+		eigen/src/Core/EigenBase.h \
+		eigen/src/Core/Product.h \
+		eigen/src/Core/CoreEvaluators.h \
+		eigen/src/Core/AssignEvaluator.h \
+		eigen/src/Core/Assign.h \
+		eigen/src/Core/ArrayBase.h \
+		eigen/src/plugins/ArrayCwiseUnaryOps.h \
+		eigen/src/plugins/ArrayCwiseBinaryOps.h \
+		eigen/src/Core/util/BlasUtil.h \
+		eigen/src/Core/DenseStorage.h \
+		eigen/src/Core/NestByValue.h \
+		eigen/src/Core/ReturnByValue.h \
+		eigen/src/Core/NoAlias.h \
+		eigen/src/Core/PlainObjectBase.h \
+		eigen/src/Core/Matrix.h \
+		eigen/src/Core/Array.h \
+		eigen/src/Core/CwiseTernaryOp.h \
+		eigen/src/Core/CwiseBinaryOp.h \
+		eigen/src/Core/CwiseUnaryOp.h \
+		eigen/src/Core/CwiseNullaryOp.h \
+		eigen/src/Core/CwiseUnaryView.h \
+		eigen/src/Core/SelfCwiseBinaryOp.h \
+		eigen/src/Core/Dot.h \
+		eigen/src/Core/StableNorm.h \
+		eigen/src/Core/Stride.h \
+		eigen/src/Core/MapBase.h \
+		eigen/src/Core/Map.h \
+		eigen/src/Core/Ref.h \
+		eigen/src/Core/Block.h \
+		eigen/src/Core/VectorBlock.h \
+		eigen/src/Core/Transpose.h \
+		eigen/src/Core/DiagonalMatrix.h \
+		eigen/src/Core/Diagonal.h \
+		eigen/src/Core/DiagonalProduct.h \
+		eigen/src/Core/Redux.h \
+		eigen/src/Core/Visitor.h \
+		eigen/src/Core/Fuzzy.h \
+		eigen/src/Core/Swap.h \
+		eigen/src/Core/CommaInitializer.h \
+		eigen/src/Core/GeneralProduct.h \
+		eigen/src/Core/Solve.h \
+		eigen/src/Core/Inverse.h \
+		eigen/src/Core/SolverBase.h \
+		eigen/src/Core/PermutationMatrix.h \
+		eigen/src/Core/Transpositions.h \
+		eigen/src/Core/TriangularMatrix.h \
+		eigen/src/Core/SelfAdjointView.h \
+		eigen/src/Core/products/GeneralBlockPanelKernel.h \
+		eigen/src/Core/products/Parallelizer.h \
+		eigen/src/Core/ProductEvaluators.h \
+		eigen/src/Core/products/GeneralMatrixVector.h \
+		eigen/src/Core/products/GeneralMatrixMatrix.h \
+		eigen/src/Core/SolveTriangular.h \
+		eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+		eigen/src/Core/products/SelfadjointMatrixVector.h \
+		eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+		eigen/src/Core/products/SelfadjointProduct.h \
+		eigen/src/Core/products/SelfadjointRank2Update.h \
+		eigen/src/Core/products/TriangularMatrixVector.h \
+		eigen/src/Core/products/TriangularMatrixMatrix.h \
+		eigen/src/Core/products/TriangularSolverMatrix.h \
+		eigen/src/Core/products/TriangularSolverVector.h \
+		eigen/src/Core/BandMatrix.h \
+		eigen/src/Core/CoreIterators.h \
+		eigen/src/Core/ConditionEstimator.h \
+		eigen/src/Core/BooleanRedux.h \
+		eigen/src/Core/Select.h \
+		eigen/src/Core/VectorwiseOp.h \
+		eigen/src/Core/Random.h \
+		eigen/src/Core/Replicate.h \
+		eigen/src/Core/Reverse.h \
+		eigen/src/Core/ArrayWrapper.h \
+		eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
+		eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
+		eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
+		eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
+		eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
+		eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
+		eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
+		eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
+		eigen/src/Core/Assign_MKL.h \
+		eigen/src/Core/GlobalFunctions.h \
+		eigen/src/Core/util/ReenableStupidWarnings.h \
+		eigen/Cholesky \
+		eigen/Jacobi \
+		eigen/src/Jacobi/Jacobi.h \
+		eigen/src/Cholesky/LLT.h \
+		eigen/src/Cholesky/LDLT.h \
+		eigen/src/misc/lapacke.h \
+		eigen/src/misc/lapacke_mangling.h \
+		eigen/src/Cholesky/LLT_LAPACKE.h \
+		eigen/Householder \
+		eigen/src/Householder/Householder.h \
+		eigen/src/Householder/HouseholderSequence.h \
+		eigen/src/Householder/BlockHouseholder.h \
+		eigen/LU \
+		eigen/src/misc/Kernel.h \
+		eigen/src/misc/Image.h \
+		eigen/src/LU/FullPivLU.h \
+		eigen/src/LU/PartialPivLU.h \
+		eigen/src/LU/PartialPivLU_LAPACKE.h \
+		eigen/src/LU/Determinant.h \
+		eigen/src/LU/InverseImpl.h \
+		eigen/src/LU/arch/Inverse_SSE.h \
+		eigen/Geometry \
+		eigen/SVD \
+		eigen/QR \
+		eigen/src/QR/HouseholderQR.h \
+		eigen/src/QR/FullPivHouseholderQR.h \
+		eigen/src/QR/ColPivHouseholderQR.h \
+		eigen/src/QR/CompleteOrthogonalDecomposition.h \
+		eigen/src/QR/HouseholderQR_LAPACKE.h \
+		eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
+		eigen/src/misc/RealSvd2x2.h \
+		eigen/src/SVD/UpperBidiagonalization.h \
+		eigen/src/SVD/SVDBase.h \
+		eigen/src/SVD/JacobiSVD.h \
+		eigen/src/SVD/BDCSVD.h \
+		eigen/src/SVD/JacobiSVD_LAPACKE.h \
+		eigen/src/Geometry/OrthoMethods.h \
+		eigen/src/Geometry/EulerAngles.h \
+		eigen/src/Geometry/Homogeneous.h \
+		eigen/src/Geometry/RotationBase.h \
+		eigen/src/Geometry/Rotation2D.h \
+		eigen/src/Geometry/Quaternion.h \
+		eigen/src/Geometry/AngleAxis.h \
+		eigen/src/Geometry/Transform.h \
+		eigen/src/Geometry/Translation.h \
+		eigen/src/Geometry/Scaling.h \
+		eigen/src/Geometry/Hyperplane.h \
+		eigen/src/Geometry/ParametrizedLine.h \
+		eigen/src/Geometry/AlignedBox.h \
+		eigen/src/Geometry/Umeyama.h \
+		eigen/src/Geometry/arch/Geometry_SSE.h \
+		eigen/src/Eigenvalues/Tridiagonalization.h \
+		eigen/src/Eigenvalues/RealSchur.h \
+		eigen/src/Eigenvalues/HessenbergDecomposition.h \
+		eigen/src/Eigenvalues/EigenSolver.h \
+		eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+		eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+		eigen/src/Eigenvalues/ComplexSchur.h \
+		eigen/src/Eigenvalues/ComplexEigenSolver.h \
+		eigen/src/Eigenvalues/RealQZ.h \
+		eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+		eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+		eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
+		eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
+		eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		pivots/include/FFTPivots.h \
+		pivots/include/HFIPivots.h \
+		pivots/include/ISPivots.h \
+		pivots/include/WDRPivots.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/main.o main.cpp
+
+bin/RAF.o: spb_tree/RAF.cpp spb_tree/RAF.h \
+		Distance/BasicArrayObject.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/blockfile/blk_file.h \
+		spb_tree/spb_config.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/RAF.o spb_tree/RAF.cpp
+
+bin/blk_file.o: spb_tree/blockfile/blk_file.cpp spb_tree/blockfile/blk_file.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/spb_config.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/blk_file.o spb_tree/blockfile/blk_file.cpp
+
+bin/cache.o: spb_tree/blockfile/cache.cpp spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/blockfile/blk_file.h \
+		spb_tree/spb_config.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/cache.o spb_tree/blockfile/cache.cpp
+
+bin/f_def.o: spb_tree/blockfile/f_def.cpp spb_tree/blockfile/f_def.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/f_def.o spb_tree/blockfile/f_def.cpp
+
+bin/b-entry.o: spb_tree/btree/b-entry.cpp spb_tree/btree/b-node.h \
+		spb_tree/btree/b-def.h \
+		spb_tree/btree/b-entry.h \
+		spb_tree/btree/b-tree.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/b-entry.o spb_tree/btree/b-entry.cpp
+
+bin/b-node.o: spb_tree/btree/b-node.cpp spb_tree/btree/b-node.h \
+		spb_tree/btree/b-def.h \
+		spb_tree/btree/b-entry.h \
+		spb_tree/btree/b-tree.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/blockfile/blk_file.h \
+		spb_tree/spb_config.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/b-node.o spb_tree/btree/b-node.cpp
+
+bin/b-tree.o: spb_tree/btree/b-tree.cpp spb_tree/btree/b-tree.h \
+		spb_tree/btree/b-def.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		spb_tree/btree/b-node.h \
+		spb_tree/btree/b-entry.h \
+		spb_tree/heap/heap.h \
+		spb_tree/blockfile/blk_file.h \
+		spb_tree/spb_config.h \
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/b-tree.o spb_tree/btree/b-tree.cpp
+
+bin/gadget.o: spb_tree/gadget/gadget.cpp spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/gadget.o spb_tree/gadget/gadget.cpp
+
+bin/binheap.o: spb_tree/heap/binheap.cpp spb_tree/heap/binheap.h \
+		spb_tree/gadget/gadget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/binheap.o spb_tree/heap/binheap.cpp
+
+bin/heap.o: spb_tree/heap/heap.cpp spb_tree/heap/heap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/heap.o spb_tree/heap/heap.cpp
+
+bin/pb_tree.o: spb_tree/pb_tree.cpp spb_tree/pb-tree.h \
+		spb_tree/btree/b-tree.h \
+		spb_tree/btree/b-def.h \
+		spb_tree/blockfile/cache.h \
+		spb_tree/blockfile/f_def.h \
+		Distance/BasicArrayObject.h \
+		spb_tree/RAF.h \
+		spb_tree/blockfile/blk_file.h \
+		spb_tree/spb_config.h \
+		spb_tree/btree/b-node.h \
+		spb_tree/btree/b-entry.h \
+		spb_tree/SortEntry.h \
+		Distance/Hermes.h \
+		Distance/DistanceFunction.h \
+		Distance/MetricHistogramDistance.h \
+		Distance/MetricHistogramDistance-inl.h \
+		Distance/WarpDistance.h \
+		Distance/WarpDistance-inl.h \
+		Distance/EuclideanDistance.h \
+		Distance/EuclideanDistance-inl.h \
+		Distance/ManhattanDistance.h \
+		Distance/ManhattanDistance-inl.h \
+		Distance/ChebyshevDistance.h \
+		Distance/ChebyshevDistance-inl.h \
+		Distance/LEdit.h \
+		Distance/LEdit-inl.h \
+		Distance/CanberraDistance.h \
+		Distance/CanberraDistance-inl.h \
+		Distance/JeffreyDivergenceDistance.h \
+		Distance/JeffreyDivergenceDistance-inl.h \
+		Distance/KullbackLeiblerDivergenceDistance.h \
+		Distance/KullbackLeiblerDivergenceDistance-inl.h \
+		Distance/ColorLayoutDistance.h \
+		Distance/ColorLayoutDistance-inl.h \
+		Distance/SumProductDistance.h \
+		Distance/SumProductDistance-inl.h \
+		Distance/SquaredChordDistance.h \
+		Distance/SquaredChordDistance-inl.h \
+		Distance/BrayCurtisDistance.h \
+		Distance/BrayCurtisDistance-inl.h \
+		Distance/QuiSquareDistance.h \
+		Distance/QuiSquareDistance-inl.h \
+		Distance/SpearmanDistance.h \
+		Distance/SpearmanDistance-inl.h \
+		Distance/DTWDistance.h \
+		Distance/DTWDistance-inl.h \
+		Distance/MorositaDistance.h \
+		Distance/MorositaDistance-inl.h \
+		Distance/EditDistance.h \
+		Distance/EditDistance-inl.h \
+		dataset/include/Dataset.h \
+		utils/include/Util.h \
 		pivots/include/Pivots.h \
 		pivots/include/Pivot.h \
 		pivots/include/RandomPivots.h \
@@ -919,20 +1235,9 @@ bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qtestcase.h
 		pivots/include/HFIPivots.h \
 		pivots/include/ISPivots.h \
 		pivots/include/WDRPivots.h \
-		omni/OmniKdTree.h \
-		kdtree/KdTree.h \
-		kdtree/NodeKdTree.h \
-		kdtree/LeafNodeKdTree.h \
-		kdtree/DirectoryNodeKdTree.h \
-		VpTree/VpTree.h \
-		VpTree/QueueItem.h \
-		VpTree/Node/LeafNodeVPTree.h \
-		VpTree/Node/Node.h \
-		VpTree/Node/Bucket/Bucket.h \
-		VpTree/Node/Bucket/Pair.h \
-		VpTree/Node/DirectorNode.h \
-		pm_tree/PM_Tree.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/main.o main.cpp
+		spb_tree/gadget/gadget.h \
+		spb_tree/heap/binheap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/pb_tree.o spb_tree/pb_tree.cpp
 
 bin/Util.o: utils/include/Util.cpp utils/include/Util.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/Util.o utils/include/Util.cpp

@@ -1,0 +1,74 @@
+pivotnum: 5
+building...
+finished... 4.666584 build time
+finished... 0.000000 distances computed
+finished... 0.000000 IO times
+saved... 52039680 bytes
+
+querying...
+k: 1
+finished... 0.000588 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 3962.247403 radius
+k: 5
+finished... 0.000697 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 3971.052075 radius
+k: 10
+finished... 0.000860 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 3973.086069 radius
+k: 20
+finished... 0.000869 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 3973.090619 radius
+k: 50
+finished... 0.000916 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 3973.318399 radius
+k: 100
+finished... 0.001014 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 4039.351622 radius
+r: 473.000000
+finished... 0.000072 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+r: 692.000000
+finished... 0.000071 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+r: 989.000000
+finished... 0.000071 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+r: 1409.000000
+finished... 0.000071 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+r: 1875.000000
+finished... 0.000072 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+r: 2314.000000
+finished... 0.000072 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+r: 3096.000000
+finished... 0.000072 query time
+finished... 5368635.000000 distances computed
+finished... 5368635.000000 IO times
+finished... 0.000000 objs
+

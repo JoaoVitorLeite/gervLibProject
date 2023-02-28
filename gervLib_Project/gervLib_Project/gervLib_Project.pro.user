@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.2, 2023-02-26T22:21:42. -->
+<!-- Written by QtCreator 7.0.2, 2023-02-27T22:20:43. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -218,7 +218,6 @@
     <value type="Qt::CheckState" key="1@/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/TestSelectionPivots.cpp:test8">Unchecked</value>
     <value type="Qt::CheckState" key="1@/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/TestSelectionPivots.cpp:test9">Unchecked</value>
     <value type="Qt::CheckState" key="1@/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/TestSelectionPivots.h:TestSelectionPivots">Unchecked</value>
-    <value type="Qt::CheckState" key="1@:Qt Test">Unchecked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>

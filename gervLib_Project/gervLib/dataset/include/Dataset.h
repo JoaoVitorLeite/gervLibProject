@@ -62,6 +62,8 @@ class Dataset{
         const BasicArrayObject<DType> &getFeatureVector(const size_t pos) const;
         size_t getSerializedSize();
         std::vector<BasicArrayObject<DType>> getElements();
+        BasicArrayObject<DType>* getInstances();
+        BasicArrayObject<DType>** getInstancesArray();
         size_t getDimensionality() const;
         size_t getCardinality() const;
         size_t getSeed() const;
@@ -678,7 +680,32 @@ std::vector<BasicArrayObject<DType>> Dataset<DType>::getElements()
 
 }
 
+template <class DType>
+BasicArrayObject<DType>* Dataset<DType>::getInstances()
+{
 
+    BasicArrayObject<DType>* ans = new BasicArrayObject<DType>[getCardinality()];
+    std::copy(data.begin(), data.end(), ans);
+    return ans;
+
+}
+
+template <class DType>
+BasicArrayObject<DType>** Dataset<DType>::getInstancesArray()
+{
+
+    BasicArrayObject<DType>** ans = new BasicArrayObject<DType>*[getCardinality()];
+
+    for(size_t i = 0; i < getCardinality(); i++)
+    {
+
+        ans[i] = getInstance(i)->clone();
+
+    }
+
+    return ans;
+
+}
 
 template <class DType>
 size_t Dataset<DType>::getDimensionality() const
