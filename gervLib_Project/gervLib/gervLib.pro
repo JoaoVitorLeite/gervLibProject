@@ -28,6 +28,7 @@ INCLUDEPATH += \
             kdtree/ \
             mvptree/ \
 
+
 HEADERS += \
         VpTree/Node/Bucket/Bucket.h \
         VpTree/Node/Bucket/Pair.h \
@@ -40,9 +41,9 @@ HEADERS += \
         kdtree/KdTree.h \
         kdtree/LeafNodeKdTree.h \
         kdtree/NodeKdTree.h \
-        mvptree/datapoint.h \
-        mvptree/mvpnode.h \
-        mvptree/mvptree.h \
+    mvptree/datapoint.h \
+    mvptree/mvpnode.h \
+    mvptree/mvptree.h \
         omni/OmniKdTree.h \
         pivots/include/Cluster.h \
         pivots/include/ConvexPivots.h \
@@ -64,20 +65,6 @@ HEADERS += \
         pivots/include/SelectionPivots.h \
         pivots/include/WDRPivots.h \
         pm_tree/PM_Tree.h \
-    spb_tree/RAF.h \
-    spb_tree/SortEntry.h \
-    spb_tree/blockfile/blk_file.h \
-    spb_tree/blockfile/cache.h \
-    spb_tree/blockfile/f_def.h \
-    spb_tree/btree/b-def.h \
-    spb_tree/btree/b-entry.h \
-    spb_tree/btree/b-node.h \
-    spb_tree/btree/b-tree.h \
-    spb_tree/gadget/gadget.h \
-    spb_tree/heap/binheap.h \
-    spb_tree/heap/heap.h \
-    spb_tree/pb-tree.h \
-    spb_tree/spb_config.h \
         utils/include/Util.h \
 
 
@@ -85,17 +72,6 @@ HEADERS += \
 
 SOURCES += \
         main.cpp \
-    spb_tree/RAF.cpp \
-    spb_tree/blockfile/blk_file.cpp \
-    spb_tree/blockfile/cache.cpp \
-    spb_tree/blockfile/f_def.cpp \
-    spb_tree/btree/b-entry.cpp \
-    spb_tree/btree/b-node.cpp \
-    spb_tree/btree/b-tree.cpp \
-    spb_tree/gadget/gadget.cpp \
-    spb_tree/heap/binheap.cpp \
-    spb_tree/heap/heap.cpp \
-    spb_tree/pb_tree.cpp \
         utils/include/Util.cpp \
 #        query.cpp
 
