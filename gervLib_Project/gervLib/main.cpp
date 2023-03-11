@@ -27,11 +27,50 @@ typedef MVPTree<BasicArrayObject<vector<char>>, EditDistance<BasicArrayObject<ve
 typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_MAXSEPARETED;
 typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_KMEDOIDS;
 
+
+
+
 int main(int argc, char *argv[])
 {
 
-//    Dataset<double>* train = new Dataset<double>();
-//    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+    Dataset<double>* train = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+    //pvt->generatePivots(train, df, 2);
+
+//    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
+//            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df, train);
+
+//    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, 5);
+    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, 5, 2);
+
+    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+    query.set(0, 6.0);
+    query.set(1, 3.0);
+
+    std::vector<KnnEntry<double>> ans;
+    index.kNN(query, 3, ans);
+
+//    std::vector<PairResult> ans;
+//    index.kNN(train, &query, 3, ans);
+
+//    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+//    index.knn(query, 3, ans);
+
+    for(auto i : ans)
+        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
+
+    cout << endl << index.getLeafNodeAccess() << endl;
+
+
+//-------------------------------------------------------------------------------------------------------
+
+//    std::string s = std::bitset< 10 >( 2 ).to_string();
+//    cout << s << endl;
+
+
 //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
 //    WDRPivots<double> pvt1 = WDRPivots<double>();
 //    pvt1.setSeed(94819);
@@ -43,19 +82,19 @@ int main(int argc, char *argv[])
 //    for(size_t i = 0; i < 6; i++)
 //        cout << pvt1.getPivot(i)->getOID() << "\n";
 
-    Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
-    Dataset<double>* test = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
-    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
-    pvt->generatePivots(train, df, 3);
+//    Dataset<double>* train = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+//    Dataset<double>* test = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
+//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+//    pvt->generatePivots(train, df, 3);
 
-    for(size_t x = 0; x < 3; x++)
-        cout << pvt->getPivot(x)->toString() << endl;
+//    for(size_t x = 0; x < 3; x++)
+//        cout << pvt->getPivot(x)->toString() << endl;
 
-    pvt->setPath("../results/maxvar.pvt");
-    pvt->writePivotsToFile();
+//    pvt->setPath("../results/maxvar.pvt");
+//    pvt->writePivotsToFile();
 
 
 ////    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
@@ -90,7 +129,7 @@ int main(int argc, char *argv[])
 //    Dataset<double>* ans3 = new Dataset<double>();
 
 ////    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, numPerLeaf);
-//    //VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, numPerLeaf, pvt, train, df);
+////    //VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, numPerLeaf, pvt, train, df);
 //    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, numPerLeaf, 2);
 
 //    std::vector<std::pair<double, size_t>> ansVec;

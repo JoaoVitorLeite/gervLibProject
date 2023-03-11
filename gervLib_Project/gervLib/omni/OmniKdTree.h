@@ -285,10 +285,13 @@ class OmniKdTree
         {
 
             tree = new KdTree<DType>(dataset_, df_, pivot_, numPerLeaf);
+            //std::cout << tree->toString() << std::endl;
             diskAccess = 0;
             pivot = pivot_;
             df = df_;
             laesaMatrix = tree->getLaesaMatrix();
+            //std::cout << "\n\n";
+            //laesaMatrix->printDataset();
             setPath();
             saveToFile();
             saveAllLeafNodes();
@@ -534,6 +537,7 @@ class OmniKdTree
             std::priority_queue<PairResult, std::vector<PairResult>, ComparePairResult> pqCandidates;
             std::priority_queue<PairResult, std::vector<PairResult>, ComparePairResult2> pqAns;
             BasicArrayObject<double> sq_ = pivotCoordinates(query);
+            //std::cout << sq_.toString() << "\n";
             pqPartition.push(Partition(tree->getRoot(), 0.0, 0.0));
             NodeKdTree* node = nullptr;
             Partition partition;

@@ -41,9 +41,10 @@ HEADERS += \
         kdtree/KdTree.h \
         kdtree/LeafNodeKdTree.h \
         kdtree/NodeKdTree.h \
-    mvptree/datapoint.h \
-    mvptree/mvpnode.h \
-    mvptree/mvptree.h \
+    #memory/MemoryManager.h \
+        mvptree/datapoint.h \
+        mvptree/mvpnode.h \
+        mvptree/mvptree.h \
         omni/OmniKdTree.h \
         pivots/include/Cluster.h \
         pivots/include/ConvexPivots.h \

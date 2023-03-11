@@ -1456,7 +1456,7 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
     update_pivot_distance(query_to_pivot, query);
     nodeQueue.push(PM_Partition<DType>(get_root(), minDistNode(get_root(), query, query_to_pivot), maxDistNode(get_root(), query, query_to_pivot)));
 
-    while(!nodeQueue.empty() || candidatesQueue.size() > 0)
+    while((!nodeQueue.empty() || candidatesQueue.size() > 0) && resultQueue.size() < k)
     {
 
         if(candidatesQueue.size() == 0)
