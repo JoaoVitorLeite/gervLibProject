@@ -11,6 +11,9 @@
 #include <chrono>
 #include <unistd.h>
 #include <typeinfo>
+#include <config_spb.h>
+#include <MemoryManagerUtils.h>
+#include <SPB_Tree.h>
 
 using namespace std;
 using namespace mvp;
@@ -27,42 +30,146 @@ typedef MVPTree<BasicArrayObject<vector<char>>, EditDistance<BasicArrayObject<ve
 typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_MAXSEPARETED;
 typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_KMEDOIDS;
 
+void checkRAFDisk()
+{
 
+    std::string path = baseFilePath;
+    std::vector<BasicArrayObject<double>*> ans;
+
+    for (const auto & entry : std::filesystem::directory_iterator(path))
+    {
+
+        if (entry.path().extension() == ".dat")
+        {
+
+            std::string p = entry.path().stem().string();
+            std::stringstream ss(p.substr(p.find("_") + 1));
+            size_t pageID;
+            ss >> pageID;
+            read_from_disk(ans, pageID);
+
+        }
+    }
+
+    for(auto b : ans)
+        cout << b->toStringWithOID() << endl;
+
+    cout << ans.size() << endl;
+
+    for(auto i : ans)
+        delete i;
+    ans.clear();
+
+}
 
 
 int main(int argc, char *argv[])
 {
 
-    Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
-    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
-    //pvt->generatePivots(train, df, 2);
+    Dataset<double>* data = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
+    Dataset<double>* test = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(test, "../datasets/cities_norm.csv", ",");
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    Pivot<double>* pvt = new RandomPivots<double>();
+    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 3, 200);
+    spb.dump_key_min_max();
 
-//    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
-//            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df, train);
+    size_t leafMean = 0, distCnt = 0;
+    size_t num_queries = test->getCardinality();
 
-//    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, 5);
-    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, 5, 2);
+    for(size_t j = 0; j < num_queries; j++)
+    {
 
-    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
-    query.set(0, 6.0);
-    query.set(1, 3.0);
+        BasicArrayObject<double> query = test->getFeatureVector(j);
+        size_t k = 100;
 
-    std::vector<KnnEntry<double>> ans;
-    index.kNN(query, 3, ans);
+        std::vector<KnnSPB<double>> ans;
+        spb.knn(query, k, ans);
 
-//    std::vector<PairResult> ans;
-//    index.kNN(train, &query, 3, ans);
+        //        cout << ans.size() << endl;
+        //        cout << spb.getLeafNodeAccess() << endl;
+        //        cout << spb.getDistanceCount() << endl;
+        leafMean += spb.getLeafNodeAccess();
+        distCnt += spb.getDistanceCount();
 
-//    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+        //    for(auto i : ans)
+        //        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
 
-//    index.knn(query, 3, ans);
+        vector<pair<size_t, double>> dist;
 
-    for(auto i : ans)
-        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
+        for(size_t i = 0; i < test->getCardinality(); i++)
+        {
 
-    cout << endl << index.getLeafNodeAccess() << endl;
+            dist.push_back(std::make_pair(i, df->getDistance(query, test->getFeatureVector(i))));
+
+        }
+
+        std::sort(dist.begin(), dist.end(), [](const std::pair<size_t, double>& lhs, const std::pair<size_t, double>& rhs){
+            return lhs.second < rhs.second;
+        });
+
+        //    cout << "\n\n";
+
+        //    for(size_t i = 0; i < k; i++)
+        //        cout << dist[i].first << " / " << dist[i].second << endl;
+
+        for(size_t z = 0; z < k; z++)
+        {
+
+            if(ans[z].distance != dist[z].second)
+                cout << "ERRO EM: " << j << endl;
+
+        }
+
+    }
+
+    cout << "LEAF MEAN : " << (leafMean*1.0)/num_queries << endl;
+    cout << "DIST MEAN : " << (distCnt*1.0)/num_queries << endl;
+    cout << "LEAF 2 : " << IOread/num_queries << endl;
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+//    Dataset<double>* data = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(data, "../SPB/datasets/Datatset1.csv", " ");
+//    Dataset<double>* test = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(test, "../SPB/datasets/Dataset1.csv", " ");
+//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    SPBTree<double> spb = SPBTree<double>(data, df, 2, 200);
+//    spb.dump_key_min_max();
+
+//-------------------------------------------------------------------------------------------------------
+
+//    Dataset<double>* train = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+//    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+//    //pvt->generatePivots(train, df, 2);
+
+////    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
+////            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df, train);
+
+////    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, 5);
+//    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, 5, 2);
+
+//    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+//    query.set(0, 6.0);
+//    query.set(1, 3.0);
+
+//    std::vector<KnnEntry<double>> ans;
+//    index.kNN(query, 3, ans);
+
+////    std::vector<PairResult> ans;
+////    index.kNN(train, &query, 3, ans);
+
+////    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+////    index.knn(query, 3, ans);
+
+//    for(auto i : ans)
+//        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
+
+//    cout << endl << index.getLeafNodeAccess() << endl;
 
 
 //-------------------------------------------------------------------------------------------------------

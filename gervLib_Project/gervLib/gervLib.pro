@@ -27,7 +27,10 @@ INCLUDEPATH += \
             omni/ \
             kdtree/ \
             mvptree/ \
-
+            hilbert/ \
+            btree/ \
+            memory/ \
+            spb_tree/ \
 
 HEADERS += \
         VpTree/Node/Bucket/Bucket.h \
@@ -37,11 +40,22 @@ HEADERS += \
         VpTree/Node/Node.h \
         VpTree/QueueItem.h \
         VpTree/VpTree.h \
+    btree/btree.h \
+    btree/btree_multimap.h \
+    config_spb.h \
+    hilbert/EquiDepth.h \
+    hilbert/Hilbert.h \
         kdtree/DirectoryNodeKdTree.h \
         kdtree/KdTree.h \
         kdtree/LeafNodeKdTree.h \
         kdtree/NodeKdTree.h \
     #memory/MemoryManager.h \
+    memory/MemoryManagerUtils.h \
+    memory/cache.h \
+    memory/cache_policy.h \
+    memory/fifo_cache_policy.h \
+    memory/lfu_cache_policy.h \
+    memory/lru_cache_policy.h \
         mvptree/datapoint.h \
         mvptree/mvpnode.h \
         mvptree/mvptree.h \
@@ -66,12 +80,14 @@ HEADERS += \
         pivots/include/SelectionPivots.h \
         pivots/include/WDRPivots.h \
         pm_tree/PM_Tree.h \
+    spb_tree/SPB_Tree.h \
         utils/include/Util.h \
 
 
 
 
 SOURCES += \
+    hilbert/hilbert2.cpp \
         main.cpp \
         utils/include/Util.cpp \
 #        query.cpp
