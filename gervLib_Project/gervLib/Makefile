@@ -950,8 +950,8 @@ bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/qtestcase.h
 		VpTree/Node/Bucket/Pair.h \
 		VpTree/Node/DirectorNode.h \
 		pm_tree/PM_Tree.h \
-		config_spb.h \
 		memory/MemoryManagerUtils.h \
+		config_spb.h \
 		spb_tree/SPB_Tree.h \
 		hilbert/Hilbert.h \
 		btree/btree_multimap.h \

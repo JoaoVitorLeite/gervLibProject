@@ -9,6 +9,7 @@
 #include <Pivots.h>
 #include <algorithm>
 #include <KdTree.h>
+#include <MemoryManagerUtils.h>
 
 //enum PromoteFunc_E { RANDOM_e,m_RAD_2 };
 
@@ -29,6 +30,8 @@ struct PM_Node
     std::vector<PM_Node<DType>*> ptr_sub_tree;
     std::vector<std::pair<double, double>> hyper_rings;
 
+    size_t pageID;
+
     PM_Node()
     {
 
@@ -43,7 +46,7 @@ struct PM_Node
         node_category = node_category_;
         dist_to_parent = dist_to_parent_;
         id = id_;
-
+        pageID = std::numeric_limits<size_t>::max();
 
     }
 
@@ -199,6 +202,9 @@ class PM_Tree
         double cal_hypersphere_volume(double radius_, size_t dim_);
         double minDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element, std::vector<double> dist_to_query);
         double maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<DType>& element, std::vector<double> dist_to_query);
+        void initDisk();
+        void saveLeafNode(PM_Node<DType>* cur_node_);
+        Dataset<DType>* readLeafNode(PM_Node<DType>* cur_node_);
 //        double minLimInf(PM_Node<DType>* cur_node_);
 //        double maxLimSup(PM_Node<DType>* cur_node_);
 
@@ -1028,6 +1034,79 @@ double PM_Tree<DType>::maxDistNode(PM_Node<DType>* cur_node_, BasicArrayObject<D
 
 }
 
+template <class DType>
+void PM_Tree<DType>::initDisk()
+{
+
+    baseFilePath = "../pm_tree/pm_files";
+    setBaseFilePath("PMfiles");
+
+    std::queue<PM_Node<DType>*> queue;
+    queue.push(get_root());
+    PM_Node<DType>* curr = nullptr;
+    size_t id = 0;
+
+    while(!queue.empty())
+    {
+
+        curr = queue.front();
+        queue.pop();
+
+        if(is_leaf_node(curr))
+        {
+
+            curr->pageID = id++;
+            saveLeafNode(curr);
+
+        }
+        else
+        {
+
+            for(size_t i = 0; i < curr->ptr_sub_tree.size(); i++)
+            {
+
+                queue.push(curr->ptr_sub_tree[i]);
+
+            }
+
+        }
+
+    }
+
+}
+
+template <class DType>
+void PM_Tree<DType>::saveLeafNode(PM_Node<DType>* cur_node_)
+{
+
+    std::vector<BasicArrayObject<DType>> data;
+
+    for(size_t i = 0; i < cur_node_->ptr_sub_tree.size(); i++)
+    {
+
+        data.push_back(cur_node_->ptr_sub_tree[i]->feature_val);
+        delete cur_node_->ptr_sub_tree[i];
+
+    }
+
+    cur_node_->ptr_sub_tree.clear();
+
+    Dataset<DType>* datasetLeaf = new Dataset<DType>(data, data.size(), data[0].size());
+    write_dataset_to_disk(datasetLeaf, cur_node_->pageID);
+    delete datasetLeaf;
+
+}
+
+template <class DType>
+Dataset<DType>* PM_Tree<DType>::readLeafNode(PM_Node<DType>* cur_node_)
+{
+
+    Dataset<DType>* datasetLeaf = new Dataset<DType>();
+    read_dataset_from_disk(datasetLeaf, cur_node_->pageID);
+    return datasetLeaf;
+
+}
+
 //template <class DType>
 //double PM_Tree<DType>::minLimInf(PM_Node<DType>* cur_node_)
 //{
@@ -1107,6 +1186,8 @@ PM_Tree<DType>::PM_Tree(Dataset<DType>* dataset, DistanceFunction<BasicArrayObje
         insert(dataset->getFeatureVector(x), x);
 
     }
+
+    initDisk();
 
 }
 
@@ -1456,6 +1537,8 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
     update_pivot_distance(query_to_pivot, query);
     nodeQueue.push(PM_Partition<DType>(get_root(), minDistNode(get_root(), query, query_to_pivot), maxDistNode(get_root(), query, query_to_pivot)));
 
+    Dataset<DType>* datasetLeaf;
+
     while((!nodeQueue.empty() || candidatesQueue.size() > 0) && resultQueue.size() < k)
     {
 
@@ -1471,12 +1554,24 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
 
                 leafNodeAccess++;
 
-                for(size_t i = 0; i < node->ptr_sub_tree.size(); i++)
+                datasetLeaf = readLeafNode(node);
+
+                for(size_t i = 0; i < datasetLeaf->getCardinality(); i++)
                 {
 
-                    candidatesQueue.push(KnnEntry<DType>(node->ptr_sub_tree[i]->feature_val, df->getDistance(query, node->ptr_sub_tree[i]->feature_val)));
+                    //std::cout << datasetLeaf->getFeatureVector(i).toStringWithOID() << std::endl;
+                    candidatesQueue.push(KnnEntry<DType>(datasetLeaf->getFeatureVector(i), df->getDistance(query, datasetLeaf->getFeatureVector(i))));
 
                 }
+
+                delete datasetLeaf;
+
+//                for(size_t i = 0; i < node->ptr_sub_tree.size(); i++)
+//                {
+
+//                    candidatesQueue.push(KnnEntry<DType>(node->ptr_sub_tree[i]->feature_val, df->getDistance(query, node->ptr_sub_tree[i]->feature_val)));
+
+//                }
 
             }
             else
@@ -1504,12 +1599,25 @@ void PM_Tree<DType>::kNN(BasicArrayObject<DType> query, size_t k, std::vector<Kn
 
                 leafNodeAccess++;
 
-                for(size_t i = 0; i < node->ptr_sub_tree.size(); i++)
+                datasetLeaf = readLeafNode(node);
+
+                for(size_t i = 0; i < datasetLeaf->getCardinality(); i++)
                 {
 
-                    candidatesQueue.push(KnnEntry<DType>(node->ptr_sub_tree[i]->feature_val, df->getDistance(query, node->ptr_sub_tree[i]->feature_val)));
+                    //std::cout << datasetLeaf->getFeatureVector(i).toStringWithOID() << std::endl;
+                    candidatesQueue.push(KnnEntry<DType>(datasetLeaf->getFeatureVector(i), df->getDistance(query, datasetLeaf->getFeatureVector(i))));
 
                 }
+
+                delete datasetLeaf;
+
+
+//                for(size_t i = 0; i < node->ptr_sub_tree.size(); i++)
+//                {
+
+//                    candidatesQueue.push(KnnEntry<DType>(node->ptr_sub_tree[i]->feature_val, df->getDistance(query, node->ptr_sub_tree[i]->feature_val)));
+
+//                }
 
             }
             else

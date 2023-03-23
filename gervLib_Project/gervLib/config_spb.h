@@ -8,16 +8,16 @@
 typedef unsigned long long ull;
 typedef long long ll;
 
-static double MAXDIST = 0.0;
-static double EPS = 0.0;
-static double MAXINT = 0.0;
+//static double MAXDIST = 0.0;
+//static double EPS = 0.0;
+//static double MAXINT = 0.0;
 static ull p = 0;
 static ull PIVOT_NUM = 0; //numero de pivos
 static ull GRID_L = ((1ull << p) - 1);
-static ull PREC = 1e5;
+//static ull PREC = 1e5;
 static const size_t PAGE_SIZE = 256;
 static const size_t BTREE_PAGE_SIZE = 4096;
-static const size_t MIN_BTREE_LEAF_NUM = 55+1;
+static const size_t MIN_BTREE_LEAF_NUM = 5;
 static const size_t MIN_INNER_SIZE = 2048;
 static long long IOwrite = 0;
 static long long IOread = 0;

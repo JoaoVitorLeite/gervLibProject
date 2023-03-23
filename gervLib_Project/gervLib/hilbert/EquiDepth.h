@@ -65,6 +65,7 @@ private:
     size_t pivot_num;
     bool toINF;
     vector<vector<Bins>> bins;
+    bool inMemory;
 
 public:
     EquiDepth()
@@ -74,6 +75,7 @@ public:
         pivot_num = -1;
         toINF = true;
         bins = vector<vector<Bins>>();
+        inMemory = true;
 
     }
 
@@ -84,6 +86,7 @@ public:
         pivot_num = pivot_num_;
         toINF = toINF_;
         bins = std::vector<std::vector<Bins>>(pivot_num, std::vector<Bins>(num_bins));
+        inMemory = true;
 
     }
 
@@ -97,6 +100,8 @@ public:
 
         }
         bins.clear();
+
+        inMemory = false;
 
     }
 
@@ -270,6 +275,19 @@ public:
     {
 
         return make_pair(bins[pivot][id].min, bins[pivot][id].max);
+
+    }
+
+    void load()
+    {
+
+        if(!inMemory)
+        {
+
+            readFromFile();
+            inMemory = true;
+
+        }
 
     }
 

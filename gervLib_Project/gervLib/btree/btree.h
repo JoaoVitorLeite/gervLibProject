@@ -1672,20 +1672,38 @@ public:
     void test()
     {
 
-        cout << "TAM = " << m_headleaf->slotuse << endl;
-        for(int i = 0; i < m_headleaf->slotuse; ++i)
+        inner_node *root = static_cast<inner_node*>(m_root);
+        cout << "ROOT = \n";
+        for(short i = 0; i < root->slotuse; i++)
         {
 
-            cout << m_headleaf->slotkey[i] << " ";
+            cout << root->slotkey[i] << endl;
 
         }
 
-        cout << "\n\n";
-        cout << "TAM = " << m_headleaf->nextleaf->slotuse << endl;
-        for(int i = 0; i < m_headleaf->nextleaf->slotuse; ++i)
+//        leaf_node *leaf = static_cast<leaf_node*>(root->childid[3]);
+
+//        cout << "LEAF = ";
+//        for(size_t i = 0; i < leaf->slotuse; i++)
+//        {
+
+//            cout << leaf->slotkey[i] << "/" << leaf->slotdata[i] << "  ";
+
+//        }
+
+        cout << endl;
+
+        for(leaf_node* it = m_headleaf; ; it = it->nextleaf)
         {
 
-            cout << m_headleaf->nextleaf->slotkey[i] << " ";
+            cout << "LEAF = ";
+            for(size_t i = 0; i < it->slotuse; ++i)
+            {
+
+                cout << it->slotkey[i] << "/" << it->slotdata[i] << "  ";
+
+            }
+            cout << endl;
 
         }
 

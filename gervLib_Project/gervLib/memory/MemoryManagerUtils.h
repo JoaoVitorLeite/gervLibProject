@@ -10,7 +10,7 @@
 
 using std::stringstream, std::string, std::ofstream, std::ifstream, std::vector;
 
-void setBaseFilePath()
+void setBaseFilePath(std::string auxName = "SPBfiles")
 {
 
     if(!std::filesystem::exists(baseFilePath))
@@ -22,7 +22,7 @@ void setBaseFilePath()
 
     vector<int> sub_folders;
     std::string auxPath, subName;
-    size_t num;
+    //size_t num;
 
     for(const auto & entry : std::filesystem::directory_iterator(baseFilePath))
     {
@@ -30,7 +30,7 @@ void setBaseFilePath()
         auxPath = entry.path().string();
 
         //std::cout << auxPath << "\n";
-        if(entry.is_directory() && (entry.path().string().find("SPBfiles") != std::string::npos))
+        if(entry.is_directory() && (entry.path().string().find(auxName) != std::string::npos))
         {
 
 //            std::cout << "SUB = " << auxPath.substr(auxPath.find_last_of(std::filesystem::path::preferred_separator) + 1) << "\n";
@@ -53,7 +53,7 @@ void setBaseFilePath()
     if(sub_folders.empty())
     {
 
-        ss << baseFilePath << std::filesystem::path::preferred_separator << "SPBfiles_0";
+        ss << baseFilePath << std::filesystem::path::preferred_separator << auxName << "_0";
 
     }
     else
@@ -65,7 +65,7 @@ void setBaseFilePath()
 //        ssAux >> num;
 //        num++;
 //        ss.str("");
-        ss << baseFilePath << std::filesystem::path::preferred_separator << "SPBfiles_" << (++sub_folders.back());
+        ss << baseFilePath << std::filesystem::path::preferred_separator << auxName << "_" << (++sub_folders.back());
 //        ss << "SPBfiles_" << num;
 
     }
@@ -127,6 +127,43 @@ void write_to_disk(Dataset<type>* dataset, vector<size_t> ids, size_t pageCost, 
 
     file.write((char*)data, pageCost + sizeof(size_t));
     file.close();
+    delete [] data;
+
+}
+
+template <class type>
+void write_dataset_to_disk(Dataset<type>* dataset, size_t pageID)
+{
+
+    IOwrite++;
+
+    ofstream file(genDiskFileName(pageID), std::ios::out | std::ios::binary);
+    unsigned char* data = new unsigned char[dataset->getSerializedSize() + sizeof(size_t)];
+    size_t sz = dataset->getSerializedSize();
+    memcpy(data, &sz, sizeof(size_t));
+    memcpy(data + sizeof(size_t), dataset->serialize(), sz);
+    file.write((char*)data, dataset->getSerializedSize() + sizeof(size_t));
+    file.close();
+    delete [] data;
+
+}
+
+template <class type>
+void read_dataset_from_disk(Dataset<type>* dataset, size_t pageID)
+{
+
+    IOread++;
+
+    ifstream file(genDiskFileName(pageID), std::ios::in | std::ios::binary);
+    size_t size;
+    unsigned char* sizeChar = new unsigned char[sizeof(size_t)];
+    file.read((char*)sizeChar, sizeof(size_t));
+    memcpy(&size, sizeChar, sizeof(size_t));
+    unsigned char* data = new unsigned char[size];
+    file.read((char*)data, size);
+    dataset->unserialize(data);
+    file.close();
+    delete [] sizeChar;
     delete [] data;
 
 }

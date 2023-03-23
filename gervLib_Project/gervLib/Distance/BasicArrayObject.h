@@ -338,7 +338,7 @@ class BasicArrayObject{
             } else {
                 if (pos > data.size()){
                     DType aux;
-                    for (int x = 0; x < (pos-data.size()); x++)
+                    for (size_t x = 0; x < (pos-data.size()); x++)
                         data.push_back(aux);
                     data[pos] = value;
                 } else {

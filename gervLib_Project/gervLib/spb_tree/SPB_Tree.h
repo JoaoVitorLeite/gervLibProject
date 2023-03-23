@@ -132,7 +132,7 @@ class SPBTree
 
 private:
     HilbertCurve hc;
-    EquiDepth<T> ed;
+    EquiDepth<double> ed;
     DistanceFunction<BasicArrayObject<T>>* df;
     Pivot<T>* pvt;
 //    vector<size_t> pivotsIds;
@@ -316,9 +316,9 @@ public:
         setBaseFilePath();
 //        pivotsIds = {(size_t)2, (size_t)12};
 //        pivots = {dataset->getFeatureVector(2), dataset->getFeatureVector(12)};
+        df = _df;
         pvt = pvt_;
         pvt->generatePivots(dataset, df, pivot_num);
-        df = _df;
         PIVOT_NUM = pivot_num;
         ed = EquiDepth<double>(num_bins, pivot_num);
         p = (ull)log2(num_bins-1) + 1;
@@ -552,7 +552,8 @@ public:
     void knn(BasicArrayObject<T> query, size_t k, std::vector<KnnSPB<T>>& ans)
     {
 
-        ed.readFromFile();
+        //ed.readFromFile();
+        ed.load();
         df->resetStatistics();
         leafNodeAccess = 0;
         ans.clear();
@@ -568,6 +569,8 @@ public:
         {
 
             sq_[i] = df->getDistance(query, *pvt->getPivot(i));
+//            cout << "SQ_ = " << sq_[i] << endl;
+//            cout << "BIN = " << ed.getBin(i, sq_[i]) << endl;
 
         }
 
@@ -578,7 +581,7 @@ public:
         std::vector<BasicArrayObject<T>*> dataLeaf;
         set<size_t> globalPagesID;
 
-        while((!nodeQueue.empty() || candidatesQueue.size() > 0))
+        while((!nodeQueue.empty() || candidatesQueue.size() > 0) && resultQueue.size() < k)
         {
 
             if(candidatesQueue.size() == 0)
@@ -625,7 +628,7 @@ public:
 
                     innernode = static_cast<btree_type::Inner*>(node);
 
-                    for(size_t i = 0; i < innernode->slotuse + 1; i++)
+                    for(size_t i = 0; i < (size_t)(innernode->slotuse + 1); i++)
                     {
 
                         nodeQueue.push(SPBPartition(innernode->childid[i], minDist(sq_, innernode->childid[i]->mbr), maxDist(sq_, innernode->childid[i]->mbr)));
@@ -679,7 +682,7 @@ public:
 
                     innernode = static_cast<btree_type::Inner*>(node);
 
-                    for(size_t i = 0; i < innernode->slotuse + 1; i++)
+                    for(size_t i = 0; i < (size_t)(innernode->slotuse + 1); i++)
                     {
 
                         nodeQueue.push(SPBPartition(innernode->childid[i], minDist(sq_, innernode->childid[i]->mbr), maxDist(sq_, innernode->childid[i]->mbr)));
@@ -736,6 +739,14 @@ public:
             nodeQueue.pop();
 
         }
+
+    }
+
+    void dumpEquiDepth()
+    {
+
+        ed.load();
+        ed.print();
 
     }
 

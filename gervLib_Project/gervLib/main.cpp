@@ -30,6 +30,8 @@ typedef MVPTree<BasicArrayObject<vector<char>>, EditDistance<BasicArrayObject<ve
 typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparetedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_MAXSEPARETED;
 typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_KMEDOIDS;
 
+typedef std::vector<char> str;
+
 void checkRAFDisk()
 {
 
@@ -62,81 +64,111 @@ void checkRAFDisk()
 
 }
 
-
 int main(int argc, char *argv[])
 {
 
     Dataset<double>* data = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(data, "../datasets/Dataset1.csv", " ");
     Dataset<double>* test = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(test, "../datasets/cities_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    Pivot<double>* pvt = new RandomPivots<double>();
-    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 3, 200);
-    spb.dump_key_min_max();
+    Pivot<double>* pvt = new MaxVariancePivots<double>();
+    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 2, 4);
+//    spb.dump_key_min_max();
+//    spb.test();
 
-    size_t leafMean = 0, distCnt = 0;
-    size_t num_queries = test->getCardinality();
+    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+    query.set(0, 6.0);
+    query.set(1, 3.0);
 
-    for(size_t j = 0; j < num_queries; j++)
-    {
+    std::vector<KnnSPB<double>> ans;
+    spb.knn(query, 3, ans);
 
-        BasicArrayObject<double> query = test->getFeatureVector(j);
-        size_t k = 100;
+    for(auto &e : ans)
+        cout << e.element.getOID() << " / " << e.distance << endl;
 
-        std::vector<KnnSPB<double>> ans;
-        spb.knn(query, k, ans);
-
-        //        cout << ans.size() << endl;
-        //        cout << spb.getLeafNodeAccess() << endl;
-        //        cout << spb.getDistanceCount() << endl;
-        leafMean += spb.getLeafNodeAccess();
-        distCnt += spb.getDistanceCount();
-
-        //    for(auto i : ans)
-        //        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
-
-        vector<pair<size_t, double>> dist;
-
-        for(size_t i = 0; i < test->getCardinality(); i++)
-        {
-
-            dist.push_back(std::make_pair(i, df->getDistance(query, test->getFeatureVector(i))));
-
-        }
-
-        std::sort(dist.begin(), dist.end(), [](const std::pair<size_t, double>& lhs, const std::pair<size_t, double>& rhs){
-            return lhs.second < rhs.second;
-        });
-
-        //    cout << "\n\n";
-
-        //    for(size_t i = 0; i < k; i++)
-        //        cout << dist[i].first << " / " << dist[i].second << endl;
-
-        for(size_t z = 0; z < k; z++)
-        {
-
-            if(ans[z].distance != dist[z].second)
-                cout << "ERRO EM: " << j << endl;
-
-        }
-
-    }
-
-    cout << "LEAF MEAN : " << (leafMean*1.0)/num_queries << endl;
-    cout << "DIST MEAN : " << (distCnt*1.0)/num_queries << endl;
-    cout << "LEAF 2 : " << IOread/num_queries << endl;
+    cout << ans.size() << endl;
+    cout << spb.getLeafNodeAccess() << endl;
+    cout << spb.getDistanceCount() << endl;
+    cout << IOread << endl;
+    cout << p << endl;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 
-//    Dataset<double>* data = new Dataset<double>();
-//    Dataset<double>::loadNumericDataset(data, "../SPB/datasets/Datatset1.csv", " ");
-//    Dataset<double>* test = new Dataset<double>();
-//    Dataset<double>::loadNumericDataset(test, "../SPB/datasets/Dataset1.csv", " ");
-//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-//    SPBTree<double> spb = SPBTree<double>(data, df, 2, 200);
+//    Dataset<str>* data = new Dataset<str>();
+//    Dataset<str>::loadTextDataset(data, "../datasets/names.csv", " ");
+//    Dataset<str>* test = new Dataset<str>();
+//    Dataset<str>::loadTextDataset(test, "../datasets/names.csv", " ");
+//    DistanceFunction<BasicArrayObject<str>>* df = new EditDistance<BasicArrayObject<str>>();
+//    Pivot<str>* pvt = new MaxVariancePivots<str>();
+//    SPBTree<str> spb = SPBTree<str>(data, df, pvt, 3, 3);
 //    spb.dump_key_min_max();
+
+//    Dataset<double>* data = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
+//    Dataset<double>* test = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(test, "../datasets/cities_norm.csv", ",");
+//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    Pivot<double>* pvt = new MaxVariancePivots<double>();
+//    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 3, 200);
+//    //spb.dump_key_min_max();
+
+//    size_t leafMean = 0, distCnt = 0;
+//    size_t num_queries = test->getCardinality();
+
+//    for(size_t j = 0; j < num_queries; j++)
+//    {
+
+//        BasicArrayObject<double> query = test->getFeatureVector(j);
+//        //BasicArrayObject<str> query = test->getFeatureVector(j);
+
+//        size_t k = 100;
+
+//        std::vector<KnnSPB<double>> ans;
+//        //std::vector<KnnSPB<str>> ans;
+
+//        spb.knn(query, k, ans);
+
+//        //        cout << ans.size() << endl;
+//        //        cout << spb.getLeafNodeAccess() << endl;
+//        //        cout << spb.getDistanceCount() << endl;
+//        leafMean += spb.getLeafNodeAccess();
+//        distCnt += spb.getDistanceCount();
+
+//        //    for(auto i : ans)
+//        //        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
+
+//        vector<pair<size_t, double>> dist;
+
+//        for(size_t i = 0; i < test->getCardinality(); i++)
+//        {
+
+//            dist.push_back(std::make_pair(i, df->getDistance(query, test->getFeatureVector(i))));
+
+//        }
+
+//        std::sort(dist.begin(), dist.end(), [](const std::pair<size_t, double>& lhs, const std::pair<size_t, double>& rhs){
+//            return lhs.second < rhs.second;
+//        });
+
+//        //    cout << "\n\n";
+
+//        //    for(size_t i = 0; i < k; i++)
+//        //        cout << dist[i].first << " / " << dist[i].second << endl;
+
+//        for(size_t z = 0; z < k; z++)
+//        {
+
+//            if(ans[z].distance != dist[z].second)
+//                cout << "ERRO EM: " << j << endl;
+
+//        }
+
+//    }
+
+//    cout << "LEAF MEAN : " << (leafMean*1.0)/num_queries << endl;
+//    cout << "DIST MEAN : " << (distCnt*1.0)/num_queries << endl;
+//    cout << "LEAF 2 : " << IOread/num_queries << endl;
 
 //-------------------------------------------------------------------------------------------------------
 
@@ -166,7 +198,7 @@ int main(int argc, char *argv[])
 
 ////    index.knn(query, 3, ans);
 
-//    for(auto i : ans)
+//    for(auto &i : ans)
 //        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
 
 //    cout << endl << index.getLeafNodeAccess() << endl;
