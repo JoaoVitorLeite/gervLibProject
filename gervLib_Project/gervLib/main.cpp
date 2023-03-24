@@ -72,26 +72,36 @@ int main(int argc, char *argv[])
     Dataset<double>* test = new Dataset<double>();
     Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    Pivot<double>* pvt = new MaxVariancePivots<double>();
-    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 2, 4);
-//    spb.dump_key_min_max();
-//    spb.test();
+    Pivot<double>* pvt = new BPPPivots<double>();
+    pvt->setSeed(4554);
+    pvt->generatePivots(data, df, 6);
 
-    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
-    query.set(0, 6.0);
-    query.set(1, 3.0);
+    for(size_t i = 0; i < 6; i++)
+    {
 
-    std::vector<KnnSPB<double>> ans;
-    spb.knn(query, 3, ans);
+        cout << pvt->get(i).toStringWithOID() << endl;
 
-    for(auto &e : ans)
-        cout << e.element.getOID() << " / " << e.distance << endl;
+    }
 
-    cout << ans.size() << endl;
-    cout << spb.getLeafNodeAccess() << endl;
-    cout << spb.getDistanceCount() << endl;
-    cout << IOread << endl;
-    cout << p << endl;
+    //    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 2, 4);
+////    spb.dump_key_min_max();
+////    spb.test();
+
+//    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+//    query.set(0, 6.0);
+//    query.set(1, 3.0);
+
+//    std::vector<KnnSPB<double>> ans;
+//    spb.knn(query, 3, ans);
+
+//    for(auto &e : ans)
+//        cout << e.element.getOID() << " / " << e.distance << endl;
+
+//    cout << ans.size() << endl;
+//    cout << spb.getLeafNodeAccess() << endl;
+//    cout << spb.getDistanceCount() << endl;
+//    cout << IOread << endl;
+//    cout << p << endl;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 
