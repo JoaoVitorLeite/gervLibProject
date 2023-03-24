@@ -7,7 +7,7 @@
 #include <ConvexPivots.h>
 #include <KmedoidsPivots.h>
 #include <MaxVariancePivots.h>
-#include <MaxSeparetedPivots.h>
+#include <MaxSeparatedPivots.h>
 #include <SelectionPivots.h>
 #include <SSSPivots.h>
 #include <PCAPivots.h>
@@ -15,5 +15,6 @@
 #include <HFIPivots.h>
 #include <ISPivots.h>
 #include <WDRPivots.h>
+#include <BPPPivots.h>
 
 #endif // PIVOTS_H

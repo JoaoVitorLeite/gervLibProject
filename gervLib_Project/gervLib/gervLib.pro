@@ -60,6 +60,7 @@ HEADERS += \
         mvptree/mvpnode.h \
         mvptree/mvptree.h \
         omni/OmniKdTree.h \
+    pivots/include/BPPPivots.h \
         pivots/include/Cluster.h \
         pivots/include/ConvexPivots.h \
         pivots/include/FFTPivots.h \
@@ -70,7 +71,7 @@ HEADERS += \
         pivots/include/ISPivots.h \
         pivots/include/Kmedoids.h \
         pivots/include/KmedoidsPivots.h \
-        pivots/include/MaxSeparetedPivots.h \
+        pivots/include/MaxSeparatedPivots.h \
         pivots/include/MaxVariancePivots.h \
         pivots/include/PCAPivots.h \
         pivots/include/Pivot.h \

@@ -23,7 +23,7 @@ void TestMaxSeparetedPivots::test1()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset1.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(1627);
     pvt->generatePivots(sample, df,2);
 
@@ -51,7 +51,7 @@ void TestMaxSeparetedPivots::test2()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset1.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(3508);
     pvt->generatePivots(sample, df,5);
 
@@ -82,7 +82,7 @@ void TestMaxSeparetedPivots::test3()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset1.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(41);
     pvt->generatePivots(sample, df,7);
 
@@ -115,7 +115,7 @@ void TestMaxSeparetedPivots::test4()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset2.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(1024);
     pvt->generatePivots(sample, df,2);
 
@@ -143,7 +143,7 @@ void TestMaxSeparetedPivots::test5()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset2.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(597);
     pvt->generatePivots(sample, df,5);
 
@@ -174,7 +174,7 @@ void TestMaxSeparetedPivots::test6()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset2.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(66);
     pvt->generatePivots(sample, df,7);
 
@@ -207,7 +207,7 @@ void TestMaxSeparetedPivots::test7()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset3.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(1211);
     pvt->generatePivots(sample, df,2);
 
@@ -235,7 +235,7 @@ void TestMaxSeparetedPivots::test8()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset3.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(2480);
     pvt->generatePivots(sample, df,5);
 
@@ -266,7 +266,7 @@ void TestMaxSeparetedPivots::test9()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset3.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(12615);
     pvt->generatePivots(sample, df,7);
 
@@ -299,12 +299,12 @@ void TestMaxSeparetedPivots::test10()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset1.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(1627);
     pvt->generatePivots(sample,df,2);
     pvt->saveToFile("../../gervLib/datasets/pivot_unit_test_max_separeted_1.dat");
 
-    MaxSeparetedPivots<double>* test = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* test = new MaxSeparatedPivots<double>();
     test->loadFromFile("../../gervLib/datasets/pivot_unit_test_max_separeted_1.dat");
 
     QCOMPARE(pvt->isEqual(test), true);
@@ -321,12 +321,12 @@ void TestMaxSeparetedPivots::test11()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset2.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(597);
     pvt->generatePivots(sample,df,5);
     pvt->saveToFile("../../gervLib/datasets/pivot_unit_test_max_separeted_2.dat");
 
-    MaxSeparetedPivots<double>* test = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* test = new MaxSeparatedPivots<double>();
     test->loadFromFile("../../gervLib/datasets/pivot_unit_test_max_separeted_2.dat");
 
     QCOMPARE(pvt->isEqual(test), true);
@@ -343,12 +343,12 @@ void TestMaxSeparetedPivots::test12()
     Dataset<double>* sample = new Dataset<double>();
     Dataset<double>::loadNumericDataset(sample, "../../gervLib/datasets/open2/Dataset3.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxSeparetedPivots<double>* pvt = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* pvt = new MaxSeparatedPivots<double>();
     pvt->setSeed(12615);
     pvt->generatePivots(sample,df,7);
     pvt->saveToFile("../../gervLib/datasets/pivot_unit_test_max_separeted_3.dat");
 
-    MaxSeparetedPivots<double>* test = new MaxSeparetedPivots<double>();
+    MaxSeparatedPivots<double>* test = new MaxSeparatedPivots<double>();
     test->loadFromFile("../../gervLib/datasets/pivot_unit_test_max_separeted_3.dat");
 
     QCOMPARE(pvt->isEqual(test), true);

@@ -1249,7 +1249,7 @@
 //    laesaMatrix = new Dataset();
 //    laesaMatrix->unserialize((char*)dataset_char);
 
-//    std::string names[] = {"RANDOM", "GNAT", "CONVEX", "KMEDOIDS", "MAXSEPARETED", "MAXVARIANCE", "SELECTION", "PCA", "SSS"};
+//    std::string names[] = {"RANDOM", "GNAT", "CONVEX", "KMEDOIDS", "MAXSEPARATED", "MAXVARIANCE", "SELECTION", "PCA", "SSS"};
 
 //    if(names[pvt_type] == "RANDOM")
 //        pivot = new RandomPivots();
@@ -1259,8 +1259,8 @@
 //        pivot = new ConvexPivots();
 //    else if(names[pvt_type] == "KMEDOIDS")
 //        pivot = new KmedoidsPivots();
-//    else if(names[pvt_type] == "MAXSEPARETED")
-//        pivot = new MaxSeparetedPivots();
+//    else if(names[pvt_type] == "MAXSEPARATED")
+//        pivot = new MaxSeparatedPivots();
 //    else if(names[pvt_type] == "MAXVARIANCE")
 //        pivot = new MaxVariancePivots();
 //    else if(names[pvt_type] == "SELECTION")
@@ -2319,7 +2319,7 @@ class KdTree
             laesaMatrix = new Dataset<double>();
             laesaMatrix->unserialize(dataset_char);
 
-            std::string names[] = {"RANDOM", "GNAT", "CONVEX", "KMEDOIDS", "MAXSEPARETED", "MAXVARIANCE", "SELECTION", "PCA", "SSS", "FFT", "IS", "HFI", "WDR"};
+            std::string names[] = {"RANDOM", "GNAT", "CONVEX", "KMEDOIDS", "MAXSEPARATED", "MAXVARIANCE", "SELECTION", "PCA", "SSS", "FFT", "IS", "HFI", "WDR", "BPP"};
 
             if(names[pvtType] == "RANDOM")
                 pvt = new RandomPivots<DType>();
@@ -2329,8 +2329,8 @@ class KdTree
                 pvt = new ConvexPivots<DType>();
             else if(names[pvtType] == "KMEDOIDS")
                 pvt = new KmedoidsPivots<DType>();
-            else if(names[pvtType] == "MAXSEPARETED")
-                pvt = new MaxSeparetedPivots<DType>();
+            else if(names[pvtType] == "MAXSEPARATED")
+                pvt = new MaxSeparatedPivots<DType>();
             else if(names[pvtType] == "MAXVARIANCE")
                 pvt = new MaxVariancePivots<DType>();
             else if(names[pvtType] == "SELECTION")
@@ -2347,6 +2347,8 @@ class KdTree
                 pvt = new HFIPivots<DType>();
             else if(names[pvtType] == "WDR")
                 pvt = new WDRPivots<DType>();
+            else if(names[pvtType] == "BPP")
+                pvt = new BPPPivots<DType>();
             else
                 throw std::invalid_argument("Can't read pivot type !_!");
 

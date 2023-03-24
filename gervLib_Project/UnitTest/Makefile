@@ -1674,7 +1674,7 @@ bin/moc_TestKmedoidsPivots.cpp: TestKmedoidsPivots.h \
 	/home/joaovictor/Qt/6.0.1/gcc_64/bin/moc $(DEFINES) --include /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaovictor/Qt/6.0.1/gcc_64/mkspecs/linux-g++ -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaovictor/Qt/6.0.1/gcc_64/include -I/home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest -I/home/joaovictor/Qt/6.0.1/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestKmedoidsPivots.h -o bin/moc_TestKmedoidsPivots.cpp
 
 bin/moc_TestMaxSeparetedPivots.cpp: TestMaxSeparetedPivots.h \
-		../gervLib/pivots/include/MaxSeparetedPivots.h \
+		../gervLib/pivots/include/MaxSeparatedPivots.h \
 		../gervLib/pivots/include/Pivot.h \
 		../gervLib/dataset/include/Dataset.h \
 		../gervLib/Distance/BasicArrayObject.h \
@@ -4571,7 +4571,7 @@ bin/TestKmedoidsPivots.o: TestKmedoidsPivots.cpp TestKmedoidsPivots.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/TestKmedoidsPivots.o TestKmedoidsPivots.cpp
 
 bin/TestMaxSeparetedPivots.o: TestMaxSeparetedPivots.cpp TestMaxSeparetedPivots.h \
-		../gervLib/pivots/include/MaxSeparetedPivots.h \
+		../gervLib/pivots/include/MaxSeparatedPivots.h \
 		../gervLib/pivots/include/Pivot.h \
 		../gervLib/dataset/include/Dataset.h \
 		../gervLib/Distance/BasicArrayObject.h \
@@ -6703,7 +6703,7 @@ bin/main.o: main.cpp /home/joaovictor/Qt/6.0.1/gcc_64/include/QtTest/QTest \
 		TestConvexPivots.h \
 		../gervLib/pivots/include/ConvexPivots.h \
 		TestMaxSeparetedPivots.h \
-		../gervLib/pivots/include/MaxSeparetedPivots.h \
+		../gervLib/pivots/include/MaxSeparatedPivots.h \
 		TestMaxVariancePivots.h \
 		../gervLib/pivots/include/MaxVariancePivots.h \
 		TestSelectionPivots.h \

@@ -1,7 +1,7 @@
 #ifndef TESTMAXSEPARETEDPIVOTS_H
 #define TESTMAXSEPARETEDPIVOTS_H
 
-#include <MaxSeparetedPivots.h>
+#include <MaxSeparatedPivots.h>
 #include <QTest>
 
 class TestMaxSeparetedPivots : public QObject
