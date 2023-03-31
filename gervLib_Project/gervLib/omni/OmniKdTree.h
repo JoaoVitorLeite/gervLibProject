@@ -298,6 +298,27 @@ class OmniKdTree
 
         }
 
+        OmniKdTree(Dataset<DType>* dataset_, DistanceFunction<BasicArrayObject<DType>>* df_, Pivot<DType>* pivot_, size_t numPerLeaf, size_t pivot_num)
+        {
+
+            pivot = pivot_;
+            df = df_;
+            pivot->generatePivots(dataset_, df, pivot_num);
+
+            tree = new KdTree<DType>(dataset_, df_, pivot_, numPerLeaf);
+            //std::cout << tree->toString() << std::endl;
+            diskAccess = 0;
+//            pivot = pivot_;
+//            df = df_;
+            laesaMatrix = tree->getLaesaMatrix();
+            //std::cout << "\n\n";
+            //laesaMatrix->printDataset();
+            setPath();
+            saveToFile();
+            saveAllLeafNodes();
+
+        }
+
         OmniKdTree(std::string serializedPath, DistanceFunction<BasicArrayObject<DType>>* df_)
         {
 

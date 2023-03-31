@@ -31,6 +31,7 @@ INCLUDEPATH += \
             btree/ \
             memory/ \
             spb_tree/ \
+            experiments/ \
 
 HEADERS += \
         VpTree/Node/Bucket/Bucket.h \
@@ -43,6 +44,14 @@ HEADERS += \
     btree/btree.h \
     btree/btree_multimap.h \
     config_spb.h \
+    experiments/Experiments.h \
+    experiments/IndexExperiments.h \
+    experiments/MVPExperiments.h \
+    experiments/OmniExperiments.h \
+    experiments/PMExperiments.h \
+    experiments/PivotExperiments.h \
+    experiments/SPBExperiments.h \
+    experiments/VPExperiments.h \
     hilbert/EquiDepth.h \
     hilbert/Hilbert.h \
         kdtree/DirectoryNodeKdTree.h \

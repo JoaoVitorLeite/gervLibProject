@@ -209,6 +209,36 @@ void read_from_disk(vector<BasicArrayObject<type>*>& read, size_t pageID)
 
 }
 
+void checkRAFDisk()
+{
 
+    std::string path = baseFilePath;
+    std::vector<BasicArrayObject<double>*> ans;
+
+    for (const auto & entry : std::filesystem::directory_iterator(path))
+    {
+
+        if (entry.path().extension() == ".dat")
+        {
+
+            std::string p = entry.path().stem().string();
+            std::stringstream ss(p.substr(p.find("_") + 1));
+            size_t pageID;
+            ss >> pageID;
+            read_from_disk(ans, pageID);
+
+        }
+    }
+
+    for(auto b : ans)
+        std::cout << b->toStringWithOID() << std::endl;
+
+    std::cout << ans.size() << std::endl;
+
+    for(auto i : ans)
+        delete i;
+    ans.clear();
+
+}
 
 #endif // MEMORYMANAGERUTILS_H

@@ -14,6 +14,7 @@
 #include <config_spb.h>
 #include <MemoryManagerUtils.h>
 #include <SPB_Tree.h>
+#include <PivotExperiments.h>
 
 using namespace std;
 using namespace mvp;
@@ -32,56 +33,48 @@ typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<dou
 
 typedef std::vector<char> str;
 
-void checkRAFDisk()
-{
-
-    std::string path = baseFilePath;
-    std::vector<BasicArrayObject<double>*> ans;
-
-    for (const auto & entry : std::filesystem::directory_iterator(path))
-    {
-
-        if (entry.path().extension() == ".dat")
-        {
-
-            std::string p = entry.path().stem().string();
-            std::stringstream ss(p.substr(p.find("_") + 1));
-            size_t pageID;
-            ss >> pageID;
-            read_from_disk(ans, pageID);
-
-        }
-    }
-
-    for(auto b : ans)
-        cout << b->toStringWithOID() << endl;
-
-    cout << ans.size() << endl;
-
-    for(auto i : ans)
-        delete i;
-    ans.clear();
-
-}
 
 int main(int argc, char *argv[])
 {
 
     Dataset<double>* data = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(data, "../datasets/Dataset1.csv", " ");
-    Dataset<double>* test = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
+    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    Pivot<double>* pvt = new BPPPivots<double>();
-    pvt->setSeed(4554);
-    pvt->generatePivots(data, df, 6);
+    Pivot<double>* pvt = new ConvexPivots<double>();
 
-    for(size_t i = 0; i < 6; i++)
-    {
+    PivotExperiments<double> expt = PivotExperiments<double>();
+    expt.setDistanceFunctionName("EUCLIDEAN");
+    expt.setTrainDataset(data);
+    expt.setOutputPath("../results/");
+    expt.setDistanceFunction(df);
+    expt.setPivotMethod(pvt);
+    expt.setSeed(157);
+    expt.setSampleSize(0.5);
+    expt.modifySeed();
+    expt.modifySampleSize();
+    expt.setPivotNum({3,5,7});
+    expt.setSavePivot(false);
+    expt.runExperiment();
+    expt.setSavePivot(true);
+    expt.runExperimentWithRepetitions(3);
 
-        cout << pvt->get(i).toStringWithOID() << endl;
+//-----------------------------------------------------------------------------------------------------------------------------------------
 
-    }
+//    Dataset<double>* data = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(data, "../datasets/Dataset1.csv", " ");
+//    Dataset<double>* test = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
+//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    Pivot<double>* pvt = new BPPPivots<double>();
+//    pvt->setSeed(4554);
+//    pvt->generatePivots(data, df, 6);
+
+//    for(size_t i = 0; i < 6; i++)
+//    {
+
+//        cout << pvt->get(i).toStringWithOID() << endl;
+
+//    }
 
     //    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 2, 4);
 ////    spb.dump_key_min_max();

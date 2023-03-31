@@ -556,6 +556,7 @@ public:
         ed.load();
         df->resetStatistics();
         leafNodeAccess = 0;
+        IOread = 0;
         ans.clear();
 
         std::priority_queue<SPBPartition, std::vector<SPBPartition>, ComparePartitionSPB> nodeQueue;
