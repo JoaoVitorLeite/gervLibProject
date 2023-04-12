@@ -44,7 +44,7 @@ template <class DType>
 SSSPivots<DType>::SSSPivots()
 {
 
-    setAlpha(0.35);
+    setAlpha(0.0015);
     this->setPivotType(PIVOT_TYPE::SSS);
 
 }
