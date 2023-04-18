@@ -10,6 +10,8 @@
 
 //using std::numeric_limits, std::vector, std::sort, std::cout, std::endl, std::ofstream, std::ifstream, std::pair, std::make_pair;
 
+namespace fs = std::experimental::filesystem;
+
 class Bins
 {
 public:

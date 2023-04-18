@@ -11,6 +11,8 @@
 #include <set>
 #include <Pivots.h>
 
+namespace fs = std::experimental::filesystem;
+
 //using std::less, std::ofstream, std::floor, std::pair, std::make_pair, std::sort, std::set, std::pair, std::numeric_limits;
 
 typedef stx::btree_multimap<ull, size_t, std::less<ull> > btree_type;
