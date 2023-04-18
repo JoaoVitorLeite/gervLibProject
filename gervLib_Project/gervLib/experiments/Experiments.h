@@ -7,7 +7,7 @@
 #include <fstream>
 #include <experimental/filesystem>
 
-using fs = std::experimental::filesystem;
+namespace fs = std::experimental::filesystem;
 
 template <class T>
 class Experiments
