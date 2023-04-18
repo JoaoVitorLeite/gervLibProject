@@ -5,7 +5,9 @@
 #include <Dataset.h>
 #include <Pivots.h>
 #include <fstream>
-#include <filesystem>
+#include <experimental/filesystem>
+
+using fs = std::experimental::filesystem;
 
 template <class T>
 class Experiments

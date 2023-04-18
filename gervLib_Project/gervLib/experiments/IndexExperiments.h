@@ -22,11 +22,11 @@ public:
     void runExperiment() override
     {
 
-        std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator)) +
-                std::filesystem::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()] + ".csv";
+        std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
+                fs::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()] + ".csv";
         std::ofstream file(filePath, std::fstream::app);
 
-        if(std::filesystem::file_size(filePath) == 0)
+        if(fs::file_size(filePath) == 0)
         {
 
             file << this->indexName()
@@ -77,12 +77,12 @@ public:
         for(size_t r = 0; r < rep; r++)
         {
 
-            std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator)) +
-                    std::filesystem::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()]
+            std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
+                    fs::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()]
                     + "_rep_" + std::to_string(r) + ".csv";
             std::ofstream file(filePath, std::fstream::app);
 
-            if(std::filesystem::file_size(filePath) == 0)
+            if(fs::file_size(filePath) == 0)
             {
 
                 file << this->indexName()

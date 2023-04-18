@@ -76,11 +76,11 @@ public:
     void runExperiment() override
     {
 
-        std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator)) +
-                std::filesystem::path::preferred_separator + this->names[this->pvt->getPivotType()] + ".csv";
+        std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
+                fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + ".csv";
         std::ofstream file(filePath, std::fstream::app);
 
-        if(std::filesystem::file_size(filePath) == 0)
+        if(fs::file_size(filePath) == 0)
         {
 
             file << this->dfName
@@ -117,10 +117,10 @@ public:
             if(savePivots)
             {
 
-                std::string filePath2 = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator))
-                        + std::filesystem::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_ID_" + std::to_string(p) + ".csv";
-                std::string filePath3 = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator))
-                        + std::filesystem::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_VALUE_" + std::to_string(p) + ".csv";
+                std::string filePath2 = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator))
+                        + fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_ID_" + std::to_string(p) + ".csv";
+                std::string filePath3 = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator))
+                        + fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_VALUE_" + std::to_string(p) + ".csv";
                 std::ofstream file2(filePath2, std::fstream::app);
                 std::ofstream file3(filePath3, std::fstream::app);
 
@@ -147,12 +147,12 @@ public:
         for(size_t r = 0; r < rep; r++)
         {
 
-            std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator)) +
-                    std::filesystem::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_rep_"
+            std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
+                    fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_rep_"
                     + std::to_string(r) + ".csv";
             std::ofstream file(filePath, std::fstream::app);
 
-            if(std::filesystem::file_size(filePath) == 0)
+            if(fs::file_size(filePath) == 0)
             {
 
                 file << this->dfName
@@ -188,10 +188,10 @@ public:
                 if(savePivots && repSavePivots)
                 {
 
-                    std::string filePath2 = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator))
-                            + std::filesystem::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_REP_ID_" + std::to_string(p) + ".csv";
-                    std::string filePath3 = this->outputPath.substr(0, this->outputPath.find_last_of(std::filesystem::path::preferred_separator))
-                            + std::filesystem::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_REP_VALUE_" + std::to_string(p) + ".csv";
+                    std::string filePath2 = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator))
+                            + fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_REP_ID_" + std::to_string(p) + ".csv";
+                    std::string filePath3 = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator))
+                            + fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + "_PIVOTS_REP_VALUE_" + std::to_string(p) + ".csv";
                     std::ofstream file2(filePath2, std::fstream::app);
                     std::ofstream file3(filePath3, std::fstream::app);
 

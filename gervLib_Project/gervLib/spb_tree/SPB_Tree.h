@@ -11,9 +11,9 @@
 #include <set>
 #include <Pivots.h>
 
-using std::less, std::ofstream, std::floor, std::pair, std::make_pair, std::sort, std::set, std::pair, std::numeric_limits;
+//using std::less, std::ofstream, std::floor, std::pair, std::make_pair, std::sort, std::set, std::pair, std::numeric_limits;
 
-typedef stx::btree_multimap<ull, size_t, less<ull> > btree_type;
+typedef stx::btree_multimap<ull, size_t, std::less<ull> > btree_type;
 
 struct SPBPartition
 {
@@ -152,9 +152,9 @@ private:
 
         vector<ull> keys(dataset->getCardinality());
 
-        ofstream file_pivot_mapping(baseFilePath + std::filesystem::path::preferred_separator + "bulk_load_pivot_mapping.txt");
-        ofstream file_disc(baseFilePath + std::filesystem::path::preferred_separator + "bulk_load_disc.txt");
-        ofstream file_sfc(baseFilePath + std::filesystem::path::preferred_separator + "bulk_load_sfc.txt");
+        std::ofstream file_pivot_mapping(baseFilePath + fs::path::preferred_separator + "bulk_load_pivot_mapping.txt");
+        std::ofstream file_disc(baseFilePath + fs::path::preferred_separator + "bulk_load_disc.txt");
+        std::ofstream file_sfc(baseFilePath + fs::path::preferred_separator + "bulk_load_sfc.txt");
 
         for(size_t i = 0; i < dataset->getCardinality(); i++)
         {
@@ -199,7 +199,7 @@ private:
         file_disc.close();
         file_sfc.close();
 
-        vector<pair<ull, size_t>> insertValues(keys.size());
+        std::vector<std::pair<ull, size_t>> insertValues(keys.size());
 
         for(size_t i = 0; i < keys.size(); i++)
         {
@@ -380,8 +380,8 @@ public:
             //mbr[i][0] = numeric_limits<double>::max();
             //mbr[i][1] = numeric_limits<double>::lowest();
 
-            pair<double, double> pairMin = ed.getInterval(i, mbr_[i][0]);
-            pair<double, double> pairMax = ed.getInterval(i, mbr_[i][1]);
+            std::pair<double, double> pairMin = ed.getInterval(i, mbr_[i][0]);
+            std::pair<double, double> pairMax = ed.getInterval(i, mbr_[i][1]);
 
             //mbr[i][0] = std::min({mbr[i][0], pairMin.first, pairMin.second, pairMax.first, pairMax.second});
               //mbr[i][0] = std::min({mbr[i][0], pairMin.first, pairMax.first});
@@ -481,8 +481,8 @@ public:
             //mbr[i][0] = numeric_limits<double>::max();
             //mbr[i][1] = numeric_limits<double>::lowest();
 
-            pair<double, double> pairMin = ed.getInterval(i, mbr_[i][0]);
-            pair<double, double> pairMax = ed.getInterval(i, mbr_[i][1]);
+            std::pair<double, double> pairMin = ed.getInterval(i, mbr_[i][0]);
+            std::pair<double, double> pairMax = ed.getInterval(i, mbr_[i][1]);
 
             //mbr[i][0] = std::min({mbr[i][0], pairMin.first, pairMin.second, pairMax.first, pairMax.second});
               //mbr[i][0] = std::min({mbr[i][0], pairMin.first, pairMax.first});
@@ -580,7 +580,7 @@ public:
         btree_type::Leaf *leafnode;
         btree_type::Inner* innernode;
         std::vector<BasicArrayObject<T>*> dataLeaf;
-        set<size_t> globalPagesID;
+        std::set<size_t> globalPagesID;
 
         while((!nodeQueue.empty() || candidatesQueue.size() > 0) && resultQueue.size() < k)
         {
@@ -602,7 +602,7 @@ public:
                     {
 
                         size_t pid = getPageID(leafnode, i);
-                        pair<set<size_t>::iterator, bool> insertPID = globalPagesID.insert(pid);
+                        std::pair<std::set<size_t>::iterator, bool> insertPID = globalPagesID.insert(pid);
 
                         if(insertPID.second)
                         {
@@ -656,7 +656,7 @@ public:
                     {
 
                         size_t pid = getPageID(leafnode, i);
-                        pair<set<size_t>::iterator, bool> insertPID = globalPagesID.insert(pid);
+                        std::pair<std::set<size_t>::iterator, bool> insertPID = globalPagesID.insert(pid);
 
                         if(insertPID.second)
                         {

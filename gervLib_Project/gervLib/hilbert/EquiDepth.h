@@ -8,7 +8,7 @@
 #include <fstream>
 #include <config_spb.h>
 
-using std::numeric_limits, std::vector, std::sort, std::cout, std::endl, std::ofstream, std::ifstream, std::pair, std::make_pair;
+//using std::numeric_limits, std::vector, std::sort, std::cout, std::endl, std::ofstream, std::ifstream, std::pair, std::make_pair;
 
 class Bins
 {
@@ -20,8 +20,8 @@ public:
     {
 
         id = 0;
-        min = numeric_limits<double>::max();
-        max = numeric_limits<double>::lowest();
+        min = std::numeric_limits<double>::max();
+        max = std::numeric_limits<double>::lowest();
 
     }
 
@@ -29,8 +29,8 @@ public:
     {
 
         id = id_;
-        min = numeric_limits<double>::max();
-        max = numeric_limits<double>::lowest();
+        min = std::numeric_limits<double>::max();
+        max = std::numeric_limits<double>::lowest();
 
     }
 
@@ -64,7 +64,7 @@ private:
     long num_bins;
     size_t pivot_num;
     bool toINF;
-    vector<vector<Bins>> bins;
+    std::vector<std::vector<Bins>> bins;
     bool inMemory;
 
 public:
@@ -74,7 +74,7 @@ public:
         num_bins = -1;
         pivot_num = -1;
         toINF = true;
-        bins = vector<vector<Bins>>();
+        bins = std::vector<std::vector<Bins>>();
         inMemory = true;
 
     }
@@ -112,7 +112,7 @@ public:
 
     }
 
-    void build(vector<vector<double>>& aux)
+    void build(std::vector<std::vector<double>>& aux)
     {
 
         std::vector<double> v(aux.size());
@@ -173,8 +173,8 @@ public:
     void print()
     {
 
-        cout << "PIVOT NUM: " << bins.size() << endl;
-        cout << "NUM BINS: " << bins[0].size() << endl << endl;
+        std::cout << "PIVOT NUM: " << bins.size() << std::endl;
+        std::cout << "NUM BINS: " << bins[0].size() << std::endl << std::endl;
 
         for(size_t i = 0; i < bins.size(); i++)
         {
@@ -182,11 +182,11 @@ public:
             for(size_t j = 0; j < bins[0].size(); j++)
             {
 
-                cout << "[" << bins[i][j].min << ", " << bins[i][j].max << ")" << endl;
+                std::cout << "[" << bins[i][j].min << ", " << bins[i][j].max << ")" << std::endl;
 
             }
 
-            cout << "\n\n";
+            std::cout << "\n\n";
 
         }
 
@@ -195,8 +195,8 @@ public:
     void saveToFile()
     {
 
-        ofstream file(baseFilePath + std::filesystem::path::preferred_separator + "equi_depth.txt");
-        file << bins.size() << " "  << bins[0].size() << endl;
+        std::ofstream file(baseFilePath + fs::path::preferred_separator + "equi_depth.txt");
+        file << bins.size() << " "  << bins[0].size() << std::endl;
 
         for(size_t i = 0; i < bins.size(); i++)
         {
@@ -204,7 +204,7 @@ public:
             for(size_t j = 0; j < bins[0].size(); j++)
             {
 
-                file << bins[i][j].min << " " << bins[i][j].max << endl;
+                file << bins[i][j].min << " " << bins[i][j].max << std::endl;
 
             }
 
@@ -217,14 +217,14 @@ public:
     void readFromFile()
     {
 
-        ifstream file(baseFilePath + std::filesystem::path::preferred_separator + "equi_depth.txt");
+        std::ifstream file(baseFilePath + fs::path::preferred_separator + "equi_depth.txt");
         size_t pivot_num;
         double minV, maxV;
 
         file >> pivot_num;
         file >> num_bins;
 
-        bins.resize(pivot_num, vector<Bins>(num_bins));
+        bins.resize(pivot_num, std::vector<Bins>(num_bins));
 
         for(size_t i = 0; i < pivot_num; i++)
         {
@@ -271,10 +271,10 @@ public:
 
     }
 
-    pair<double, double> getInterval(size_t pivot, long id)
+    std::pair<double, double> getInterval(size_t pivot, long id)
     {
 
-        return make_pair(bins[pivot][id].min, bins[pivot][id].max);
+        return std::make_pair(bins[pivot][id].min, bins[pivot][id].max);
 
     }
 

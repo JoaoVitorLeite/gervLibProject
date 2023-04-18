@@ -13,7 +13,7 @@
 #include <limits.h>
 #include <fstream>
 
-using std::vector, std::bitset, std::cout, std::endl, std::string, std::stoll, std::stringstream, std::numeric_limits, std::sort, std::ofstream, std::ifstream;
+///using std::vector, std::bitset, std::cout, std::endl, std::string, std::stoll, std::stringstream, std::numeric_limits, std::sort, std::ofstream, std::ifstream;
 
 /*
 n - numero de dimensoes
@@ -25,7 +25,7 @@ class HilbertCurve
 {
 
 private:
-    string _binary_repr(ull num, ull width)
+    std::string _binary_repr(ull num, ull width)
     {
 
         std::string s =
@@ -37,12 +37,12 @@ private:
 
     }
 
-    vector<ull> _hilbert_integer_to_transpose(ull h)
+    std::vector<ull> _hilbert_integer_to_transpose(ull h)
     {
 
-        string h_bit_str = _binary_repr(h, p*n);//bitset<p*n>(h).to_string();
-        vector<ull> x = vector<ull>(n);
-        stringstream ss;
+        std::string h_bit_str = _binary_repr(h, p*n);//bitset<p*n>(h).to_string();
+        std::vector<ull> x = std::vector<ull>(n);
+        std::stringstream ss;
 
         for(size_t i = 0; i < n; i++)
         {
@@ -54,7 +54,7 @@ private:
 
             }
 
-            x[i] = stoll(ss.str(), NULL, 2);
+            x[i] = std::stoll(ss.str(), NULL, 2);
             ss.str(std::string());
 
         }
@@ -63,11 +63,11 @@ private:
 
     }
 
-    ull _transpose_to_hilbert_integer(vector<ull> x)
+    ull _transpose_to_hilbert_integer(std::vector<ull> x)
     {
 
-        stringstream ss;
-        vector<string> x_bit_str = vector<string>(n);
+        std::stringstream ss;
+        std::vector<std::string> x_bit_str = std::vector<std::string>(n);
 
         for(size_t i = 0; i < n; i++)
         {
@@ -89,7 +89,7 @@ private:
 
         }
 
-        return stoll(ss.str(), NULL, 2);
+        return std::stoll(ss.str(), NULL, 2);
 
     }
 
@@ -105,10 +105,10 @@ private:
 
     friend std::ostream& operator<<( std::ostream& o, const HilbertCurve& t ) {
 
-        o << "P : " << t.p << endl;
-        o << "N : " << t.n << endl;
-        o << "MIN/MAX H : " << t.min_h << " / " << t.max_h << endl;
-        o << "MIN/MAX X : " << t.min_x << " / " << t.max_x << endl;
+        o << "P : " << t.p << std::endl;
+        o << "N : " << t.n << std::endl;
+        o << "MIN/MAX H : " << t.min_h << " / " << t.max_h << std::endl;
+        o << "MIN/MAX X : " << t.min_x << " / " << t.max_x << std::endl;
         return o;
 
     }
@@ -141,10 +141,10 @@ public:
 
 
 
-    vector<ull> point_from_distance(ull distance)
+    std::vector<ull> point_from_distance(ull distance)
     {
 
-        vector<ull> x = this->_hilbert_integer_to_transpose(distance);
+        std::vector<ull> x = this->_hilbert_integer_to_transpose(distance);
         ull z = 2 << (p-1);
         ull t = x[n-1] >> 1;
 
@@ -192,10 +192,10 @@ public:
 
     }
 
-    vector<vector<ull>> points_from_distances(vector<ull> distances)
+    std::vector<std::vector<ull>> points_from_distances(std::vector<ull> distances)
     {
 
-        vector<vector<ull>> ans;
+        std::vector<std::vector<ull>> ans;
 
         for(size_t i = 0; i < distances.size(); i++)
         {
@@ -223,7 +223,7 @@ public:
 
     }
 
-    ull distance_from_point(vector<ull> point)
+    ull distance_from_point(std::vector<ull> point)
     {
 
         ull m = 1 << (p-1);
@@ -293,10 +293,10 @@ public:
 
     }
 
-    vector<ull> distances_from_points(vector<vector<ull>> points)
+    std::vector<ull> distances_from_points(std::vector<std::vector<ull>> points)
     {
 
-        vector<ull> ans;
+        std::vector<ull> ans;
 
         for(size_t i = 0; i < points.size(); i++)
         {

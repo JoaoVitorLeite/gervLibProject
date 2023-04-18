@@ -6,25 +6,24 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
-#include <filesystem>
+#include <experimental/filesystem>
 
-using std::stringstream, std::string, std::ofstream, std::ifstream, std::vector;
+using fs = std::experimental::filesystem;
 
 void setBaseFilePath(std::string auxName = "SPBfiles")
 {
 
-    if(!std::filesystem::exists(baseFilePath))
+    if(!fs::exists(baseFilePath))
     {
 
         throw std::runtime_error("Base file path not exists !_!");
 
     }
 
-    vector<int> sub_folders;
+    std::vector<int> sub_folders;
     std::string auxPath, subName;
     //size_t num;
-
-    for(const auto & entry : std::filesystem::directory_iterator(baseFilePath))
+    for(const auto & entry : fs::directory_iterator(baseFilePath))
     {
 
         auxPath = entry.path().string();
@@ -34,7 +33,7 @@ void setBaseFilePath(std::string auxName = "SPBfiles")
         {
 
 //            std::cout << "SUB = " << auxPath.substr(auxPath.find_last_of(std::filesystem::path::preferred_separator) + 1) << "\n";
-            subName = auxPath.substr(auxPath.find_last_of(std::filesystem::path::preferred_separator) + 1);
+            subName = auxPath.substr(auxPath.find_last_of(fs::path::preferred_separator) + 1);
             sub_folders.push_back(std::stoi(subName.substr(subName.find("_") + 1)));
 
         }
@@ -48,12 +47,12 @@ void setBaseFilePath(std::string auxName = "SPBfiles")
 
     }
 
-    stringstream ss;
+    std::stringstream ss;
 
     if(sub_folders.empty())
     {
 
-        ss << baseFilePath << std::filesystem::path::preferred_separator << auxName << "_0";
+        ss << baseFilePath << fs::path::preferred_separator << auxName << "_0";
 
     }
     else
@@ -65,7 +64,7 @@ void setBaseFilePath(std::string auxName = "SPBfiles")
 //        ssAux >> num;
 //        num++;
 //        ss.str("");
-        ss << baseFilePath << std::filesystem::path::preferred_separator << auxName << "_" << (++sub_folders.back());
+        ss << baseFilePath << fs::path::preferred_separator << auxName << "_" << (++sub_folders.back());
 //        ss << "SPBfiles_" << num;
 
     }
@@ -74,10 +73,10 @@ void setBaseFilePath(std::string auxName = "SPBfiles")
 
     //std::cout << sub_folderPath << "\n";
 
-    if (!std::filesystem::is_directory(sub_folderPath) || !std::filesystem::exists(sub_folderPath))
+    if (!fs::is_directory(sub_folderPath) || !fs::exists(sub_folderPath))
     {
 
-        std::filesystem::create_directory(sub_folderPath);
+        fs::create_directory(sub_folderPath);
 
     }
 
@@ -86,24 +85,24 @@ void setBaseFilePath(std::string auxName = "SPBfiles")
 
 }
 
-string genDiskFileName(size_t pageID)
+std::string genDiskFileName(size_t pageID)
 {
 
-    stringstream ss;
+    std::stringstream ss;
 
-    ss << baseFilePath << std::filesystem::path::preferred_separator << "tmp_" << pageID << ".dat";
+    ss << baseFilePath << fs::path::preferred_separator << "tmp_" << pageID << ".dat";
 
     return ss.str();
 
 }
 
 template <class type>
-void write_to_disk(Dataset<type>* dataset, vector<size_t> ids, size_t pageCost, size_t pageSize, size_t pageID)
+void write_to_disk(Dataset<type>* dataset, std::vector<size_t> ids, size_t pageCost, size_t pageSize, size_t pageID)
 {
 
     IOwrite++;
 
-    ofstream file(genDiskFileName(pageID), std::ios::out | std::ios::binary);
+    std::ofstream file(genDiskFileName(pageID), std::ios::out | std::ios::binary);
 
     unsigned char* data = new unsigned char[pageCost + sizeof(size_t)];
     size_t total = 0, sizeElem;
@@ -137,7 +136,7 @@ void write_dataset_to_disk(Dataset<type>* dataset, size_t pageID)
 
     IOwrite++;
 
-    ofstream file(genDiskFileName(pageID), std::ios::out | std::ios::binary);
+    std::ofstream file(genDiskFileName(pageID), std::ios::out | std::ios::binary);
     unsigned char* data = new unsigned char[dataset->getSerializedSize() + sizeof(size_t)];
     size_t sz = dataset->getSerializedSize();
     memcpy(data, &sz, sizeof(size_t));
@@ -154,7 +153,7 @@ void read_dataset_from_disk(Dataset<type>* dataset, size_t pageID)
 
     IOread++;
 
-    ifstream file(genDiskFileName(pageID), std::ios::in | std::ios::binary);
+    std::ifstream file(genDiskFileName(pageID), std::ios::in | std::ios::binary);
     size_t size;
     unsigned char* sizeChar = new unsigned char[sizeof(size_t)];
     file.read((char*)sizeChar, sizeof(size_t));
@@ -169,12 +168,12 @@ void read_dataset_from_disk(Dataset<type>* dataset, size_t pageID)
 }
 
 template <class type>
-void read_from_disk(vector<BasicArrayObject<type>*>& read, size_t pageID)
+void read_from_disk(std::vector<BasicArrayObject<type>*>& read, size_t pageID)
 {
 
     IOread++;
 
-    ifstream file(genDiskFileName(pageID), std::ios::in | std::ios::binary);
+    std::ifstream file(genDiskFileName(pageID), std::ios::in | std::ios::binary);
 
     size_t size;
 //    BasicArrayObject<type> b;
@@ -215,7 +214,7 @@ void checkRAFDisk()
     std::string path = baseFilePath;
     std::vector<BasicArrayObject<double>*> ans;
 
-    for (const auto & entry : std::filesystem::directory_iterator(path))
+    for (const auto & entry : fs::directory_iterator(path))
     {
 
         if (entry.path().extension() == ".dat")

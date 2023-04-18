@@ -1,299 +1,647 @@
+#include "QtTest/qtestcase.h"
+#include "mvptree.h"
+#include <iostream>
+#include <datapoint.h>
+#include <Hermes.h>
+#include <Pivots.h>
+#include <Dataset.h>
+#include <OmniKdTree.h>
+#include <VpTree.h>
+#include <PM_Tree.h>
+#include <chrono>
+#include <unistd.h>
+#include <typeinfo>
+#include <config_spb.h>
+#include <MemoryManagerUtils.h>
+#include <SPB_Tree.h>
 #include <PivotExperiments.h>
 
 using namespace std;
+using namespace mvp;
+
+const int BF = 2;   //branchfactor
+const int PL = 8;   // pathlength
+const int LC = 5; // leafcap
+const int LPN = 2;  // levelspernode
+const int FO = 4; //fanout bf^lpn
+const int NS = 2; //numsplits (bf-1)^lpn
+
+typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_RANDOM;
+typedef MVPTree<BasicArrayObject<vector<char>>, EditDistance<BasicArrayObject<vector<char>>>, RandomPivots<vector<char>>, Dataset<vector<char>>, BF,PL,LC,LPN,FO,NS> MVPTREE_STRING_RANDOM;
+typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparatedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_MAXSEPARETED;
+typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_KMEDOIDS;
 
 typedef std::vector<char> str;
 
-/*Keywords
-
-    -DATASET_TRAIN => Caminho do dataset de treino
-    ** -DATASET_TRAIN_CARDINALITY => Cardinalidade do dataset de treino
-    ** -DATASET_TRAIN_DIMENSIONALITY => Dimensionalidade do dataset de treino
-    ** -DATASET_TRAIN_SEPARATOR => Caracter separador do dataset de treino !DEFAULT = COMMA
-    -DISTANCE_FUNCTION => Função de distância !DEFAULT = EUCLIDEAN DISTANCE
-    -PIVOT_TYPE => Pivot
-    ** -SAMPLE_SIZE_PIVOT => Tamanho da amostra para gerar os pivôs
-    ** -SEED => Seed
-    -REP => Numero de repeticoes !DEFAULT = 1
-    -PATH_SAVE_RESULTS => Caminho para salvar os arquivos gerados !DEFAULT = ../results/
-
-*/
 
 int main(int argc, char *argv[])
 {
 
-    if((argc-1) % 2 != 0)
-    {
+    Dataset<double>* data = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    Pivot<double>* pvt = new WDRPivots<double>();
+
+    PivotExperiments<double> expt = PivotExperiments<double>();
+    expt.setDistanceFunctionName("EUCLIDEAN");
+    expt.setTrainDataset(data);
+    expt.setOutputPath("../results/");
+    expt.setDistanceFunction(df);
+    expt.setPivotMethod(pvt);
+    expt.setSeed(157);
+    expt.setSampleSize(0.5);
+    expt.modifySeed();
+    expt.modifySampleSize();
+    expt.setPivotNum({100,150,200});
+    expt.setSavePivot(false);
+    expt.runExperiment();
+    expt.setSavePivot(true);
+    expt.runExperimentWithRepetitions(1);
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------
+
+    //    Dataset<double>* data = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(data, "../datasets/Dataset1.csv", " ");
+    //    Dataset<double>* test = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
+    //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    Pivot<double>* pvt = new BPPPivots<double>();
+    //    pvt->setSeed(4554);
+    //    pvt->generatePivots(data, df, 6);
 
-        throw std::invalid_argument("Invalid number of arguments !_!");
+    //    for(size_t i = 0; i < 6; i++)
+    //    {
 
-    }
-    else
-    {
+    //        cout << pvt->get(i).toStringWithOID() << endl;
 
-        Dataset<double>* train = new Dataset<double>();
-        DistanceFunction<BasicArrayObject<double>>* df = nullptr;
-        Pivot<double>* pvt = nullptr;
-        std::string names[] = {"RANDOM", "GNAT", "CONVEX", "KMEDOIDS", "MAXSEPARATED", "MAXVARIANCE", "SELECTION", "PCA", "SSS", "FFT", "HFI", "IS", "WDR", "BPP"};
+    //    }
 
-        std::string *dataset_train = nullptr,
-            *dataset_train_separator = nullptr,
-                *distanceFunction = nullptr,
-                    *pivot_type = nullptr,
-                        *pivot_optional = nullptr,
-                            *path_save_results = nullptr;
+    //    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 2, 4);
+    ////    spb.dump_key_min_max();
+    ////    spb.test();
 
-        size_t *dataset_train_cardinality = nullptr,
-            *dataset_train_dimensionality = nullptr,
-                *seed = nullptr,
-                    *num = nullptr,
-                        *rep = nullptr;
+    //    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+    //    query.set(0, 6.0);
+    //    query.set(1, 3.0);
 
-        double *sample_size_pivot = nullptr;
+    //    std::vector<KnnSPB<double>> ans;
+    //    spb.knn(query, 3, ans);
 
-        for(int x = 1; x < argc; x += 2)
-        {
+    //    for(auto &e : ans)
+    //        cout << e.element.getOID() << " / " << e.distance << endl;
 
-            std::string key = argv[x];
-            for(size_t x = 0; x < key.size(); x++)
-                key[x] = std::toupper(key[x]);
+    //    cout << ans.size() << endl;
+    //    cout << spb.getLeafNodeAccess() << endl;
+    //    cout << spb.getDistanceCount() << endl;
+    //    cout << IOread << endl;
+    //    cout << p << endl;
 
-            std::string value = argv[x+1];
+    //----------------------------------------------------------------------------------------------------------------------------------------
 
-            if(key == "-DATASET_TRAIN")
-            {
+    //    Dataset<str>* data = new Dataset<str>();
+    //    Dataset<str>::loadTextDataset(data, "../datasets/names.csv", " ");
+    //    Dataset<str>* test = new Dataset<str>();
+    //    Dataset<str>::loadTextDataset(test, "../datasets/names.csv", " ");
+    //    DistanceFunction<BasicArrayObject<str>>* df = new EditDistance<BasicArrayObject<str>>();
+    //    Pivot<str>* pvt = new MaxVariancePivots<str>();
+    //    SPBTree<str> spb = SPBTree<str>(data, df, pvt, 3, 3);
+    //    spb.dump_key_min_max();
 
-                dataset_train = new std::string(value);
+    //    Dataset<double>* data = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
+    //    Dataset<double>* test = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(test, "../datasets/cities_norm.csv", ",");
+    //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    Pivot<double>* pvt = new MaxVariancePivots<double>();
+    //    SPBTree<double> spb = SPBTree<double>(data, df, pvt, 3, 200);
+    //    //spb.dump_key_min_max();
 
-            }
-            else if(key == "-DATASET_TRAIN_CARDINALITY")
-            {
+    //    size_t leafMean = 0, distCnt = 0;
+    //    size_t num_queries = test->getCardinality();
 
-                dataset_train_cardinality = new size_t(std::stoi(value));
+    //    for(size_t j = 0; j < num_queries; j++)
+    //    {
 
-            }
-            else if(key == "-DATASET_TRAIN_DIMENSIONALITY")
-            {
+    //        BasicArrayObject<double> query = test->getFeatureVector(j);
+    //        //BasicArrayObject<str> query = test->getFeatureVector(j);
 
-                dataset_train_dimensionality = new size_t(std::stoi(value));
+    //        size_t k = 100;
 
-            }
-            else if(key == "-DATASET_TRAIN_SEPARATOR")
-            {
+    //        std::vector<KnnSPB<double>> ans;
+    //        //std::vector<KnnSPB<str>> ans;
 
-                dataset_train_separator = new std::string(value);
+    //        spb.knn(query, k, ans);
 
-            }
-            else if(key == "-DISTANCE_FUNCTION")
-            {
+    //        //        cout << ans.size() << endl;
+    //        //        cout << spb.getLeafNodeAccess() << endl;
+    //        //        cout << spb.getDistanceCount() << endl;
+    //        leafMean += spb.getLeafNodeAccess();
+    //        distCnt += spb.getDistanceCount();
 
-                distanceFunction = new std::string(value);
+    //        //    for(auto i : ans)
+    //        //        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
 
-            }
-            else if(key == "-PIVOT_TYPE")
-            {
+    //        vector<pair<size_t, double>> dist;results/
 
-                pivot_type = new std::string(value);
+    //        for(size_t i = 0; i < test->getCardinality(); i++)
+    //        {
 
-            }
-            else if(key == "-SAMPLE_SIZE_PIVOT")
-            {
+    //            dist.push_back(std::make_pair(i, df->getDistance(query, test->getFeatureVector(i))));
 
-                sample_size_pivot = new double(std::stod(value));
+    //        }
 
-            }
-            else if(key == "-SEED")
-            {
+    //        std::sort(dist.begin(), dist.end(), [](const std::pair<size_t, double>& lhs, const std::pair<size_t, double>& rhs){
+    //            return lhs.second < rhs.second;
+    //        });
 
-                seed = new size_t(std::stoi(value));
+    //        //    cout << "\n\n";
 
-            }
-            else if(key == "-REP")
-            {
+    //        //    for(size_t i = 0; i < k; i++)
+    //        //        cout << dist[i].first << " / " << dist[i].second << endl;
 
-                rep = new size_t(std::stoi(value));
+    //        for(size_t z = 0; z < k; z++)
+    //        {
 
-            }
-            else if(key == "-PATH_SAVE_RESULTS")
-            {
+    //            if(ans[z].distance != dist[z].second)
+    //                cout << "ERRO EM: " << j << endl;
 
-                path_save_results = new std::string(value);
+    //        }
 
-            }
-            else
-            {
+    //    }
 
-                throw std::invalid_argument("Invalid key !_!");
+    //    cout << "LEAF MEAN : " << (leafMean*1.0)/num_queries << endl;
+    //    cout << "DIST MEAN : " << (distCnt*1.0)/num_queries << endl;
+    //    cout << "LEAF 2 : " << IOread/num_queries << endl;
 
-            }
+    //-------------------------------------------------------------------------------------------------------
 
-        }
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+    //    //pvt->generatePivots(train, df, 2);
 
-        //Read seed
-        if(seed == nullptr)
-        {
+    ////    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
+    ////            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df, train);
 
-            seed = new size_t(100);
+    ////    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, 5);
+    //    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, 5, 2);
 
-        }
+    //    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+    //    query.set(0, 6.0);
+    //    query.set(1, 3.0);
 
-        //Path save results
-        if(path_save_results == nullptr)
-        {
+    //    std::vector<KnnEntry<double>> ans;
+    //    index.kNN(query, 3, ans);
 
-            path_save_results = new std::string("../results/");
+    ////    std::vector<PairResult> ans;
+    ////    index.kNN(train, &query, 3, ans);
 
-        }
-
-        //Read dataset train
-        if((dataset_train_cardinality != nullptr) && (dataset_train_dimensionality != nullptr))
-        {
-
-            Dataset<double>::loadNumericDataset(train, *dataset_train, *dataset_train_cardinality, *dataset_train_dimensionality);
-
-        }
-        else
-        {
-
-            if(dataset_train_separator != nullptr)
-            {
-
-                Dataset<double>::loadNumericDataset(train, *dataset_train, *dataset_train_separator);
-
-            }
-            else
-            {
-
-                Dataset<double>::loadNumericDataset(train, *dataset_train, ",");
-
-            }
-
-        }
-
-        //Read distance function
-        if(distanceFunction == nullptr)
-        {
-
-            df = new EuclideanDistance<BasicArrayObject<double>>();
-
-        }
-        else
-        {
-
-            if(*distanceFunction == "EUCLIDEAN")
-                df = new EuclideanDistance<BasicArrayObject<double>>();
-            else if(*distanceFunction == "CHEBYSHEV")
-                df = new ChebyshevDistance<BasicArrayObject<double>>();
-            else if(*distanceFunction == "MANHATTAN")
-                df = new ManhattanDistance<BasicArrayObject<double>>();
-            else
-            {
-
-                throw std::invalid_argument("Not find distance function !_!");
-
-            }
-
-        }
-
-        //Read pivot
-        if(pivot_type != nullptr)
-        {
-
-            if(sample_size_pivot == nullptr)
-            {
-
-                sample_size_pivot = new double(0.1);
-
-            }
-
-            if(*pivot_type == "RANDOM")
-            {
-                pvt = new RandomPivots<double>();
-            }
-            else if(*pivot_type == "GNAT")
-            {
-                pvt = new GnatPivots<double>();
-            }
-            else if(*pivot_type == "CONVEX")
-            {
-                pvt = new ConvexPivots<double>();
-            }
-            else if(*pivot_type == "KMEDOIDS")
-            {
-                pvt = new KmedoidsPivots<double>();
-            }
-            else if(*pivot_type == "MAXSEPARATED")
-            {
-                pvt = new MaxSeparatedPivots<double>();
-            }
-            else if(*pivot_type == "MAXVARIANCE")
-            {
-                pvt = new MaxVariancePivots<double>();
-            }
-            else if(*pivot_type == "SELECTION")
-            {
-                pvt = new SelectionPivots<double>();
-            }
-            else if(*pivot_type == "PCA")
-            {
-                pvt = new PCAPivots<double>();
-            }
-            else if(*pivot_type == "SSS")
-            {
-                pvt = new SSSPivots<double>();
-            }
-            else if(*pivot_type == "FFT")
-            {
-                pvt = new FFTPivots<double>();
-            }
-            else if(*pivot_type == "HFI")
-            {
-                pvt = new HFIPivots<double>();
-            }
-            else if(*pivot_type == "IS")
-            {
-                pvt = new ISPivots<double>();
-            }
-            else if(*pivot_type == "WDR")
-            {
-                pvt = new WDRPivots<double>();
-            }
-            else if(*pivot_type == "BPP")
-            {
-                pvt = new BPPPivots<double>();
-            }
-            else
-            {
-                throw std::invalid_argument("Pivot selection not find !_! " + *pivot_type);
-            }
-
-            if(*sample_size_pivot != 1.0)
-                pvt->setSampleSize(*sample_size_pivot);
-
-            pvt->setSeed(*seed);
-
-        }
-
-        PivotExperiments<double> expt = PivotExperiments<double>();
-        expt.setDistanceFunctionName(*distanceFunction);
-        expt.setDistanceFunction(df);
-        expt.setOutputPath(*path_save_results);
-        expt.setTrainDataset(train);
-        expt.setPivotMethod(pvt);
-        expt.setSeed(*seed);
-        expt.setSampleSize(*sample_size_pivot);
-        expt.modifySeed();
-        expt.modifySampleSize();
-        expt.setPivotNum({5, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500});
-        expt.setSavePivot(true);
-        if(*rep == 1)
-            expt.runExperiment();
-        else
-            expt.runExperimentWithRepetitions(*rep);
-
-        cout << *pivot_type << endl;
-
-    }
+    ////    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+    ////    index.knn(query, 3, ans);
+
+    //    for(auto &i : ans)
+    //        cout << i.element.toStringWithOID() << " / " << i.distance << endl;
+
+    //    cout << endl << index.getLeafNodeAccess() << endl;
+
+
+    //-------------------------------------------------------------------------------------------------------
+
+    //    std::string s = std::bitset< 10 >( 2 ).to_string();
+    //    cout << s << endl;
+
+
+    //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    WDRPivots<double> pvt1 = WDRPivots<double>();
+    //    pvt1.setSeed(94819);
+    ////    pvt1.setAlpha(0.1);
+
+    //    //pvt1.setSampleSize(0.5);
+    //    pvt1.generatePivots(train, df, 6);
+
+    //    for(size_t i = 0; i < 6; i++)
+    //        cout << pvt1.getPivot(i)->getOID() << "\n";
+
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "../datasets/Dataset1.csv", " ");
+    //    Dataset<double>* test = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(test, "../datasets/Dataset1.csv", " ");
+    //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+    //    pvt->generatePivots(train, df, 3);
+
+    //    for(size_t x = 0; x < 3; x++)
+    //        cout << pvt->getPivot(x)->toString() << endl;
+
+    //    pvt->setPath("../results/maxvar.pvt");
+    //    pvt->writePivotsToFile();
+
+
+    ////    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
+
+    //    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
+    //            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxVariancePivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df, train);
+
+    //    BasicArrayObject<double> query = BasicArrayObject<double>(-1,2);
+    //    query.set(0, 6.0);
+    //    query.set(1, 3.0);
+
+    ////    Dataset<double>* ans3 = new Dataset<double>();
+    ////    index.kNNInc(query, 3, index.getRoot(), ans3, df);
+
+    //    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+    //    index.knn(query, 3, ans);
+    //    cout << index.getLeafNodeAccess() << endl;
+
+    //    for(size_t x = 0; x < ans.size(); x++)
+    //        cout << ans[x].element.toStringWithOID() << endl;
+
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "/home/joaovictor/Documents/TCC/Code/Project/gervLib/datasets/cities_norm.csv", ",");
+    //    Dataset<double>* test = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(test, "/home/joaovictor/Documents/TCC/Code/Project/gervLib/datasets/cities_norm.csv", ",");
+    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    RandomPivots<double>* pvt = new RandomPivots<double>();
+    //    pvt->generatePivots(train, df, 2);
+    //    size_t numPerLeaf = 55;
+    //    std::vector<PairResult> ans;
+    //    std::vector<KnnEntry<double>> ans2;
+    //    Dataset<double>* ans3 = new Dataset<double>();
+
+    ////    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, numPerLeaf);
+    ////    //VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, numPerLeaf, pvt, train, df);
+    //    PM_Tree<double> index = PM_Tree<double>(train, df, pvt, numPerLeaf, 2);
+
+    //    std::vector<std::pair<double, size_t>> ansVec;
+    //    for(size_t x = 0; x < test->getCardinality(); x++)
+    //    {
+
+    //        ans2.clear();
+    //        index.kNN(test->getFeatureVector(x), 100, ans2);
+
+    //        std::vector<double> dist;
+    //        for(size_t i = 0; i < train->getCardinality(); i++)
+    //            dist.push_back(df->getDistance(*test->instance(x), *train->instance(i)));
+
+    //        sort(dist.begin(), dist.end());
+
+    //        for(size_t z = 0; z < 100; z++)
+    //            if(dist[z] != ans2[z].distance)
+    //                cout << "ERRO EM : " << x << endl;
+
+    //    }
+
+    //    std::ofstream file("/home/joaovictor/Documents/TCC/Code/cities_pmtree_range.csv");
+    //    file << "k,Time,Count,Leaf\n";
+
+    //    for(size_t k = 5; k <= 100; k+=5)
+    //    {
+
+    //        for(size_t i = 0; i < test->getCardinality(); i++)
+    //        {
+
+    //            df->ResetStatistics();
+    //            //ans.erase(ans.begin(), ans.end());
+    //            //ans.clear();
+    //            ans2.erase(ans2.begin(), ans2.end());
+    //            auto start = std::chrono::steady_clock::now();
+    ////            index.kNN(train, test->instance(i), k, ans);
+    ////            index.kNNInc(test->getFeatureVector(i), k, index.getRoot(), ans3, df);
+    //            //index.kNN(test->getFeatureVector(i), k, ans2);
+    //            index.rang
+    //            auto end = std::chrono::steady_clock::now();
+    //            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+    //            file << std::to_string(k) << "," << std::to_string(elapsed.count()) << "," << std::to_string(df->getDistanceCount()) << "," << index.getLeafNodeAccess() << "\n";
+
+    //        }
+
+    //    }
+
+    //    file.close();
+
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "../datasets/train_nasa.csv", ",");
+    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    WDRPivots<double>* pvt = new WDRPivots<double>();
+    //    pvt->setSampleSize(0.2);
+    //    pvt->generatePivots(train, df, 2);
+
+    ////    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, 360);
+    //    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 360, pvt, train, df);
+
+    //    cout << "OI\n";
+
+    ////    Dataset<double>* sample = train->sampleDataset(std::ceil(train->getCardinality()*0.2), false, 0);
+
+    ////    for(size_t i = 0; i < train->getCardinality(); i++)
+    ////        vec.push_back({static_cast<long long>(i), train->getFeatureVector(i)});
+
+    ////    tree.Add(vec);
+    ///
+
+
+
+
+    //**********************************************************************************************************************************
+
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "../datasets/cities_norm.csv", ",");
+    //    Dataset<double>* test = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(test, "../datasets/cities_norm.csv", ",");
+    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    RandomPivots<double>* pvt = new RandomPivots<double>();
+    //    pvt->generatePivots(train, df, 2);
+    //    size_t numPerLeaf = 55;
+    //    std::vector<PairResult> ans;
+    //    std::vector<KnnEntry<double>> ans2;
+    //    Dataset<double>* ans3 = new Dataset<double>();
+
+    //    OmniKdTree<double> index = OmniKdTree<double>(train, df, pvt, numPerLeaf);
+
+    //    std::vector<double> dist;
+
+    //    for(size_t i = 0; i < test->getCardinality(); i++)
+    //    {
+
+    //        BasicArrayObject<double> query = test->getFeatureVector(i);
+
+    //        ans.clear();
+    //        ans2.clear();
+    //        ans3->clear();
+
+    //        index.kNN(train, test->instance(i), 100, ans);
+    //        train->getDistanceVector(query, df, &dist);
+    //        std::sort(dist.begin(), dist.end());
+
+    //        for(size_t z = 0; z < 100; z++)
+    //            if(ans[z].distance != dist[z])
+    //                cout << "ERRO EM : " << i << " " << ans[z].distance << " " << dist[z] << endl;
+
+    //    }
+
+    //**********************************************************************************************************************************
+
+    //    Dataset<vector<char>>* train = new Dataset<vector<char>>();
+    //    Dataset<vector<char>>::loadTextDataset(train, "../datasets/names.csv", " ");
+    //    Dataset<vector<char>>* train2 = new Dataset<vector<char>>();
+    //    *train2 = *train;
+    //    Dataset<vector<char>>* test = new Dataset<vector<char>>();
+    //    Dataset<vector<char>>::loadTextDataset(test, "../datasets/names.csv", " ");
+    //    EditDistance<BasicArrayObject<vector<char>>>* df = new EditDistance<BasicArrayObject<vector<char>>>();
+    //    RandomPivots<vector<char>>* pvt = new RandomPivots<vector<char>>();
+    //    pvt->generatePivots(train, df, 2);
+    //    size_t numPerLeaf = 55;
+    //    std::vector<PairResult> ans;
+    //    std::vector<KnnEntry<vector<char>>> ans2;
+    //    Dataset<vector<char>>* ans3 = new Dataset<vector<char>>();
+
+
+    //    //OmniKdTree<vector<char>> index = OmniKdTree<vector<char>>(train, df, pvt, numPerLeaf);
+    //    //VpTree<vector<char>, DistanceFunction<BasicArrayObject<vector<char>>>> index = VpTree<vector<char>, DistanceFunction<BasicArrayObject<vector<char>>>>(false, 0.0, numPerLeaf, pvt, train, df);
+    //    PM_Tree<vector<char>> index = PM_Tree<vector<char>>(train, df, pvt, numPerLeaf, 2);
+
+
+    //    std::vector<double> dist;
+
+    //    for(size_t i = 0; i < test->getCardinality(); i++)
+    //    {
+
+    //        BasicArrayObject<vector<char>> query = test->getFeatureVector(i);
+
+    //        ans.clear();
+    //        ans2.clear();
+    //        ans3->clear();
+
+    //        dist.clear();
+
+    ////        index.kNN(train, test->instance(i), 100, ans);
+    ////        index.kNNInc(test->getFeatureVector(i), 100, index.getRoot(), ans3, df);
+    //        index.kNN(test->getFeatureVector(i), 100, ans2);
+
+    //        train2->getDistanceVector(query, df, &dist);
+    //        std::sort(dist.begin(), dist.end());
+
+    //        for(size_t z = 0; z < 100; z++)
+    //            if(ans2[z].distance != dist[z])
+    //                cout << "ERRO EM : " << i << endl;
+
+    //    }
+
+    /////////////////////////////////////////////MVP
+
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "../datasets/train_nasa.csv", ",");
+    //    Dataset<double>* test = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(test, "../datasets/test_nasa.csv", ",");
+    //    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    PCAPivots<double> pvt1 = PCAPivots<double>();
+    //    pvt1.setSampleSize(0.01);
+    //    pvt1.generatePivots(train, df, 7);
+
+    //    for(size_t i = 0; i < 7; i++)
+    //        cout << pvt1.getPivot(i)->toStringWithOID() << "\n";
+
+
+    //    PCAPivots<double>* pvt = new PCAPivots<double>();
+    //    pvt->setSampleSize(0.01);
+    //    pvt->generatePivots(train, df, 2);
+
+    //    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> mvp
+    //            = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, PCAPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>((EuclideanDistance<BasicArrayObject<double>>*)df);
+    //    std::vector<datapoint_t<BasicArrayObject<double>, PL>> addPoints;
+    //    for(size_t x = 0; x < train->getCardinality(); x++)
+    //    {
+
+    //        addPoints.push_back({static_cast<long long>(x), train->getFeatureVector(x)});
+
+    //    }
+    //    mvp.Add(addPoints);
+    //    size_t k = 100;
+
+    //    vector<size_t> distcnt, leafcnt;
+
+    //    for(size_t j = 0; j < test->getCardinality(); j++)
+    //    {
+
+    //        std::vector<std::pair<size_t, double>> dist;
+    //        for(size_t i = 0; i < train->getCardinality(); i++)
+    //            dist.push_back(std::make_pair(i, df->getDistance(*test->instance(j), *train->instance(i))));
+    //        std::sort(dist.begin(), dist.end(), [](std::pair<size_t, double> &a, std::pair<size_t, double> &b){
+    //            return a.second < b.second;
+    //        });
+
+    //        std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+    //        df->resetStatistics();
+    //        mvp.knn(test->getFeatureVector(j), k, ans);
+
+    //        for(size_t z = 0; z < k; z++)
+    //        {
+
+    //            if(ans[z].distance != dist[z].second)
+    //                cout << "ERRO EM : " << j << endl;
+
+    //        }
+
+    //        distcnt.push_back(df->getDistanceCount());
+    //        leafcnt.push_back(mvp.getLeafNodeAccess());
+
+    //    }
+
+    //    if(distcnt.size() % 2 == 0)
+    //    {
+
+    //        nth_element(distcnt.begin(),
+    //                            distcnt.begin() + distcnt.size() / 2,
+    //                            distcnt.end());
+
+    //        nth_element(distcnt.begin(),
+    //                            distcnt.begin() + (distcnt.size() - 1) / 2,
+    //                            distcnt.end());
+
+
+    //        cout << "DIST MEDIAN : " << (double)(distcnt[(distcnt.size() - 1) / 2]+ distcnt[distcnt.size() / 2])/ 2.0 << endl;
+
+    //    }
+    //    else
+    //    {
+
+    //        nth_element(distcnt.begin(),
+    //                            distcnt.begin() + distcnt.size() / 2,
+    //                            distcnt.end());
+
+    //        cout << "DIST MEDIAN : " << (double)distcnt[distcnt.size() / 2] << endl;
+
+    //    }
+
+    //    if(leafcnt.size() % 2 == 0)
+    //    {
+
+    //        nth_element(leafcnt.begin(),
+    //                            leafcnt.begin() + leafcnt.size() / 2,
+    //                            leafcnt.end());
+
+    //        nth_element(leafcnt.begin(),
+    //                            leafcnt.begin() + (leafcnt.size() - 1) / 2,
+    //                            leafcnt.end());
+
+
+    //        cout << "LEAF MEDIAN : " << (double)(leafcnt[(leafcnt.size() - 1) / 2]+ leafcnt[leafcnt.size() / 2])/ 2.0 << endl;
+
+    //    }
+    //    else
+    //    {
+
+    //        nth_element(leafcnt.begin(),
+    //                            leafcnt.begin() + leafcnt.size() / 2,
+    //                            leafcnt.end());
+
+    //        cout << "LEAF MEDIAN : " << (double)leafcnt[leafcnt.size() / 2] << endl;
+
+    //    }
+
+    //    Dataset<vector<char>>* train = new Dataset<vector<char>>();
+    //    Dataset<vector<char>>::loadTextDataset(train, "../datasets/names.csv", " ");
+    //    Dataset<vector<char>>* test = new Dataset<vector<char>>();
+    //    Dataset<vector<char>>::loadTextDataset(test, "../datasets/names.csv", " ");
+    //    EditDistance<BasicArrayObject<vector<char>>>* df = new EditDistance<BasicArrayObject<vector<char>>>();
+    //    RandomPivots<vector<char>>* pvt = new RandomPivots<vector<char>>();
+    //    pvt->generatePivots(train, df, 2);
+
+    //    MVPTREE_STRING_RANDOM mvp = MVPTREE_STRING_RANDOM(df, pvt);
+    //    std::vector<datapoint_t<BasicArrayObject<vector<char>>, PL>> addPoints;
+    //    for(size_t x = 0; x < train->getCardinality(); x++)
+    //    {
+
+    //        addPoints.push_back({static_cast<long long>(x), train->getFeatureVector(x)});
+
+    //    }
+    //    mvp.Add(addPoints);
+    //    size_t k = 100;
+
+    //    vector<size_t> distcnt, leafcnt;
+
+    //    for(size_t j = 0; j < test->getCardinality(); j++)
+    //    {
+
+    //        std::vector<std::pair<size_t, double>> dist;
+    //        for(size_t i = 0; i < train->getCardinality(); i++)
+    //            dist.push_back(std::make_pair(i, df->getDistance(*test->instance(j), *train->instance(i))));
+    //        std::sort(dist.begin(), dist.end(), [](std::pair<size_t, double> &a, std::pair<size_t, double> &b){
+    //            return a.second < b.second;
+    //        });
+
+    //        std::vector<KnnEntryMVP<BasicArrayObject<vector<char>>>> ans;
+    //        df->resetStatistics();
+    //        mvp.knn(test->getFeatureVector(j), k, ans);
+
+    //        for(size_t z = 0; z < k; z++)
+    //        {
+
+    //            if(ans[z].distance != dist[z].second)
+    //                cout << "ERRO EM : " << j << endl;
+
+    //        }
+
+    //        distcnt.push_back(df->getDistanceCount());
+    //        leafcnt.push_back(mvp.getLeafNodeAccess());
+
+    //    }
+
+    //    if(distcnt.size() % 2 == 0)
+    //    {
+
+    //        nth_element(distcnt.begin(),
+    //                            distcnt.begin() + distcnt.size() / 2,
+    //                            distcnt.end());
+
+    //        nth_element(distcnt.begin(),
+    //                            distcnt.begin() + (distcnt.size() - 1) / 2,
+    //                            distcnt.end());
+
+
+    //        cout << "DIST MEDIAN : " << (double)(distcnt[(distcnt.size() - 1) / 2]+ distcnt[distcnt.size() / 2])/ 2.0 << endl;
+
+    //    }
+    //    else
+    //    {
+
+    //        nth_element(distcnt.begin(),
+    //                            distcnt.begin() + distcnt.size() / 2,
+    //                            distcnt.end());
+
+    //        cout << "DIST MEDIAN : " << (double)distcnt[distcnt.size() / 2] << endl;
+
+    //    }
+
+    //    if(leafcnt.size() % 2 == 0)
+    //    {
+
+    //        nth_element(leafcnt.begin(),
+    //                            leafcnt.begin() + leafcnt.size() / 2,
+    //                            leafcnt.end());
+
+    //        nth_element(leafcnt.begin(),
+    //                            leafcnt.begin() + (leafcnt.size() - 1) / 2,
+    //                            leafcnt.end());
+
+
+    //        cout << "LEAF MEDIAN : " << (double)(leafcnt[(leafcnt.size() - 1) / 2]+ leafcnt[leafcnt.size() / 2])/ 2.0 << endl;
+
+    //    }
+    //    else
+    //    {
+
+    //        nth_element(leafcnt.begin(),
+    //                            leafcnt.begin() + leafcnt.size() / 2,
+    //                            leafcnt.end());
+
+    //        cout << "LEAF MEDIAN : " << (double)leafcnt[leafcnt.size() / 2] << endl;
+
+    //    }
+
 
     return 0;
 
