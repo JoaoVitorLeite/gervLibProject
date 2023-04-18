@@ -3,6 +3,8 @@
 
 #include <Experiments.h>
 
+namespace fs = std::experimental::filesystem;
+
 template <class T>
 class IndexExperiments : public Experiments<T>
 {
