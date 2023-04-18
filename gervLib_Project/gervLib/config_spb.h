@@ -5,7 +5,7 @@
 #include <string>
 #include <experimental/filesystem>
 
-using fs = std::experimental::filesystem;
+namespace fs = std::experimental::filesystem;
 
 typedef unsigned long long ull;
 typedef long long ll;

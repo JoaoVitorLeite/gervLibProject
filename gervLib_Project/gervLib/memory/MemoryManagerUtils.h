@@ -8,7 +8,7 @@
 #include <vector>
 #include <experimental/filesystem>
 
-using fs = std::experimental::filesystem;
+namespace fs = std::experimental::filesystem;
 
 void setBaseFilePath(std::string auxName = "SPBfiles")
 {
