@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
         else
             expt.runExperimentWithRepetitions(*rep);
 
-        cout << *pivot_type << endl;
+        //cout << *pivot_type << endl;
 
     }
 

@@ -78,13 +78,7 @@ public:
     void runExperiment() override
     {
 
-        //REMOVER DEPOIS
-        std::stringstream ss;
-        ss << this->names[this->pvt->getPivotType()] << "/";
-        for(size_t &p : pvtNum)
-            ss << p << "/";
-        ss << std::endl;
-        //REMOVER DEPOIS
+        std::cout << this->names[this->pvt->getPivotType()] << "/"; //REMOVER
 
         std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
                 fs::path::preferred_separator + this->names[this->pvt->getPivotType()] + ".csv";
@@ -145,20 +139,18 @@ public:
 
             }
 
+            std::cout << p << "/"; //REMOVER
+
         }
+
+        std::cout << std::endl; //REMOVER
 
     }
 
     void runExperimentWithRepetitions(size_t rep) override
     {
 
-        //REMOVER DEPOIS
-        std::stringstream ss;
-        ss << this->names[this->pvt->getPivotType()] << "/";
-        for(size_t &p : pvtNum)
-            ss << p << "/";
-        ss << std::endl;
-        //REMOVER DEPOIS
+        std::cout << this->names[this->pvt->getPivotType()] << "/"; //REMOVER
 
         bool repSavePivots = true;
 
@@ -224,7 +216,11 @@ public:
 
                 }
 
+                std::cout << p << "/"; //REMOVER
+
             }
+
+            std::cout << std::endl; //REMOVER
 
             repSavePivots = false;
 
