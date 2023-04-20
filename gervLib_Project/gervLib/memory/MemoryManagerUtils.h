@@ -29,7 +29,8 @@ void setBaseFilePath(std::string auxName = "SPBfiles")
         auxPath = entry.path().string();
 
         //std::cout << auxPath << "\n";
-        if(entry.is_directory() && (entry.path().string().find(auxName) != std::string::npos))
+//        if(entry.is_directory() && (entry.path().string().find(auxName) != std::string::npos))
+        if(fs::is_directory(entry.path()) && (entry.path().string().find(auxName) != std::string::npos))
         {
 
 //            std::cout << "SUB = " << auxPath.substr(auxPath.find_last_of(std::filesystem::path::preferred_separator) + 1) << "\n";

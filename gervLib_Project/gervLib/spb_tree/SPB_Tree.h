@@ -146,13 +146,13 @@ private:
     void bulk_load(Dataset<T>* dataset)
     {
 
-        vector<vector<double>> pivot_mapping;
-        pivot_mapping.resize(dataset->getCardinality(), vector<double>(PIVOT_NUM));
+        std::vector<std::vector<double>> pivot_mapping;
+        pivot_mapping.resize(dataset->getCardinality(), std::vector<double>(PIVOT_NUM));
 
-        vector<vector<ull>> disc;
-        disc.resize(dataset->getCardinality(), vector<ull>(PIVOT_NUM));
+        std::vector<std::vector<ull>> disc;
+        disc.resize(dataset->getCardinality(), std::vector<ull>(PIVOT_NUM));
 
-        vector<ull> keys(dataset->getCardinality());
+        std::vector<ull> keys(dataset->getCardinality());
 
         std::ofstream file_pivot_mapping(baseFilePath + fs::path::preferred_separator + "bulk_load_pivot_mapping.txt");
         std::ofstream file_disc(baseFilePath + fs::path::preferred_separator + "bulk_load_disc.txt");
@@ -344,7 +344,7 @@ public:
     void dumpHilbertCurve()
     {
 
-        cout << hc << endl;
+        std::cout << hc << std::endl;
 
     }
 
@@ -370,7 +370,7 @@ public:
 
     }
 
-    double minDist(vector<double> sq_, ull** mbr_)
+    double minDist(std::vector<double> sq_, ull** mbr_)
     {
 
         double** mbr = new double*[PIVOT_NUM];
@@ -470,7 +470,7 @@ public:
 
     }
 
-    double maxDist(vector<double> sq_, ull** mbr_)
+    double maxDist(std::vector<double> sq_, ull** mbr_)
     {
 
 
@@ -566,7 +566,7 @@ public:
         std::priority_queue<KnnSPB<T>, std::vector<KnnSPB<T>>, std::less<KnnSPB<T>>> resultQueue;
         nodeQueue.push(SPBPartition(bt.getRoot(), 0.0, std::numeric_limits<double>::infinity()));
 
-        vector<double> sq_ = vector<double>(PIVOT_NUM);
+        std::vector<double> sq_ = std::vector<double>(PIVOT_NUM);
 
         for(size_t i = 0; i < PIVOT_NUM; i++)
         {

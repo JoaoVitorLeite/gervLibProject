@@ -41,22 +41,24 @@ int main(int argc, char *argv[])
     Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
     DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
     Pivot<double>* pvt = new WDRPivots<double>();
+    pvt->setSampleSize(0.5);
+    pvt->generatePivots(data, df, 500);
 
-    PivotExperiments<double> expt = PivotExperiments<double>();
-    expt.setDistanceFunctionName("EUCLIDEAN");
-    expt.setTrainDataset(data);
-    expt.setOutputPath("../results/");
-    expt.setDistanceFunction(df);
-    expt.setPivotMethod(pvt);
-    expt.setSeed(157);
-    expt.setSampleSize(0.5);
-    expt.modifySeed();
-    expt.modifySampleSize();
-    expt.setPivotNum({100,150,200});
-    expt.setSavePivot(false);
-    expt.runExperiment();
-    expt.setSavePivot(true);
-    expt.runExperimentWithRepetitions(1);
+//    PivotExperiments<double> expt = PivotExperiments<double>();
+//    expt.setDistanceFunctionName("EUCLIDEAN");
+//    expt.setTrainDataset(data);
+//    expt.setOutputPath("../results/");
+//    expt.setDistanceFunction(df);
+//    expt.setPivotMethod(pvt);
+//    expt.setSeed(157);
+//    expt.setSampleSize(0.5);
+//    expt.modifySeed();
+//    expt.modifySampleSize();
+//    expt.setPivotNum({100,150,200});
+//    expt.setSavePivot(false);
+//    expt.runExperiment();
+//    expt.setSavePivot(true);
+//    expt.runExperimentWithRepetitions(1);
 
     //-----------------------------------------------------------------------------------------------------------------------------------------
 

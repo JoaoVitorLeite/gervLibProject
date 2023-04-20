@@ -1633,14 +1633,14 @@ public:
 	
     void _dump_Key_Minmax(node *n, int depth) {
         for (int i=0; i<depth; ++i) {
-            cout << ' ';
+            std::cout << ' ';
         }
-        cout << "(key_min, key_max) = (" << n->key_min << ", " << n->key_max << "), ";
-        cout << "mbr = ";
+        std::cout << "(key_min, key_max) = (" << n->key_min << ", " << n->key_max << "), ";
+        std::cout << "mbr = ";
         for (int i=0; i<PIVOT_NUM; ++i) {
-            cout << i << ":[" << n->mbr[i][0] << "," << n->mbr[i][1] << "] ";
+            std::cout << i << ":[" << n->mbr[i][0] << "," << n->mbr[i][1] << "] ";
         }
-        cout << endl;
+        std::cout << std::endl;
         if (n->isleafnode())
         {
             /*do nothing*/;
@@ -1673,11 +1673,11 @@ public:
     {
 
         inner_node *root = static_cast<inner_node*>(m_root);
-        cout << "ROOT = \n";
+        std::cout << "ROOT = \n";
         for(short i = 0; i < root->slotuse; i++)
         {
 
-            cout << root->slotkey[i] << endl;
+            std::cout << root->slotkey[i] << std::endl;
 
         }
 
@@ -1691,19 +1691,19 @@ public:
 
 //        }
 
-        cout << endl;
+        std::cout << std::endl;
 
         for(leaf_node* it = m_headleaf; ; it = it->nextleaf)
         {
 
-            cout << "LEAF = ";
+            std::cout << "LEAF = ";
             for(size_t i = 0; i < it->slotuse; ++i)
             {
 
-                cout << it->slotkey[i] << "/" << it->slotdata[i] << "  ";
+                std::cout << it->slotkey[i] << "/" << it->slotdata[i] << "  ";
 
             }
-            cout << endl;
+            std::cout << std::endl;
 
         }
 
@@ -1791,7 +1791,7 @@ public:
             leaf_node *leafnode = static_cast<leaf_node*>(n);
             leafnode->key_min = std::numeric_limits<key_type>::max();
             leafnode->key_max = std::numeric_limits<key_type>::min();
-            vector<ull> keys;
+            std::vector<ull> keys;
 
             for (int i=0; i<leafnode->slotuse; ++i)
             {
@@ -1813,7 +1813,7 @@ public:
 
             }
 
-            vector<vector<ull>> points = hc.points_from_distances(keys);
+            std::vector<std::vector<ull>> points = hc.points_from_distances(keys);
             keys.clear();
 
             for(int i = 0; i < PIVOT_NUM; ++i)

@@ -41,35 +41,35 @@ HEADERS += \
         VpTree/Node/Node.h \
         VpTree/QueueItem.h \
         VpTree/VpTree.h \
-    btree/btree.h \
-    btree/btree_multimap.h \
-    config_spb.h \
-    experiments/Experiments.h \
-    experiments/IndexExperiments.h \
-    experiments/MVPExperiments.h \
-    experiments/OmniExperiments.h \
-    experiments/PMExperiments.h \
-    experiments/PivotExperiments.h \
-    experiments/SPBExperiments.h \
-    experiments/VPExperiments.h \
-    hilbert/EquiDepth.h \
-    hilbert/Hilbert.h \
+        btree/btree.h \
+        btree/btree_multimap.h \
+        config_spb.h \
+        experiments/Experiments.h \
+        experiments/IndexExperiments.h \
+        experiments/MVPExperiments.h \
+        experiments/OmniExperiments.h \
+        experiments/PMExperiments.h \
+        experiments/PivotExperiments.h \
+        experiments/SPBExperiments.h \
+        experiments/VPExperiments.h \
+        hilbert/EquiDepth.h \
+        hilbert/Hilbert.h \
         kdtree/DirectoryNodeKdTree.h \
         kdtree/KdTree.h \
         kdtree/LeafNodeKdTree.h \
         kdtree/NodeKdTree.h \
     #memory/MemoryManager.h \
-    memory/MemoryManagerUtils.h \
-    memory/cache.h \
-    memory/cache_policy.h \
-    memory/fifo_cache_policy.h \
-    memory/lfu_cache_policy.h \
-    memory/lru_cache_policy.h \
+        memory/MemoryManagerUtils.h \
+        memory/cache.h \
+        memory/cache_policy.h \
+        memory/fifo_cache_policy.h \
+        memory/lfu_cache_policy.h \
+        memory/lru_cache_policy.h \
         mvptree/datapoint.h \
         mvptree/mvpnode.h \
         mvptree/mvptree.h \
         omni/OmniKdTree.h \
-    pivots/include/BPPPivots.h \
+        pivots/include/BPPPivots.h \
         pivots/include/Cluster.h \
         pivots/include/ConvexPivots.h \
         pivots/include/FFTPivots.h \
@@ -90,11 +90,11 @@ HEADERS += \
         pivots/include/SelectionPivots.h \
         pivots/include/WDRPivots.h \
         pm_tree/PM_Tree.h \
-    spb_tree/SPB_Tree.h \
+        spb_tree/SPB_Tree.h \
         utils/include/Util.h \
 
 
-
+LIBS += -lstdc++fs
 
 SOURCES += \
     hilbert/hilbert2.cpp \
