@@ -15,13 +15,14 @@
 #include <MemoryManagerUtils.h>
 #include <SPB_Tree.h>
 #include <PivotExperiments.h>
+#include <experimental/filesystem>
 
 using namespace std;
 using namespace mvp;
 
 const int BF = 2;   //branchfactor
 const int PL = 8;   // pathlength
-const int LC = 5; // leafcap
+const int LC = 55; // leafcap
 const int LPN = 2;  // levelspernode
 const int FO = 4; //fanout bf^lpn
 const int NS = 2; //numsplits (bf-1)^lpn
@@ -36,13 +37,56 @@ typedef std::vector<char> str;
 
 int main(int argc, char *argv[])
 {
+    //Ver se o elemento de indice 0 esta na MVP
+    //Possivel problema no algoritmo de consulta ele sempre considera 2 pivos por no diretorio mas pode nem sempre ter 2
 
-    Dataset<double>* data = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(data, "../datasets/cities_norm.csv", ",");
-    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    Pivot<double>* pvt = new WDRPivots<double>();
-    pvt->setSampleSize(0.5);
-    pvt->generatePivots(data, df, 500);
+    Dataset<std::vector<char>>* train = new Dataset<std::vector<char>>();
+    Dataset<std::vector<char>>::loadTextDataset(train, "../../gervLib/datasets/sgb-words.csv", " ");
+    Dataset<std::vector<char>>* test = new Dataset<std::vector<char>>();
+    Dataset<std::vector<char>>::loadTextDataset(test, "../../gervLib/datasets/sgb-words.csv", " ");
+    EditDistance<BasicArrayObject<std::vector<char>>>* df = new EditDistance<BasicArrayObject<std::vector<char>>>();
+    RandomPivots<std::vector<char>>* pvt = new RandomPivots<std::vector<char>>();
+    size_t k = 100, numPerLeaf = 55;
+    MVPTree<BasicArrayObject<std::vector<char>>, EditDistance<BasicArrayObject<std::vector<char>>>, RandomPivots<std::vector<char>>, Dataset<std::vector<char>>, BF,PL,LC,LPN,FO,NS> index
+        = MVPTree<BasicArrayObject<std::vector<char>>, EditDistance<BasicArrayObject<std::vector<char>>>, RandomPivots<std::vector<char>>, Dataset<std::vector<char>>, BF,PL,LC,LPN,FO,NS>(df, train);
+    std::vector<KnnEntryMVP<BasicArrayObject<std::vector<char>>>> ans;
+
+//    for(size_t x = 0; x < test->getCardinality(); x++)
+//    {
+
+//        ans.clear();
+//        index.knn(test->getFeatureVector(x), k, ans);
+//        std::vector<double> dist;
+//        for(size_t i = 0; i < test->getCardinality(); i++)
+//            dist.push_back(df->getDistance(*test->instance(x), *test->instance(i)));
+
+//        sort(dist.begin(), dist.end());
+
+//        for(size_t z = 0; z < k; z++)
+//            if(dist[z] != ans[z].distance)
+//                cout << "ERRO EM: " << x << endl;
+
+//    }
+
+    std::vector<double> dist;
+    for(size_t i = 0; i < test->getCardinality(); i++)
+        dist.push_back(df->getDistance(*test->instance(0), *test->instance(i)));
+
+    sort(dist.begin(), dist.end());
+
+    index.knn(test->getFeatureVector(0), k, ans);
+    for(size_t i = 0; i < k; i++)
+        cout << dist[i] << endl;
+
+
+//    Dataset<double>* data = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(data, "../datasets/open2/Dataset3.csv", ",");
+//    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    Pivot<double>* pvt = new PCAPivots<double>();
+//    //pvt->setSampleSize(0.5);
+//    pvt->generatePivots(data, df, 7);
+//    for(size_t i = 0; i < 7; i++)
+//        std::cout << pvt->get(i).getOID() << std::endl;
 
 //    PivotExperiments<double> expt = PivotExperiments<double>();
 //    expt.setDistanceFunctionName("EUCLIDEAN");

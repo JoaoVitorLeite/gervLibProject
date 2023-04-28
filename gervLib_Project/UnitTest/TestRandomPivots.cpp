@@ -338,7 +338,7 @@ void TestRandomPivots::test12()
 {
 
     Dataset<std::vector<char>>* sample = new Dataset<std::vector<char>>();
-    Dataset<std::vector<char>>::loadTextDataset(sample, "../../gervLib/datasets/sgb-words-30.csv", 30, 1);
+    Dataset<std::vector<char>>::loadTextDataset(sample, "../../gervLib/datasets/old/sgb-words-30.csv", 30, 1);
     DistanceFunction<BasicArrayObject<std::vector<char>>>* df = new EditDistance<BasicArrayObject<std::vector<char>>>();
     RandomPivots<std::vector<char>>* pvt = new RandomPivots<std::vector<char>>();
     pvt->setSeed(1);
@@ -372,7 +372,7 @@ void TestRandomPivots::test13()
 {
 
     Dataset<std::vector<char>>* sample = new Dataset<std::vector<char>>();
-    Dataset<std::vector<char>>::loadTextDataset(sample, "../../gervLib/datasets/sgb-words-30.csv", 30, 1);
+    Dataset<std::vector<char>>::loadTextDataset(sample, "../../gervLib/datasets/old/sgb-words-30.csv", 30, 1);
     DistanceFunction<BasicArrayObject<std::vector<char>>>* df = new EditDistance<BasicArrayObject<std::vector<char>>>();
     RandomPivots<std::vector<char>>* pvt = new RandomPivots<std::vector<char>>();
     pvt->setSeed(1);
@@ -394,7 +394,7 @@ void TestRandomPivots::test14()
 {
 
     Dataset<std::vector<char>>* sample = new Dataset<std::vector<char>>();
-    Dataset<std::vector<char>>::loadTextDataset(sample, "../../gervLib/datasets/sgb-words-30.csv", 30, 1);
+    Dataset<std::vector<char>>::loadTextDataset(sample, "../../gervLib/datasets/old/sgb-words-30.csv", 30, 1);
     DistanceFunction<BasicArrayObject<std::vector<char>>>* df = new EditDistance<BasicArrayObject<std::vector<char>>>();
     RandomPivots<std::vector<char>>* pvt = new RandomPivots<std::vector<char>>();
     pvt->setSeed(1);

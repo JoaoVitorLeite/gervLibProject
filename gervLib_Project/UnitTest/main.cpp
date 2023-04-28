@@ -10,6 +10,7 @@
 #include <TestSSSPivots.h>
 #include <TestPCAPivots.h>
 #include <TestKmedoidsPivots.h>
+#include <TestIndex.h>
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
     status |= QTest::qExec(new TestSSSPivots, argc, argv);
     status |= QTest::qExec(new TestPCAPivots, argc, argv);
     status |= QTest::qExec(new TestKmedoidsPivots, argc, argv);
+    status |= QTest::qExec(new TestIndex, argc, argv);
 
     return status;
 }

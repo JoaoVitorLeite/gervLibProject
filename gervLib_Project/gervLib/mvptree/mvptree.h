@@ -722,7 +722,7 @@ namespace mvp {
 
             //m_top->setDistanceFunction(distanceFunction);
             //m_top->setPivotMethod(pivotMethod);
-        };
+        }
 
         MVPTree(F* distanceFunction)/*:m_top(NULL),n_sync(100)*/{
             n_sync = 100;
@@ -731,7 +731,7 @@ namespace mvp {
 
             //m_top->setDistanceFunction(distanceFunction);
             //m_top->setPivotMethod(pivotMethod);
-        };
+        }
 
         void Add(datapoint_t<T,PL> &item);
 
@@ -1547,6 +1547,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
                 for(size_t x = 0; x < datapointsLeaf.size(); x++)
                 {
 
+                    if(datapointsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
                     candidatesQueue.push(KnnEntryMVP<T>(datapointsLeaf[x].key, df->getDistance(query, datapointsLeaf[x].key)));
 
                 }
@@ -1554,6 +1555,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
                 for(size_t x = 0; x < datavpsLeaf.size(); x++)
                 {
 
+                    if(datapointsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
                     candidatesQueue.push(KnnEntryMVP<T>(datavpsLeaf[x].key, df->getDistance(query, datavpsLeaf[x].key)));
 
                 }
@@ -1579,6 +1581,9 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
                 double d_sq_p2 = df->getDistance(query, datavpsInternal[1].key);
 
 //                cnt += datavpsInternal.size();
+
+                if(datavpsInternal[0].key.getOID() == (size_t)0) std::cout << "FIND\n";
+                if(datavpsInternal[1].key.getOID() == (size_t)0) std::cout << "FIND\n";
 
                 candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[0].key, d_sq_p1));
                 candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[1].key, d_sq_p2));
@@ -1625,6 +1630,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
                 for(size_t x = 0; x < datapointsLeaf.size(); x++)
                 {
 
+                    if(datapointsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
                     candidatesQueue.push(KnnEntryMVP<T>(datapointsLeaf[x].key, df->getDistance(query, datapointsLeaf[x].key)));
 
                 }
@@ -1632,6 +1638,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
                 for(size_t x = 0; x < datavpsLeaf.size(); x++)
                 {
 
+                    if(datavpsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
                     candidatesQueue.push(KnnEntryMVP<T>(datavpsLeaf[x].key, df->getDistance(query, datavpsLeaf[x].key)));
 
                 }
@@ -1656,6 +1663,9 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
                 cases sqCase;
                 double d_sq_p1 = df->getDistance(query, datavpsInternal[0].key);
                 double d_sq_p2 = df->getDistance(query, datavpsInternal[1].key);
+
+                if(datavpsInternal[0].key.getOID() == (size_t)0) std::cout << "FIND\n";
+                if(datavpsInternal[1].key.getOID() == (size_t)0) std::cout << "FIND\n";
 
                 candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[0].key, d_sq_p1));
                 candidatesQueue.push(KnnEntryMVP<T>(datavpsInternal[1].key, d_sq_p2));

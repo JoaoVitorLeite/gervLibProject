@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_TESTLIB_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR='"/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest"' -DQT_QML_DEBUG
 CFLAGS        = -pipe -g -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
-INCPATH       = -I. -I../gervLib/dataset/include -I../gervLib/Distance -I../gervLib/Distance/util/include -I../gervLib/hermes/util/include/ -I../gervLib/utils/include -I../gervLib/pivots/include -I../gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -Ibin -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -I../gervLib/dataset/include -I../gervLib/Distance -I../gervLib/Distance/util/include -I../gervLib/hermes/util/include/ -I../gervLib/utils/include -I../gervLib/pivots/include -I../gervLib/eigen -I../gervLib/omni -I../gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -Ibin -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/joaoleite/Qt/6.5.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -56,6 +56,7 @@ SOURCES       = tst_test_gervlib.cpp \
 		TestConvexPivots.cpp \
 		TestDataset.cpp \
 		TestGnatPivots.cpp \
+		TestIndex.cpp \
 		TestKmedoidsPivots.cpp \
 		TestMaxSeparetedPivots.cpp \
 		TestMaxVariancePivots.cpp \
@@ -67,6 +68,7 @@ SOURCES       = tst_test_gervlib.cpp \
 		../gervLib/utils/include/Util.cpp bin/moc_TestConvexPivots.cpp \
 		bin/moc_TestDataset.cpp \
 		bin/moc_TestGnatPivots.cpp \
+		bin/moc_TestIndex.cpp \
 		bin/moc_TestKmedoidsPivots.cpp \
 		bin/moc_TestMaxSeparetedPivots.cpp \
 		bin/moc_TestMaxVariancePivots.cpp \
@@ -78,6 +80,7 @@ OBJECTS       = bin/tst_test_gervlib.o \
 		bin/TestConvexPivots.o \
 		bin/TestDataset.o \
 		bin/TestGnatPivots.o \
+		bin/TestIndex.o \
 		bin/TestKmedoidsPivots.o \
 		bin/TestMaxSeparetedPivots.o \
 		bin/TestMaxVariancePivots.o \
@@ -90,6 +93,7 @@ OBJECTS       = bin/tst_test_gervlib.o \
 		bin/moc_TestConvexPivots.o \
 		bin/moc_TestDataset.o \
 		bin/moc_TestGnatPivots.o \
+		bin/moc_TestIndex.o \
 		bin/moc_TestKmedoidsPivots.o \
 		bin/moc_TestMaxSeparetedPivots.o \
 		bin/moc_TestMaxVariancePivots.o \
@@ -246,6 +250,7 @@ DIST          = /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
 		UnitTest.pro TestConvexPivots.h \
 		TestDataset.h \
 		TestGnatPivots.h \
+		TestIndex.h \
 		TestKmedoidsPivots.h \
 		TestMaxSeparetedPivots.h \
 		TestMaxVariancePivots.h \
@@ -257,6 +262,7 @@ DIST          = /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
 		TestConvexPivots.cpp \
 		TestDataset.cpp \
 		TestGnatPivots.cpp \
+		TestIndex.cpp \
 		TestKmedoidsPivots.cpp \
 		TestMaxSeparetedPivots.cpp \
 		TestMaxVariancePivots.cpp \
@@ -592,8 +598,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents TestConvexPivots.h TestDataset.h TestGnatPivots.h TestKmedoidsPivots.h TestMaxSeparetedPivots.h TestMaxVariancePivots.h TestPCAPivots.h TestRandomPivots.h TestSSSPivots.h TestSelectionPivots.h ../gervLib/utils/include/Util.h $(DISTDIR)/
-	$(COPY_FILE) --parents tst_test_gervlib.cpp TestConvexPivots.cpp TestDataset.cpp TestGnatPivots.cpp TestKmedoidsPivots.cpp TestMaxSeparetedPivots.cpp TestMaxVariancePivots.cpp TestPCAPivots.cpp TestRandomPivots.cpp TestSSSPivots.cpp TestSelectionPivots.cpp main.cpp ../gervLib/utils/include/Util.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents TestConvexPivots.h TestDataset.h TestGnatPivots.h TestIndex.h TestKmedoidsPivots.h TestMaxSeparetedPivots.h TestMaxVariancePivots.h TestPCAPivots.h TestRandomPivots.h TestSSSPivots.h TestSelectionPivots.h ../gervLib/utils/include/Util.h $(DISTDIR)/
+	$(COPY_FILE) --parents tst_test_gervlib.cpp TestConvexPivots.cpp TestDataset.cpp TestGnatPivots.cpp TestIndex.cpp TestKmedoidsPivots.cpp TestMaxSeparetedPivots.cpp TestMaxVariancePivots.cpp TestPCAPivots.cpp TestRandomPivots.cpp TestSSSPivots.cpp TestSelectionPivots.cpp main.cpp ../gervLib/utils/include/Util.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -626,9 +632,9 @@ compiler_moc_predefs_clean:
 bin/moc_predefs.h: /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o bin/moc_predefs.h /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: bin/moc_TestConvexPivots.cpp bin/moc_TestDataset.cpp bin/moc_TestGnatPivots.cpp bin/moc_TestKmedoidsPivots.cpp bin/moc_TestMaxSeparetedPivots.cpp bin/moc_TestMaxVariancePivots.cpp bin/moc_TestPCAPivots.cpp bin/moc_TestRandomPivots.cpp bin/moc_TestSSSPivots.cpp bin/moc_TestSelectionPivots.cpp
+compiler_moc_header_make_all: bin/moc_TestConvexPivots.cpp bin/moc_TestDataset.cpp bin/moc_TestGnatPivots.cpp bin/moc_TestIndex.cpp bin/moc_TestKmedoidsPivots.cpp bin/moc_TestMaxSeparetedPivots.cpp bin/moc_TestMaxVariancePivots.cpp bin/moc_TestPCAPivots.cpp bin/moc_TestRandomPivots.cpp bin/moc_TestSSSPivots.cpp bin/moc_TestSelectionPivots.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) bin/moc_TestConvexPivots.cpp bin/moc_TestDataset.cpp bin/moc_TestGnatPivots.cpp bin/moc_TestKmedoidsPivots.cpp bin/moc_TestMaxSeparetedPivots.cpp bin/moc_TestMaxVariancePivots.cpp bin/moc_TestPCAPivots.cpp bin/moc_TestRandomPivots.cpp bin/moc_TestSSSPivots.cpp bin/moc_TestSelectionPivots.cpp
+	-$(DEL_FILE) bin/moc_TestConvexPivots.cpp bin/moc_TestDataset.cpp bin/moc_TestGnatPivots.cpp bin/moc_TestIndex.cpp bin/moc_TestKmedoidsPivots.cpp bin/moc_TestMaxSeparetedPivots.cpp bin/moc_TestMaxVariancePivots.cpp bin/moc_TestPCAPivots.cpp bin/moc_TestRandomPivots.cpp bin/moc_TestSSSPivots.cpp bin/moc_TestSelectionPivots.cpp
 bin/moc_TestConvexPivots.cpp: TestConvexPivots.h \
 		../gervLib/pivots/include/ConvexPivots.h \
 		../gervLib/pivots/include/Pivot.h \
@@ -933,7 +939,7 @@ bin/moc_TestConvexPivots.cpp: TestConvexPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestConvexPivots.h -o bin/moc_TestConvexPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestConvexPivots.h -o bin/moc_TestConvexPivots.cpp
 
 bin/moc_TestDataset.cpp: TestDataset.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QtTest \
@@ -1312,7 +1318,7 @@ bin/moc_TestDataset.cpp: TestDataset.h \
 		../gervLib/utils/include/Util.h \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestDataset.h -o bin/moc_TestDataset.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestDataset.h -o bin/moc_TestDataset.cpp
 
 bin/moc_TestGnatPivots.cpp: TestGnatPivots.h \
 		../gervLib/pivots/include/GnatPivots.h \
@@ -1618,7 +1624,652 @@ bin/moc_TestGnatPivots.cpp: TestGnatPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestGnatPivots.h -o bin/moc_TestGnatPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestGnatPivots.h -o bin/moc_TestGnatPivots.cpp
+
+bin/moc_TestIndex.cpp: TestIndex.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QtTest \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QtTestDepends \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QtCore \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QtCoreDepends \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconfig.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcoreexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtnoop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qassert.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypes.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlogging.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qflags.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconstructormacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qexceptionhandling.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qforeach.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttypetraits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfunctionpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmalloc.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qminmax.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qoverload.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qswap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtresource.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttranslation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20algorithm.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20functional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20iterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q23functional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpair.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydataops.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxptype_traits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringfwd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20type_traits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qanystringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfloat16.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmath.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstracteventdispatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qeventloop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdebug.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qset.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qanimationgroup.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qapplicationstatic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMutex \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmutex.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtsan_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnativeinterface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuture.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfutureinterface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qresultstore.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuture_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthreadpool.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthread.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrunnable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qexception.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpromise.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qassociativeiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbitarray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbuffer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearraymatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcache.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcalendar.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlocale.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborarray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborvalue.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatetime.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborcommon.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qregularexpression.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qurl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/quuid.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcbormap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborstreamreader.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborstreamwriter.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcollator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcommandlineoption.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcommandlineparser.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcryptographichash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdir.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfiledevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfileinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdiriterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qeasingcurve.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qendian.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfactoryinterface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfileselector.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QObject \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QStringList \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfilesystemwatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuturesynchronizer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuturewatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qidentityproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsonarray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsondocument.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsonobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlatin1stringmatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlibrary.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlibraryinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qversionnumber.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qline.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpoint.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlockfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qloggingcategory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmessageauthenticationcode.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetaobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmimedata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmimedatabase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmimetype.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectcleanuphandler.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qoperatingsystemversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qparallelanimationgroup.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpauseanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qplugin.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpluginloader.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qprocess.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qproperty.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpropertyprivate.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpropertyanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariantanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qqueue.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrandom.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qreadwritelock.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrect.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsize.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qresource.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsavefile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopedvaluerollback.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsemaphore.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsequentialanimationgroup.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsequentialiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsettings.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedmemory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsignalmapper.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsimd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsocketnotifier.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstack.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstandardpaths.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstorageinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringlistmodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsystemsemaphore.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcoreversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtemporarydir.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtemporaryfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtextboundaryfinder.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthreadstorage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtimeline.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtimezone.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtranslator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtransposeproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qurlquery.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvarianthash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QHash \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QVariant \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QString \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariantlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QList \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariantmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMap \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvector.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qwaitcondition.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QDeadlineTimer \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qwineventnotifier.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxmlstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxpfunctional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestlib-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qabstractitemmodeltester.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QAbstractItemModel \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QFont \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qfont.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QColor \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qcolor.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qrgb.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QBrush \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qbrush.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qimage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtransform.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qregion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QPixmap \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QImage \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QIcon \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qicon.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qbenchmark.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qbenchmarkmetric.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qsignalspy.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtesteventloop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestcase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestdata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestsystem.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtestsupport_core.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtestsupport_gui.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qeventpoint.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvector2d.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvectornd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpointingdevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qinputdevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qscreen.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QRect \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QSize \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QSizeF \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QTransform \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtestsupport_widgets.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest_network.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QHostAddress \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtnetworkexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkCookie \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkcookie.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QSharedDataPointer \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaType \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkReply \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkreply.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QIODevice \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkRequest \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QUrl \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkAccessManager \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QSslConfiguration \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslconfiguration.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslsocket.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslerror.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslcertificate.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qssl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QFlags \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest_widgets.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest_gui.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestassert.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestkeyboard.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestspontaneevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qguiapplication.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qinputmethod.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qwindow.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QEvent \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMargins \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qsurface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qcursor.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qbitmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpalette.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qfontinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qapplication.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestmouse.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QDebug \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtesttouch.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvector3d.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvector4d.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/QSizePolicy \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestversion.h \
+		../gervLib/omni/OmniKdTree.h \
+		../gervLib/kdtree/KdTree.h \
+		../gervLib/kdtree/NodeKdTree.h \
+		../gervLib/dataset/include/Dataset.h \
+		../gervLib/Distance/BasicArrayObject.h \
+		../gervLib/Distance/DistanceFunction.h \
+		../gervLib/utils/include/Util.h \
+		../gervLib/Distance/Hermes.h \
+		../gervLib/Distance/MetricHistogramDistance.h \
+		../gervLib/Distance/MetricHistogramDistance-inl.h \
+		../gervLib/Distance/WarpDistance.h \
+		../gervLib/Distance/WarpDistance-inl.h \
+		../gervLib/Distance/EuclideanDistance.h \
+		../gervLib/Distance/EuclideanDistance-inl.h \
+		../gervLib/Distance/ManhattanDistance.h \
+		../gervLib/Distance/ManhattanDistance-inl.h \
+		../gervLib/Distance/ChebyshevDistance.h \
+		../gervLib/Distance/ChebyshevDistance-inl.h \
+		../gervLib/Distance/LEdit.h \
+		../gervLib/Distance/LEdit-inl.h \
+		../gervLib/Distance/CanberraDistance.h \
+		../gervLib/Distance/CanberraDistance-inl.h \
+		../gervLib/Distance/JeffreyDivergenceDistance.h \
+		../gervLib/Distance/JeffreyDivergenceDistance-inl.h \
+		../gervLib/Distance/KullbackLeiblerDivergenceDistance.h \
+		../gervLib/Distance/KullbackLeiblerDivergenceDistance-inl.h \
+		../gervLib/Distance/ColorLayoutDistance.h \
+		../gervLib/Distance/ColorLayoutDistance-inl.h \
+		../gervLib/Distance/SumProductDistance.h \
+		../gervLib/Distance/SumProductDistance-inl.h \
+		../gervLib/Distance/SquaredChordDistance.h \
+		../gervLib/Distance/SquaredChordDistance-inl.h \
+		../gervLib/Distance/BrayCurtisDistance.h \
+		../gervLib/Distance/BrayCurtisDistance-inl.h \
+		../gervLib/Distance/QuiSquareDistance.h \
+		../gervLib/Distance/QuiSquareDistance-inl.h \
+		../gervLib/Distance/SpearmanDistance.h \
+		../gervLib/Distance/SpearmanDistance-inl.h \
+		../gervLib/Distance/DTWDistance.h \
+		../gervLib/Distance/DTWDistance-inl.h \
+		../gervLib/Distance/MorositaDistance.h \
+		../gervLib/Distance/MorositaDistance-inl.h \
+		../gervLib/Distance/EditDistance.h \
+		../gervLib/Distance/EditDistance-inl.h \
+		../gervLib/kdtree/LeafNodeKdTree.h \
+		../gervLib/kdtree/DirectoryNodeKdTree.h \
+		../gervLib/pivots/include/Pivots.h \
+		../gervLib/pivots/include/Pivot.h \
+		../gervLib/pivots/include/RandomPivots.h \
+		../gervLib/pivots/include/GnatPivots.h \
+		../gervLib/pivots/include/ConvexPivots.h \
+		../gervLib/pivots/include/KmedoidsPivots.h \
+		../gervLib/pivots/include/Kmedoids.h \
+		../gervLib/pivots/include/Cluster.h \
+		../gervLib/pivots/include/MaxVariancePivots.h \
+		../gervLib/pivots/include/MaxSeparatedPivots.h \
+		../gervLib/pivots/include/SelectionPivots.h \
+		../gervLib/pivots/include/SSSPivots.h \
+		../gervLib/pivots/include/PCAPivots.h \
+		../gervLib/eigen/Eigenvalues \
+		../gervLib/eigen/Core \
+		../gervLib/eigen/src/Core/util/DisableStupidWarnings.h \
+		../gervLib/eigen/src/Core/util/Macros.h \
+		../gervLib/eigen/src/Core/util/MKL_support.h \
+		../gervLib/eigen/src/misc/blas.h \
+		../gervLib/eigen/src/Core/util/Constants.h \
+		../gervLib/eigen/src/Core/util/Meta.h \
+		../gervLib/eigen/src/Core/util/ForwardDeclarations.h \
+		../gervLib/eigen/src/Core/util/StaticAssert.h \
+		../gervLib/eigen/src/Core/util/XprHelper.h \
+		../gervLib/eigen/src/Core/util/Memory.h \
+		../gervLib/eigen/src/Core/NumTraits.h \
+		../gervLib/eigen/src/Core/MathFunctions.h \
+		../gervLib/eigen/src/Core/GenericPacketMath.h \
+		../gervLib/eigen/src/Core/MathFunctionsImpl.h \
+		../gervLib/eigen/src/Core/arch/Default/ConjHelper.h \
+		../gervLib/eigen/src/Core/arch/SSE/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/SSE/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/AVX/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/AVX/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/AVX512/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/AVX512/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/SSE/Complex.h \
+		../gervLib/eigen/src/Core/arch/AVX/Complex.h \
+		../gervLib/eigen/src/Core/arch/AVX/TypeCasting.h \
+		../gervLib/eigen/src/Core/arch/SSE/TypeCasting.h \
+		../gervLib/eigen/src/Core/arch/AltiVec/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/AltiVec/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/AltiVec/Complex.h \
+		../gervLib/eigen/src/Core/arch/NEON/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/NEON/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/NEON/Complex.h \
+		../gervLib/eigen/src/Core/arch/ZVector/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/ZVector/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/ZVector/Complex.h \
+		../gervLib/eigen/src/Core/arch/CUDA/Half.h \
+		../gervLib/eigen/src/Core/arch/CUDA/PacketMathHalf.h \
+		../gervLib/eigen/src/Core/arch/CUDA/TypeCasting.h \
+		../gervLib/eigen/src/Core/arch/CUDA/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/CUDA/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/Default/Settings.h \
+		../gervLib/eigen/src/Core/functors/TernaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/BinaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/UnaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/NullaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/StlFunctors.h \
+		../gervLib/eigen/src/Core/functors/AssignmentFunctors.h \
+		../gervLib/eigen/src/Core/arch/CUDA/Complex.h \
+		../gervLib/eigen/src/Core/IO.h \
+		../gervLib/eigen/src/Core/DenseCoeffsBase.h \
+		../gervLib/eigen/src/Core/DenseBase.h \
+		../gervLib/eigen/src/plugins/BlockMethods.h \
+		../gervLib/eigen/src/Core/MatrixBase.h \
+		../gervLib/eigen/src/plugins/CommonCwiseUnaryOps.h \
+		../gervLib/eigen/src/plugins/CommonCwiseBinaryOps.h \
+		../gervLib/eigen/src/plugins/MatrixCwiseUnaryOps.h \
+		../gervLib/eigen/src/plugins/MatrixCwiseBinaryOps.h \
+		../gervLib/eigen/src/Core/EigenBase.h \
+		../gervLib/eigen/src/Core/Product.h \
+		../gervLib/eigen/src/Core/CoreEvaluators.h \
+		../gervLib/eigen/src/Core/AssignEvaluator.h \
+		../gervLib/eigen/src/Core/Assign.h \
+		../gervLib/eigen/src/Core/ArrayBase.h \
+		../gervLib/eigen/src/plugins/ArrayCwiseUnaryOps.h \
+		../gervLib/eigen/src/plugins/ArrayCwiseBinaryOps.h \
+		../gervLib/eigen/src/Core/util/BlasUtil.h \
+		../gervLib/eigen/src/Core/DenseStorage.h \
+		../gervLib/eigen/src/Core/NestByValue.h \
+		../gervLib/eigen/src/Core/ReturnByValue.h \
+		../gervLib/eigen/src/Core/NoAlias.h \
+		../gervLib/eigen/src/Core/PlainObjectBase.h \
+		../gervLib/eigen/src/Core/Matrix.h \
+		../gervLib/eigen/src/Core/Array.h \
+		../gervLib/eigen/src/Core/CwiseTernaryOp.h \
+		../gervLib/eigen/src/Core/CwiseBinaryOp.h \
+		../gervLib/eigen/src/Core/CwiseUnaryOp.h \
+		../gervLib/eigen/src/Core/CwiseNullaryOp.h \
+		../gervLib/eigen/src/Core/CwiseUnaryView.h \
+		../gervLib/eigen/src/Core/SelfCwiseBinaryOp.h \
+		../gervLib/eigen/src/Core/Dot.h \
+		../gervLib/eigen/src/Core/StableNorm.h \
+		../gervLib/eigen/src/Core/Stride.h \
+		../gervLib/eigen/src/Core/MapBase.h \
+		../gervLib/eigen/src/Core/Map.h \
+		../gervLib/eigen/src/Core/Ref.h \
+		../gervLib/eigen/src/Core/Block.h \
+		../gervLib/eigen/src/Core/VectorBlock.h \
+		../gervLib/eigen/src/Core/Transpose.h \
+		../gervLib/eigen/src/Core/DiagonalMatrix.h \
+		../gervLib/eigen/src/Core/Diagonal.h \
+		../gervLib/eigen/src/Core/DiagonalProduct.h \
+		../gervLib/eigen/src/Core/Redux.h \
+		../gervLib/eigen/src/Core/Visitor.h \
+		../gervLib/eigen/src/Core/Fuzzy.h \
+		../gervLib/eigen/src/Core/Swap.h \
+		../gervLib/eigen/src/Core/CommaInitializer.h \
+		../gervLib/eigen/src/Core/GeneralProduct.h \
+		../gervLib/eigen/src/Core/Solve.h \
+		../gervLib/eigen/src/Core/Inverse.h \
+		../gervLib/eigen/src/Core/SolverBase.h \
+		../gervLib/eigen/src/Core/PermutationMatrix.h \
+		../gervLib/eigen/src/Core/Transpositions.h \
+		../gervLib/eigen/src/Core/TriangularMatrix.h \
+		../gervLib/eigen/src/Core/SelfAdjointView.h \
+		../gervLib/eigen/src/Core/products/GeneralBlockPanelKernel.h \
+		../gervLib/eigen/src/Core/products/Parallelizer.h \
+		../gervLib/eigen/src/Core/ProductEvaluators.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixVector.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrix.h \
+		../gervLib/eigen/src/Core/SolveTriangular.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixVector.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+		../gervLib/eigen/src/Core/products/SelfadjointProduct.h \
+		../gervLib/eigen/src/Core/products/SelfadjointRank2Update.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixVector.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixMatrix.h \
+		../gervLib/eigen/src/Core/products/TriangularSolverMatrix.h \
+		../gervLib/eigen/src/Core/products/TriangularSolverVector.h \
+		../gervLib/eigen/src/Core/BandMatrix.h \
+		../gervLib/eigen/src/Core/CoreIterators.h \
+		../gervLib/eigen/src/Core/ConditionEstimator.h \
+		../gervLib/eigen/src/Core/BooleanRedux.h \
+		../gervLib/eigen/src/Core/Select.h \
+		../gervLib/eigen/src/Core/VectorwiseOp.h \
+		../gervLib/eigen/src/Core/Random.h \
+		../gervLib/eigen/src/Core/Replicate.h \
+		../gervLib/eigen/src/Core/Reverse.h \
+		../gervLib/eigen/src/Core/ArrayWrapper.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
+		../gervLib/eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/Assign_MKL.h \
+		../gervLib/eigen/src/Core/GlobalFunctions.h \
+		../gervLib/eigen/src/Core/util/ReenableStupidWarnings.h \
+		../gervLib/eigen/Cholesky \
+		../gervLib/eigen/Jacobi \
+		../gervLib/eigen/src/Jacobi/Jacobi.h \
+		../gervLib/eigen/src/Cholesky/LLT.h \
+		../gervLib/eigen/src/Cholesky/LDLT.h \
+		../gervLib/eigen/src/misc/lapacke.h \
+		../gervLib/eigen/src/misc/lapacke_mangling.h \
+		../gervLib/eigen/src/Cholesky/LLT_LAPACKE.h \
+		../gervLib/eigen/Householder \
+		../gervLib/eigen/src/Householder/Householder.h \
+		../gervLib/eigen/src/Householder/HouseholderSequence.h \
+		../gervLib/eigen/src/Householder/BlockHouseholder.h \
+		../gervLib/eigen/LU \
+		../gervLib/eigen/src/misc/Kernel.h \
+		../gervLib/eigen/src/misc/Image.h \
+		../gervLib/eigen/src/LU/FullPivLU.h \
+		../gervLib/eigen/src/LU/PartialPivLU.h \
+		../gervLib/eigen/src/LU/PartialPivLU_LAPACKE.h \
+		../gervLib/eigen/src/LU/Determinant.h \
+		../gervLib/eigen/src/LU/InverseImpl.h \
+		../gervLib/eigen/src/LU/arch/Inverse_SSE.h \
+		../gervLib/eigen/Geometry \
+		../gervLib/eigen/SVD \
+		../gervLib/eigen/QR \
+		../gervLib/eigen/src/QR/HouseholderQR.h \
+		../gervLib/eigen/src/QR/FullPivHouseholderQR.h \
+		../gervLib/eigen/src/QR/ColPivHouseholderQR.h \
+		../gervLib/eigen/src/QR/CompleteOrthogonalDecomposition.h \
+		../gervLib/eigen/src/QR/HouseholderQR_LAPACKE.h \
+		../gervLib/eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
+		../gervLib/eigen/src/misc/RealSvd2x2.h \
+		../gervLib/eigen/src/SVD/UpperBidiagonalization.h \
+		../gervLib/eigen/src/SVD/SVDBase.h \
+		../gervLib/eigen/src/SVD/JacobiSVD.h \
+		../gervLib/eigen/src/SVD/BDCSVD.h \
+		../gervLib/eigen/src/SVD/JacobiSVD_LAPACKE.h \
+		../gervLib/eigen/src/Geometry/OrthoMethods.h \
+		../gervLib/eigen/src/Geometry/EulerAngles.h \
+		../gervLib/eigen/src/Geometry/Homogeneous.h \
+		../gervLib/eigen/src/Geometry/RotationBase.h \
+		../gervLib/eigen/src/Geometry/Rotation2D.h \
+		../gervLib/eigen/src/Geometry/Quaternion.h \
+		../gervLib/eigen/src/Geometry/AngleAxis.h \
+		../gervLib/eigen/src/Geometry/Transform.h \
+		../gervLib/eigen/src/Geometry/Translation.h \
+		../gervLib/eigen/src/Geometry/Scaling.h \
+		../gervLib/eigen/src/Geometry/Hyperplane.h \
+		../gervLib/eigen/src/Geometry/ParametrizedLine.h \
+		../gervLib/eigen/src/Geometry/AlignedBox.h \
+		../gervLib/eigen/src/Geometry/Umeyama.h \
+		../gervLib/eigen/src/Geometry/arch/Geometry_SSE.h \
+		../gervLib/eigen/src/Eigenvalues/Tridiagonalization.h \
+		../gervLib/eigen/src/Eigenvalues/RealSchur.h \
+		../gervLib/eigen/src/Eigenvalues/HessenbergDecomposition.h \
+		../gervLib/eigen/src/Eigenvalues/EigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/ComplexSchur.h \
+		../gervLib/eigen/src/Eigenvalues/ComplexEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/RealQZ.h \
+		../gervLib/eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+		../gervLib/eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
+		../gervLib/eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
+		../gervLib/eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../gervLib/pivots/include/FFTPivots.h \
+		../gervLib/pivots/include/HFIPivots.h \
+		../gervLib/pivots/include/ISPivots.h \
+		../gervLib/pivots/include/WDRPivots.h \
+		../gervLib/pivots/include/BPPPivots.h \
+		bin/moc_predefs.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestIndex.h -o bin/moc_TestIndex.cpp
 
 bin/moc_TestKmedoidsPivots.cpp: TestKmedoidsPivots.h \
 		../gervLib/pivots/include/KmedoidsPivots.h \
@@ -1926,7 +2577,7 @@ bin/moc_TestKmedoidsPivots.cpp: TestKmedoidsPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestKmedoidsPivots.h -o bin/moc_TestKmedoidsPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestKmedoidsPivots.h -o bin/moc_TestKmedoidsPivots.cpp
 
 bin/moc_TestMaxSeparetedPivots.cpp: TestMaxSeparetedPivots.h \
 		../gervLib/pivots/include/MaxSeparatedPivots.h \
@@ -2232,7 +2883,7 @@ bin/moc_TestMaxSeparetedPivots.cpp: TestMaxSeparetedPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestMaxSeparetedPivots.h -o bin/moc_TestMaxSeparetedPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestMaxSeparetedPivots.h -o bin/moc_TestMaxSeparetedPivots.cpp
 
 bin/moc_TestMaxVariancePivots.cpp: TestMaxVariancePivots.h \
 		../gervLib/pivots/include/MaxVariancePivots.h \
@@ -2538,7 +3189,7 @@ bin/moc_TestMaxVariancePivots.cpp: TestMaxVariancePivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestMaxVariancePivots.h -o bin/moc_TestMaxVariancePivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestMaxVariancePivots.h -o bin/moc_TestMaxVariancePivots.cpp
 
 bin/moc_TestPCAPivots.cpp: TestPCAPivots.h \
 		../gervLib/pivots/include/PCAPivots.h \
@@ -3050,7 +3701,7 @@ bin/moc_TestPCAPivots.cpp: TestPCAPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestPCAPivots.h -o bin/moc_TestPCAPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestPCAPivots.h -o bin/moc_TestPCAPivots.cpp
 
 bin/moc_TestRandomPivots.cpp: TestRandomPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QTest \
@@ -3356,7 +4007,7 @@ bin/moc_TestRandomPivots.cpp: TestRandomPivots.h \
 		../gervLib/pivots/include/RandomPivots.h \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestRandomPivots.h -o bin/moc_TestRandomPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestRandomPivots.h -o bin/moc_TestRandomPivots.cpp
 
 bin/moc_TestSSSPivots.cpp: TestSSSPivots.h \
 		../gervLib/pivots/include/SSSPivots.h \
@@ -3662,7 +4313,7 @@ bin/moc_TestSSSPivots.cpp: TestSSSPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestSSSPivots.h -o bin/moc_TestSSSPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestSSSPivots.h -o bin/moc_TestSSSPivots.cpp
 
 bin/moc_TestSelectionPivots.cpp: TestSelectionPivots.h \
 		../gervLib/pivots/include/SelectionPivots.h \
@@ -3968,7 +4619,7 @@ bin/moc_TestSelectionPivots.cpp: TestSelectionPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
 		bin/moc_predefs.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc
-	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestSelectionPivots.h -o bin/moc_TestSelectionPivots.cpp
+	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest/bin/moc_predefs.h -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/UnitTest -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/dataset/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/Distance/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/hermes/util/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/utils/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/pivots/include -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/eigen -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/omni -I/home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/kdtree -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include TestSelectionPivots.h -o bin/moc_TestSelectionPivots.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -4971,6 +5622,649 @@ bin/TestGnatPivots.o: TestGnatPivots.cpp TestGnatPivots.h \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/QSizePolicy \
 		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/TestGnatPivots.o TestGnatPivots.cpp
+
+bin/TestIndex.o: TestIndex.cpp TestIndex.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QtTest \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QtTestDepends \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QtCore \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QtCoreDepends \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconfig.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcoreexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtnoop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qassert.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypes.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlogging.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qflags.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconstructormacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qexceptionhandling.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qforeach.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttypetraits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfunctionpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmalloc.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qminmax.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qoverload.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qswap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtresource.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttranslation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20algorithm.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20functional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20iterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q23functional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpair.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydataops.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxptype_traits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringfwd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20type_traits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qanystringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfloat16.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmath.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstracteventdispatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qeventloop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdebug.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qset.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qabstractproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qanimationgroup.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qapplicationstatic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMutex \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmutex.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtsan_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnativeinterface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuture.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfutureinterface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qresultstore.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuture_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthreadpool.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthread.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrunnable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qexception.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpromise.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qassociativeiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbasictimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbitarray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbuffer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearraymatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcache.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcalendar.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlocale.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborarray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborvalue.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatetime.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborcommon.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qregularexpression.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qurl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/quuid.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcbormap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborstreamreader.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcborstreamwriter.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcollator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcommandlineoption.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcommandlineparser.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconcatenatetablesproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcryptographichash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdir.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfiledevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfileinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdiriterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qeasingcurve.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qendian.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfactoryinterface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfileselector.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QObject \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QStringList \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfilesystemwatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuturesynchronizer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfuturewatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qidentityproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsonarray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsondocument.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qjsonobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlatin1stringmatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlibrary.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlibraryinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qversionnumber.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qline.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpoint.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlockfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qloggingcategory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmessageauthenticationcode.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetaobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmimedata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmimedatabase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmimetype.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectcleanuphandler.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qoperatingsystemversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qparallelanimationgroup.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpauseanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qplugin.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpluginloader.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qprocess.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qproperty.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpropertyprivate.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpropertyanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariantanimation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qqueue.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrandom.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qreadwritelock.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrect.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsize.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qresource.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsavefile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopedvaluerollback.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsemaphore.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsequentialanimationgroup.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsequentialiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsettings.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedmemory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsignalmapper.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsimd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsocketnotifier.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstack.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstandardpaths.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstorageinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringlistmodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsystemsemaphore.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcoreversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtemporarydir.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtemporaryfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtextboundaryfinder.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthreadstorage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtimeline.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtimezone.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtranslator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtransposeproxymodel.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qurlquery.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvarianthash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QHash \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QVariant \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QString \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariantlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QList \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariantmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMap \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvector.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qwaitcondition.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QDeadlineTimer \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qwineventnotifier.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxmlstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxpfunctional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestlib-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qabstractitemmodeltester.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QAbstractItemModel \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QFont \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qfont.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QColor \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qcolor.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qrgb.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QBrush \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qbrush.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qimage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtransform.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qregion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QPixmap \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QImage \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QIcon \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qicon.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qbenchmark.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qbenchmarkmetric.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qsignalspy.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtesteventloop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestcase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestdata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestsystem.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtestsupport_core.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qtestsupport_gui.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qeventpoint.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvector2d.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvectornd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpointingdevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qinputdevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qscreen.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QRect \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QSize \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QSizeF \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/QTransform \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtestsupport_widgets.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest_network.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QHostAddress \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtnetworkexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkCookie \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkcookie.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QSharedDataPointer \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaType \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkReply \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkreply.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QIODevice \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkRequest \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QUrl \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QNetworkAccessManager \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QSslConfiguration \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslconfiguration.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslsocket.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslerror.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslcertificate.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qssl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QFlags \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest_widgets.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtest_gui.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestassert.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestkeyboard.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestspontaneevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qguiapplication.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qinputmethod.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qwindow.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QEvent \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMargins \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qsurface.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qcursor.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qbitmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qpalette.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qfontinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/qapplication.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestmouse.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QDebug \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtesttouch.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvector3d.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtGui/qvector4d.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtWidgets/QSizePolicy \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/QMetaEnum \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestversion.h \
+		../gervLib/omni/OmniKdTree.h \
+		../gervLib/kdtree/KdTree.h \
+		../gervLib/kdtree/NodeKdTree.h \
+		../gervLib/dataset/include/Dataset.h \
+		../gervLib/Distance/BasicArrayObject.h \
+		../gervLib/Distance/DistanceFunction.h \
+		../gervLib/utils/include/Util.h \
+		../gervLib/Distance/Hermes.h \
+		../gervLib/Distance/MetricHistogramDistance.h \
+		../gervLib/Distance/MetricHistogramDistance-inl.h \
+		../gervLib/Distance/WarpDistance.h \
+		../gervLib/Distance/WarpDistance-inl.h \
+		../gervLib/Distance/EuclideanDistance.h \
+		../gervLib/Distance/EuclideanDistance-inl.h \
+		../gervLib/Distance/ManhattanDistance.h \
+		../gervLib/Distance/ManhattanDistance-inl.h \
+		../gervLib/Distance/ChebyshevDistance.h \
+		../gervLib/Distance/ChebyshevDistance-inl.h \
+		../gervLib/Distance/LEdit.h \
+		../gervLib/Distance/LEdit-inl.h \
+		../gervLib/Distance/CanberraDistance.h \
+		../gervLib/Distance/CanberraDistance-inl.h \
+		../gervLib/Distance/JeffreyDivergenceDistance.h \
+		../gervLib/Distance/JeffreyDivergenceDistance-inl.h \
+		../gervLib/Distance/KullbackLeiblerDivergenceDistance.h \
+		../gervLib/Distance/KullbackLeiblerDivergenceDistance-inl.h \
+		../gervLib/Distance/ColorLayoutDistance.h \
+		../gervLib/Distance/ColorLayoutDistance-inl.h \
+		../gervLib/Distance/SumProductDistance.h \
+		../gervLib/Distance/SumProductDistance-inl.h \
+		../gervLib/Distance/SquaredChordDistance.h \
+		../gervLib/Distance/SquaredChordDistance-inl.h \
+		../gervLib/Distance/BrayCurtisDistance.h \
+		../gervLib/Distance/BrayCurtisDistance-inl.h \
+		../gervLib/Distance/QuiSquareDistance.h \
+		../gervLib/Distance/QuiSquareDistance-inl.h \
+		../gervLib/Distance/SpearmanDistance.h \
+		../gervLib/Distance/SpearmanDistance-inl.h \
+		../gervLib/Distance/DTWDistance.h \
+		../gervLib/Distance/DTWDistance-inl.h \
+		../gervLib/Distance/MorositaDistance.h \
+		../gervLib/Distance/MorositaDistance-inl.h \
+		../gervLib/Distance/EditDistance.h \
+		../gervLib/Distance/EditDistance-inl.h \
+		../gervLib/kdtree/LeafNodeKdTree.h \
+		../gervLib/kdtree/DirectoryNodeKdTree.h \
+		../gervLib/pivots/include/Pivots.h \
+		../gervLib/pivots/include/Pivot.h \
+		../gervLib/pivots/include/RandomPivots.h \
+		../gervLib/pivots/include/GnatPivots.h \
+		../gervLib/pivots/include/ConvexPivots.h \
+		../gervLib/pivots/include/KmedoidsPivots.h \
+		../gervLib/pivots/include/Kmedoids.h \
+		../gervLib/pivots/include/Cluster.h \
+		../gervLib/pivots/include/MaxVariancePivots.h \
+		../gervLib/pivots/include/MaxSeparatedPivots.h \
+		../gervLib/pivots/include/SelectionPivots.h \
+		../gervLib/pivots/include/SSSPivots.h \
+		../gervLib/pivots/include/PCAPivots.h \
+		../gervLib/eigen/Eigenvalues \
+		../gervLib/eigen/Core \
+		../gervLib/eigen/src/Core/util/DisableStupidWarnings.h \
+		../gervLib/eigen/src/Core/util/Macros.h \
+		../gervLib/eigen/src/Core/util/MKL_support.h \
+		../gervLib/eigen/src/misc/blas.h \
+		../gervLib/eigen/src/Core/util/Constants.h \
+		../gervLib/eigen/src/Core/util/Meta.h \
+		../gervLib/eigen/src/Core/util/ForwardDeclarations.h \
+		../gervLib/eigen/src/Core/util/StaticAssert.h \
+		../gervLib/eigen/src/Core/util/XprHelper.h \
+		../gervLib/eigen/src/Core/util/Memory.h \
+		../gervLib/eigen/src/Core/NumTraits.h \
+		../gervLib/eigen/src/Core/MathFunctions.h \
+		../gervLib/eigen/src/Core/GenericPacketMath.h \
+		../gervLib/eigen/src/Core/MathFunctionsImpl.h \
+		../gervLib/eigen/src/Core/arch/Default/ConjHelper.h \
+		../gervLib/eigen/src/Core/arch/SSE/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/SSE/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/AVX/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/AVX/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/AVX512/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/AVX512/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/SSE/Complex.h \
+		../gervLib/eigen/src/Core/arch/AVX/Complex.h \
+		../gervLib/eigen/src/Core/arch/AVX/TypeCasting.h \
+		../gervLib/eigen/src/Core/arch/SSE/TypeCasting.h \
+		../gervLib/eigen/src/Core/arch/AltiVec/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/AltiVec/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/AltiVec/Complex.h \
+		../gervLib/eigen/src/Core/arch/NEON/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/NEON/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/NEON/Complex.h \
+		../gervLib/eigen/src/Core/arch/ZVector/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/ZVector/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/ZVector/Complex.h \
+		../gervLib/eigen/src/Core/arch/CUDA/Half.h \
+		../gervLib/eigen/src/Core/arch/CUDA/PacketMathHalf.h \
+		../gervLib/eigen/src/Core/arch/CUDA/TypeCasting.h \
+		../gervLib/eigen/src/Core/arch/CUDA/PacketMath.h \
+		../gervLib/eigen/src/Core/arch/CUDA/MathFunctions.h \
+		../gervLib/eigen/src/Core/arch/Default/Settings.h \
+		../gervLib/eigen/src/Core/functors/TernaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/BinaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/UnaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/NullaryFunctors.h \
+		../gervLib/eigen/src/Core/functors/StlFunctors.h \
+		../gervLib/eigen/src/Core/functors/AssignmentFunctors.h \
+		../gervLib/eigen/src/Core/arch/CUDA/Complex.h \
+		../gervLib/eigen/src/Core/IO.h \
+		../gervLib/eigen/src/Core/DenseCoeffsBase.h \
+		../gervLib/eigen/src/Core/DenseBase.h \
+		../gervLib/eigen/src/plugins/BlockMethods.h \
+		../gervLib/eigen/src/Core/MatrixBase.h \
+		../gervLib/eigen/src/plugins/CommonCwiseUnaryOps.h \
+		../gervLib/eigen/src/plugins/CommonCwiseBinaryOps.h \
+		../gervLib/eigen/src/plugins/MatrixCwiseUnaryOps.h \
+		../gervLib/eigen/src/plugins/MatrixCwiseBinaryOps.h \
+		../gervLib/eigen/src/Core/EigenBase.h \
+		../gervLib/eigen/src/Core/Product.h \
+		../gervLib/eigen/src/Core/CoreEvaluators.h \
+		../gervLib/eigen/src/Core/AssignEvaluator.h \
+		../gervLib/eigen/src/Core/Assign.h \
+		../gervLib/eigen/src/Core/ArrayBase.h \
+		../gervLib/eigen/src/plugins/ArrayCwiseUnaryOps.h \
+		../gervLib/eigen/src/plugins/ArrayCwiseBinaryOps.h \
+		../gervLib/eigen/src/Core/util/BlasUtil.h \
+		../gervLib/eigen/src/Core/DenseStorage.h \
+		../gervLib/eigen/src/Core/NestByValue.h \
+		../gervLib/eigen/src/Core/ReturnByValue.h \
+		../gervLib/eigen/src/Core/NoAlias.h \
+		../gervLib/eigen/src/Core/PlainObjectBase.h \
+		../gervLib/eigen/src/Core/Matrix.h \
+		../gervLib/eigen/src/Core/Array.h \
+		../gervLib/eigen/src/Core/CwiseTernaryOp.h \
+		../gervLib/eigen/src/Core/CwiseBinaryOp.h \
+		../gervLib/eigen/src/Core/CwiseUnaryOp.h \
+		../gervLib/eigen/src/Core/CwiseNullaryOp.h \
+		../gervLib/eigen/src/Core/CwiseUnaryView.h \
+		../gervLib/eigen/src/Core/SelfCwiseBinaryOp.h \
+		../gervLib/eigen/src/Core/Dot.h \
+		../gervLib/eigen/src/Core/StableNorm.h \
+		../gervLib/eigen/src/Core/Stride.h \
+		../gervLib/eigen/src/Core/MapBase.h \
+		../gervLib/eigen/src/Core/Map.h \
+		../gervLib/eigen/src/Core/Ref.h \
+		../gervLib/eigen/src/Core/Block.h \
+		../gervLib/eigen/src/Core/VectorBlock.h \
+		../gervLib/eigen/src/Core/Transpose.h \
+		../gervLib/eigen/src/Core/DiagonalMatrix.h \
+		../gervLib/eigen/src/Core/Diagonal.h \
+		../gervLib/eigen/src/Core/DiagonalProduct.h \
+		../gervLib/eigen/src/Core/Redux.h \
+		../gervLib/eigen/src/Core/Visitor.h \
+		../gervLib/eigen/src/Core/Fuzzy.h \
+		../gervLib/eigen/src/Core/Swap.h \
+		../gervLib/eigen/src/Core/CommaInitializer.h \
+		../gervLib/eigen/src/Core/GeneralProduct.h \
+		../gervLib/eigen/src/Core/Solve.h \
+		../gervLib/eigen/src/Core/Inverse.h \
+		../gervLib/eigen/src/Core/SolverBase.h \
+		../gervLib/eigen/src/Core/PermutationMatrix.h \
+		../gervLib/eigen/src/Core/Transpositions.h \
+		../gervLib/eigen/src/Core/TriangularMatrix.h \
+		../gervLib/eigen/src/Core/SelfAdjointView.h \
+		../gervLib/eigen/src/Core/products/GeneralBlockPanelKernel.h \
+		../gervLib/eigen/src/Core/products/Parallelizer.h \
+		../gervLib/eigen/src/Core/ProductEvaluators.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixVector.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrix.h \
+		../gervLib/eigen/src/Core/SolveTriangular.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixVector.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+		../gervLib/eigen/src/Core/products/SelfadjointProduct.h \
+		../gervLib/eigen/src/Core/products/SelfadjointRank2Update.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixVector.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixMatrix.h \
+		../gervLib/eigen/src/Core/products/TriangularSolverMatrix.h \
+		../gervLib/eigen/src/Core/products/TriangularSolverVector.h \
+		../gervLib/eigen/src/Core/BandMatrix.h \
+		../gervLib/eigen/src/Core/CoreIterators.h \
+		../gervLib/eigen/src/Core/ConditionEstimator.h \
+		../gervLib/eigen/src/Core/BooleanRedux.h \
+		../gervLib/eigen/src/Core/Select.h \
+		../gervLib/eigen/src/Core/VectorwiseOp.h \
+		../gervLib/eigen/src/Core/Random.h \
+		../gervLib/eigen/src/Core/Replicate.h \
+		../gervLib/eigen/src/Core/Reverse.h \
+		../gervLib/eigen/src/Core/ArrayWrapper.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
+		../gervLib/eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
+		../gervLib/eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
+		../gervLib/eigen/src/Core/Assign_MKL.h \
+		../gervLib/eigen/src/Core/GlobalFunctions.h \
+		../gervLib/eigen/src/Core/util/ReenableStupidWarnings.h \
+		../gervLib/eigen/Cholesky \
+		../gervLib/eigen/Jacobi \
+		../gervLib/eigen/src/Jacobi/Jacobi.h \
+		../gervLib/eigen/src/Cholesky/LLT.h \
+		../gervLib/eigen/src/Cholesky/LDLT.h \
+		../gervLib/eigen/src/misc/lapacke.h \
+		../gervLib/eigen/src/misc/lapacke_mangling.h \
+		../gervLib/eigen/src/Cholesky/LLT_LAPACKE.h \
+		../gervLib/eigen/Householder \
+		../gervLib/eigen/src/Householder/Householder.h \
+		../gervLib/eigen/src/Householder/HouseholderSequence.h \
+		../gervLib/eigen/src/Householder/BlockHouseholder.h \
+		../gervLib/eigen/LU \
+		../gervLib/eigen/src/misc/Kernel.h \
+		../gervLib/eigen/src/misc/Image.h \
+		../gervLib/eigen/src/LU/FullPivLU.h \
+		../gervLib/eigen/src/LU/PartialPivLU.h \
+		../gervLib/eigen/src/LU/PartialPivLU_LAPACKE.h \
+		../gervLib/eigen/src/LU/Determinant.h \
+		../gervLib/eigen/src/LU/InverseImpl.h \
+		../gervLib/eigen/src/LU/arch/Inverse_SSE.h \
+		../gervLib/eigen/Geometry \
+		../gervLib/eigen/SVD \
+		../gervLib/eigen/QR \
+		../gervLib/eigen/src/QR/HouseholderQR.h \
+		../gervLib/eigen/src/QR/FullPivHouseholderQR.h \
+		../gervLib/eigen/src/QR/ColPivHouseholderQR.h \
+		../gervLib/eigen/src/QR/CompleteOrthogonalDecomposition.h \
+		../gervLib/eigen/src/QR/HouseholderQR_LAPACKE.h \
+		../gervLib/eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
+		../gervLib/eigen/src/misc/RealSvd2x2.h \
+		../gervLib/eigen/src/SVD/UpperBidiagonalization.h \
+		../gervLib/eigen/src/SVD/SVDBase.h \
+		../gervLib/eigen/src/SVD/JacobiSVD.h \
+		../gervLib/eigen/src/SVD/BDCSVD.h \
+		../gervLib/eigen/src/SVD/JacobiSVD_LAPACKE.h \
+		../gervLib/eigen/src/Geometry/OrthoMethods.h \
+		../gervLib/eigen/src/Geometry/EulerAngles.h \
+		../gervLib/eigen/src/Geometry/Homogeneous.h \
+		../gervLib/eigen/src/Geometry/RotationBase.h \
+		../gervLib/eigen/src/Geometry/Rotation2D.h \
+		../gervLib/eigen/src/Geometry/Quaternion.h \
+		../gervLib/eigen/src/Geometry/AngleAxis.h \
+		../gervLib/eigen/src/Geometry/Transform.h \
+		../gervLib/eigen/src/Geometry/Translation.h \
+		../gervLib/eigen/src/Geometry/Scaling.h \
+		../gervLib/eigen/src/Geometry/Hyperplane.h \
+		../gervLib/eigen/src/Geometry/ParametrizedLine.h \
+		../gervLib/eigen/src/Geometry/AlignedBox.h \
+		../gervLib/eigen/src/Geometry/Umeyama.h \
+		../gervLib/eigen/src/Geometry/arch/Geometry_SSE.h \
+		../gervLib/eigen/src/Eigenvalues/Tridiagonalization.h \
+		../gervLib/eigen/src/Eigenvalues/RealSchur.h \
+		../gervLib/eigen/src/Eigenvalues/HessenbergDecomposition.h \
+		../gervLib/eigen/src/Eigenvalues/EigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/ComplexSchur.h \
+		../gervLib/eigen/src/Eigenvalues/ComplexEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/RealQZ.h \
+		../gervLib/eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+		../gervLib/eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+		../gervLib/eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
+		../gervLib/eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
+		../gervLib/eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../gervLib/pivots/include/FFTPivots.h \
+		../gervLib/pivots/include/HFIPivots.h \
+		../gervLib/pivots/include/ISPivots.h \
+		../gervLib/pivots/include/WDRPivots.h \
+		../gervLib/pivots/include/BPPPivots.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/TestIndex.o TestIndex.cpp
 
 bin/TestKmedoidsPivots.o: TestKmedoidsPivots.cpp TestKmedoidsPivots.h \
 		../gervLib/pivots/include/KmedoidsPivots.h \
@@ -7947,7 +9241,19 @@ bin/main.o: main.cpp /home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/QTest \
 		TestKmedoidsPivots.h \
 		../gervLib/pivots/include/KmedoidsPivots.h \
 		../gervLib/pivots/include/Kmedoids.h \
-		../gervLib/pivots/include/Cluster.h
+		../gervLib/pivots/include/Cluster.h \
+		TestIndex.h \
+		../gervLib/omni/OmniKdTree.h \
+		../gervLib/kdtree/KdTree.h \
+		../gervLib/kdtree/NodeKdTree.h \
+		../gervLib/kdtree/LeafNodeKdTree.h \
+		../gervLib/kdtree/DirectoryNodeKdTree.h \
+		../gervLib/pivots/include/Pivots.h \
+		../gervLib/pivots/include/FFTPivots.h \
+		../gervLib/pivots/include/HFIPivots.h \
+		../gervLib/pivots/include/ISPivots.h \
+		../gervLib/pivots/include/WDRPivots.h \
+		../gervLib/pivots/include/BPPPivots.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/main.o main.cpp
 
 bin/Util.o: ../gervLib/utils/include/Util.cpp ../gervLib/utils/include/Util.h
@@ -7961,6 +9267,9 @@ bin/moc_TestDataset.o: bin/moc_TestDataset.cpp
 
 bin/moc_TestGnatPivots.o: bin/moc_TestGnatPivots.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/moc_TestGnatPivots.o bin/moc_TestGnatPivots.cpp
+
+bin/moc_TestIndex.o: bin/moc_TestIndex.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/moc_TestIndex.o bin/moc_TestIndex.cpp
 
 bin/moc_TestKmedoidsPivots.o: bin/moc_TestKmedoidsPivots.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/moc_TestKmedoidsPivots.o bin/moc_TestKmedoidsPivots.cpp

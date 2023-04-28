@@ -20,6 +20,8 @@ INCLUDEPATH += \
             ../gervLib/utils/include/ \
             ../gervLib/pivots/include/ \
             ../gervLib/eigen/ \
+            ../gervLib/omni/ \
+            ../gervLib/kdtree/ \
 
 SOURCES +=  tst_test_gervlib.cpp \
     TestConvexPivots.cpp \

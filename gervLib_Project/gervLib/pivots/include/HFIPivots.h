@@ -391,7 +391,7 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
         sample = dataset;
 
 //    size_t num_cand = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2)), pos = 0;
-    size_t num_cand = std::max((size_t)50, 2 * this->getNumberOfPivots());
+    size_t num_cand = std::max((size_t)50, 2 * this->getNumberOfPivots()), pos = 0;
     size_t* cand = new size_t[num_cand];
     double** O_P_matrix = maxPrunning(sample, df, num_cand, cand);
     double** Q_O_matrix = new double*[num_cand];

@@ -27,7 +27,7 @@ void TestPCAPivots::test1()
     pvt->generatePivots(sample, df,2);
 
     size_t* pvtIndex = new size_t[2];
-    pvtIndex[0] = 0;
+    pvtIndex[0] = 9;
     pvtIndex[1] = 8;
 
     for(size_t x = 0; x < 2; x++)
@@ -54,11 +54,11 @@ void TestPCAPivots::test2()
     pvt->generatePivots(sample, df,5);
 
     size_t* pvtIndex = new size_t[5];
-    pvtIndex[0] = 0;
+    pvtIndex[0] = 9;
     pvtIndex[1] = 8;
     pvtIndex[2] = 7;
-    pvtIndex[3] = 9;
-    pvtIndex[4] = 6;
+    pvtIndex[3] = 6;
+    pvtIndex[4] = 5;
 
     for(size_t x = 0; x < 5; x++)
     {
@@ -84,13 +84,13 @@ void TestPCAPivots::test3()
     pvt->generatePivots(sample, df,7);
 
     size_t* pvtIndex = new size_t[7];
-    pvtIndex[0] = 0;
+    pvtIndex[0] = 9;
     pvtIndex[1] = 8;
     pvtIndex[2] = 7;
-    pvtIndex[3] = 9;
-    pvtIndex[4] = 6;
-    pvtIndex[5] = 5;
-    pvtIndex[6] = 4;
+    pvtIndex[3] = 6;
+    pvtIndex[4] = 5;
+    pvtIndex[5] = 4;
+    pvtIndex[6] = 3;
 
     for(size_t x = 0; x < 7; x++)
     {
@@ -116,8 +116,8 @@ void TestPCAPivots::test4()
     pvt->generatePivots(sample, df,2);
 
     size_t* pvtIndex = new size_t[2];
-    pvtIndex[0] = 0;
-    pvtIndex[1] = 8;
+    pvtIndex[0] = 14;
+    pvtIndex[1] = 13;
 
     for(size_t x = 0; x < 2; x++)
     {
@@ -143,11 +143,11 @@ void TestPCAPivots::test5()
     pvt->generatePivots(sample, df,5);
 
     size_t* pvtIndex = new size_t[5];
-    pvtIndex[0] = 0;
-    pvtIndex[1] = 8;
-    pvtIndex[2] = 11;
-    pvtIndex[3] = 14;
-    pvtIndex[4] = 13;
+    pvtIndex[0] = 14;
+    pvtIndex[1] = 13;
+    pvtIndex[2] = 12;
+    pvtIndex[3] = 11;
+    pvtIndex[4] = 10;
 
     for(size_t x = 0; x < 5; x++)
     {
@@ -173,13 +173,13 @@ void TestPCAPivots::test6()
     pvt->generatePivots(sample, df,7);
 
     size_t* pvtIndex = new size_t[7];
-    pvtIndex[0] = 0;
-    pvtIndex[1] = 8;
-    pvtIndex[2] = 11;
-    pvtIndex[3] = 14;
-    pvtIndex[4] = 13;
-    pvtIndex[5] = 12;
-    pvtIndex[6] = 10;
+    pvtIndex[0] = 14;
+    pvtIndex[1] = 13;
+    pvtIndex[2] = 12;
+    pvtIndex[3] = 11;
+    pvtIndex[4] = 10;
+    pvtIndex[5] = 9;
+    pvtIndex[6] = 8;
 
     for(size_t x = 0; x < 7; x++)
     {
@@ -205,8 +205,8 @@ void TestPCAPivots::test7()
     pvt->generatePivots(sample, df,2);
 
     size_t* pvtIndex = new size_t[2];
-    pvtIndex[0] = 0;
-    pvtIndex[1] = 9;
+    pvtIndex[0] = 19;
+    pvtIndex[1] = 18;
 
     for(size_t x = 0; x < 2; x++)
     {
@@ -232,11 +232,11 @@ void TestPCAPivots::test8()
     pvt->generatePivots(sample, df,5);
 
     size_t* pvtIndex = new size_t[5];
-    pvtIndex[0] = 0;
-    pvtIndex[1] = 9;
-    pvtIndex[2] = 8;
-    pvtIndex[3] = 12;
-    pvtIndex[4] = 13;
+    pvtIndex[0] = 19;
+    pvtIndex[1] = 18;
+    pvtIndex[2] = 17;
+    pvtIndex[3] = 16;
+    pvtIndex[4] = 15;
 
     for(size_t x = 0; x < 5; x++)
     {
@@ -262,13 +262,13 @@ void TestPCAPivots::test9()
     pvt->generatePivots(sample, df,7);
 
     size_t* pvtIndex = new size_t[7];
-    pvtIndex[0] = 0;
-    pvtIndex[1] = 9;
-    pvtIndex[2] = 8;
-    pvtIndex[3] = 12;
-    pvtIndex[4] = 13;
-    pvtIndex[5] = 16;
-    pvtIndex[6] = 18;
+    pvtIndex[0] = 19;
+    pvtIndex[1] = 18;
+    pvtIndex[2] = 17;
+    pvtIndex[3] = 16;
+    pvtIndex[4] = 15;
+    pvtIndex[5] = 14;
+    pvtIndex[6] = 13;
 
     for(size_t x = 0; x < 7; x++)
     {
