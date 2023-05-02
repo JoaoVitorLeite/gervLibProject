@@ -46,7 +46,8 @@ int main(int argc, char *argv[])
     Dataset<std::vector<char>>::loadTextDataset(test, "../../gervLib/datasets/sgb-words.csv", " ");
     EditDistance<BasicArrayObject<std::vector<char>>>* df = new EditDistance<BasicArrayObject<std::vector<char>>>();
     RandomPivots<std::vector<char>>* pvt = new RandomPivots<std::vector<char>>();
-    size_t k = 100, numPerLeaf = 55;
+    srand(175978);
+    size_t k = 5, numPerLeaf = 55;
     MVPTree<BasicArrayObject<std::vector<char>>, EditDistance<BasicArrayObject<std::vector<char>>>, RandomPivots<std::vector<char>>, Dataset<std::vector<char>>, BF,PL,LC,LPN,FO,NS> index
         = MVPTree<BasicArrayObject<std::vector<char>>, EditDistance<BasicArrayObject<std::vector<char>>>, RandomPivots<std::vector<char>>, Dataset<std::vector<char>>, BF,PL,LC,LPN,FO,NS>(df, train);
     std::vector<KnnEntryMVP<BasicArrayObject<std::vector<char>>>> ans;
@@ -68,6 +69,8 @@ int main(int argc, char *argv[])
 
 //    }
 
+    cout << "Query: " << test->getFeatureVector(0).toStringWithOID() << endl;
+
     std::vector<double> dist;
     for(size_t i = 0; i < test->getCardinality(); i++)
         dist.push_back(df->getDistance(*test->instance(0), *test->instance(i)));
@@ -77,6 +80,13 @@ int main(int argc, char *argv[])
     index.knn(test->getFeatureVector(0), k, ans);
     for(size_t i = 0; i < k; i++)
         cout << dist[i] << endl;
+
+    for(size_t i = 0; i < k; i++)
+        cout << ans[i].element.toStringWithOID() << " / " << ans[i].distance << endl;
+
+    cout << endl << endl;
+
+    index.test();
 
 
 //    Dataset<double>* data = new Dataset<double>();

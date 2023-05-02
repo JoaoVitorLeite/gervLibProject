@@ -772,6 +772,8 @@ namespace mvp {
 
         void knn(T query, size_t k, std::vector<KnnEntryMVP<T>> &ans);
 
+        void test();
+
     };
 
 //    struct DistBrowsingEntry
@@ -1743,5 +1745,63 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::knn(T query, size_t k, std::ve
 
 }
 
+template<typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
+void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
+{
+
+    std::queue<mvp::MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*> queue;
+    queue.push(m_top);
+    mvp::MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node = nullptr;
+    MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* leaf;
+    MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* internal;
+
+    while(!queue.empty())
+    {
+
+        node = queue.front();
+        queue.pop();
+
+        if(node->IsLeaf())
+        {
+
+            leaf = static_cast<MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*>(node);
+            std::vector<datapoint_t<T,PL>> datapointsLeaf = leaf->GetDataPoints();
+            std::vector<vp_t<T>> datavpsLeaf = leaf->GetVantagePoints();
+
+            for(size_t x = 0; x < datapointsLeaf.size(); x++)
+            {
+
+                if(datapointsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
+
+            }
+
+            for(size_t x = 0; x < datavpsLeaf.size(); x++)
+            {
+
+                if(datavpsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
+
+            }
+
+
+        }
+        else
+        {
+
+            internal = static_cast<MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>*>(node);
+            std::vector<vp_t<T>> datavpsInternal = internal->GetVantagePoints();
+
+            if(datavpsInternal[0].key.getOID() == (size_t)0) std::cout << "FIND\n";
+            if(datavpsInternal[1].key.getOID() == (size_t)0) std::cout << "FIND\n";
+
+            if(node->GetChildNode(0) != NULL) queue.push(node->GetChildNode(0));
+            if(node->GetChildNode(1) != NULL) queue.push(node->GetChildNode(1));
+            if(node->GetChildNode(2) != NULL) queue.push(node->GetChildNode(2));
+            if(node->GetChildNode(3) != NULL) queue.push(node->GetChildNode(3));
+
+        }
+
+    }
+
+}
 
 #endif // MVPTREE_H
