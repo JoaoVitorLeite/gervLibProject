@@ -466,6 +466,7 @@ int main(int argc, char *argv[])
             expt.setDistanceFunctionName(*df_name);
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
+            expt.setSeed(*seed);
             expt.buildIndex();
 
             if(rep == nullptr)
@@ -504,6 +505,7 @@ int main(int argc, char *argv[])
             expt.setDistanceFunctionName(*df_name);
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
+            expt.setSeed(*seed);
             expt.buildIndex();
 
             if(rep == nullptr)
@@ -542,6 +544,7 @@ int main(int argc, char *argv[])
             expt.setDistanceFunctionName(*df_name);
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
+            expt.setSeed(*seed);
             expt.buildIndex();
 
             if(rep == nullptr)
@@ -581,6 +584,7 @@ int main(int argc, char *argv[])
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setNumBins(*num_bins);
+            expt.setSeed(*seed);
             expt.buildIndex();
 
             if(rep == nullptr)
