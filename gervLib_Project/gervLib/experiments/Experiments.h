@@ -26,7 +26,7 @@ protected:
                                             "GNAT",
                                             "CONVEX",
                                             "KMEDOIDS",
-                                            "MAXSEPARETED",
+                                            "MAXSEPARATED",
                                             "MAXVARIANCE",
                                             "SELECTION",
                                             "PCA",
@@ -103,6 +103,13 @@ public:
     {
 
         num_query = num;
+
+    }
+
+    void setNumPivots(size_t num)
+    {
+
+        pivot_num = num;
 
     }
 

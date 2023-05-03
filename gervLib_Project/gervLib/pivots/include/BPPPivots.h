@@ -7,12 +7,12 @@ template <class DType>
 class BPPPivots : public Pivot<DType>
 {
 
-private:
-    size_t *flg, **rnk;
-    double** rec;
+//private:
+//    size_t *flg, **rnk;
+//    double** rec;
 
-    size_t tot(size_t pn);
-    double cnt(size_t p, size_t pvtSize, size_t candSize);
+//    size_t tot(size_t pn);
+//    double cnt(size_t p, size_t pvtSize, size_t candSize);
 
 public:
     BPPPivots();
@@ -38,101 +38,101 @@ public:
 
 };
 
-template <class DType>
-size_t BPPPivots<DType>::tot(size_t pn)
-{
+//template <class DType>
+//size_t BPPPivots<DType>::tot(size_t pn)
+//{
 
-    size_t s = 0;
-    for(size_t i = 0; i < pn; i++)
-    {
+//    size_t s = 0;
+//    for(size_t i = 0; i < pn; i++)
+//    {
 
-        s += flg[i];
+//        s += flg[i];
 
-    }
+//    }
 
-    return s;
+//    return s;
 
-}
+//}
 
-template <class DType>
-double BPPPivots<DType>::cnt(size_t p, size_t pvtSize, size_t candSize)
-{
+//template <class DType>
+//double BPPPivots<DType>::cnt(size_t p, size_t pvtSize, size_t candSize)
+//{
 
-    for(size_t i = 0; i < pvtSize; i++)
-    {
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
 
-        for(size_t k = 0; k <= p; k++)
-        {
+//        for(size_t k = 0; k <= p; k++)
+//        {
 
-            rec[i][k] = 0;
+//            rec[i][k] = 0;
 
-        }
+//        }
 
-    }
+//    }
 
-    for(size_t k = 0; k < candSize; k++)
-    {
+//    for(size_t k = 0; k < candSize; k++)
+//    {
 
-        size_t j = 0;
+//        size_t j = 0;
 
-        for(size_t i = 0; i < pvtSize; i++)
-        {
+//        for(size_t i = 0; i < pvtSize; i++)
+//        {
 
-            if(flg[rnk[k][i]] == 1)
-            {
+//            if(flg[rnk[k][i]] == 1)
+//            {
 
-                j++;
-                rec[rnk[k][i]][j]++;
-                if(j == p) break;
+//                j++;
+//                rec[rnk[k][i]][j]++;
+//                if(j == p) break;
 
-            }
+//            }
 
-        }
+//        }
 
-    }
+//    }
 
-    for(size_t i = 0; i < pvtSize; i++)
-    {
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
 
-        if(flg[i])
-        {
+//        if(flg[i])
+//        {
 
-            for(size_t k = 1; k <= p; k++)
-            {
+//            for(size_t k = 1; k <= p; k++)
+//            {
 
-                rec[i][0] += rec[i][k];
+//                rec[i][0] += rec[i][k];
 
-            }
+//            }
 
-            rec[i][0] /= 1.0*p;
+//            rec[i][0] /= 1.0*p;
 
-        }
+//        }
 
-    }
+//    }
 
-    double s = 0;
+//    double s = 0;
 
-    for(size_t i = 0; i < pvtSize; i++)
-    {
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
 
-        if(flg[i])
-        {
+//        if(flg[i])
+//        {
 
-            for(size_t k = 1; k <= p; k++)
-            {
+//            for(size_t k = 1; k <= p; k++)
+//            {
 
-                s += (rec[i][k] - rec[i][0])*(rec[i][k] - rec[i][0])*1.0/p;
+//                s += (rec[i][k] - rec[i][0])*(rec[i][k] - rec[i][0])*1.0/p;
 
-            }
+//            }
 
-        }
+//        }
 
-    }
+//    }
 
-    s = s*1.0/pvtSize;
-    return s;
+//    s = s*1.0/pvtSize;
+//    return s;
 
-}
+//}
 
 template <class DType>
 BPPPivots<DType>::BPPPivots()
@@ -153,6 +153,100 @@ BPPPivots<DType>::~BPPPivots()
 template <class DType>
 void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<BasicArrayObject<DType>> *df, size_t nPivots, std::vector<std::string> args)
 {
+
+//    auto start = std::chrono::steady_clock::now();
+
+//    this->setNumberOfPivots(nPivots);
+
+//    Dataset<DType>* sample = nullptr;
+//    if(this->sample_size != -1.0)
+//        sample = dataset->sampleDataset(std::ceil(dataset->getCardinality()*this->sample_size), false, this->getSeed());
+//    else
+//        sample = dataset;
+
+//    size_t auxSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
+//    size_t pvtSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
+//    size_t cand = 2 * this->getNumberOfPivots();
+//    size_t* pivot_index = uniqueRandomNumber(0, sample->getCardinality(), pvtSize, this->getSeed());
+//    size_t* aux_index = uniqueRandomNumber(0, sample->getCardinality(), auxSize, this->getSeed()/2);
+//    bool* bitmap = new bool[pvtSize];
+//    double** dist = new double*[pvtSize];
+//    size_t** rank = new size_t*[pvtSize];
+
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
+
+//        dist[i] = new double[auxSize];
+//        rank[i] = new size_t[auxSize];
+//        bitmap[i] = true;
+
+//        for(size_t j = 0; j < auxSize; j++)
+//        {
+
+//            dist[i][j] = df->getDistance(*sample->getInstance(pivot_index[i]), *sample->getInstance(aux_index[j]));
+//            rank[i][j] = 0;
+
+//        }
+
+//    }
+
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
+
+//        for(size_t j = 0; j < auxSize; j++)
+//        {
+
+//            double d = dist[i][j];
+//            rank[i][j] = 1;
+
+//            for(size_t k = 0; k < pvtSize; k++)
+//            {
+
+//                if(k != i && dist[k][j] < d)
+//                {
+
+//                    rank[i][j] += 1;
+
+//                }
+
+//            }
+
+//        }
+
+//    }
+
+//    while(cand > this->getNumberOfPivots())
+//    {
+
+//        double min = std::numeric_limits<double>::max();
+//        size_t pos = 0;
+
+//        for(size_t i = 0; i < pvtSize; i++)
+//        {
+
+//            if(bitmap[i])
+//            {
+
+//                bitmap[i] = false;
+
+//                //Loop por pvt_index validos
+//                //Loop para o valor de k na formula do pr
+//                //Loop para as colunas da matriz rank
+
+//                bitmap[i] = true;
+
+
+//            }
+
+//        }
+
+
+//    }
+
+//    auto end = std::chrono::steady_clock::now();
+//    this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     auto start = std::chrono::steady_clock::now();
 
@@ -306,7 +400,6 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     auto end = std::chrono::steady_clock::now();
     this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
-
 
 }
 

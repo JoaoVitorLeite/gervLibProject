@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
-INCPATH       = -I. -IDistance -IDistance/util/include -Iutils/include -Idataset/include -Ipivots/include -Ieigen -IVpTree/Node/Bucket -IVpTree/Node -IVpTree -Ipm_tree -Iomni -Ikdtree -Imvptree -Ihilbert -Ibtree -Imemory -Ispb_tree -Iexperiments -I../../../../Qt/6.5.0/gcc_64/include -I../../../../Qt/6.5.0/gcc_64/include/QtCore -Ibin -I../../../../Qt/6.5.0/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -IDistance -IDistance/util/include -Iutils/include -Idataset/include -Ipivots/include -Ieigen -IVpTree/Node/Bucket -IVpTree/Node -IVpTree -Ipm_tree -Iomni -Ikdtree -Imvptree -Ihilbert -Ibtree -Imemory -Ispb_tree -Iexperiments -I/home/joaoleite/Qt/6.5.0/gcc_64/include -I/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore -Ibin -I/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/joaoleite/Qt/6.5.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = gervLib1.0.0
-DISTDIR = /home/joaoleite/Documents/gervLibProject/gervLib_Project/gervLib/bin/gervLib1.0.0
+DISTDIR = /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/bin/gervLib1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/joaoleite/Qt/6.5.0/gcc_64/lib
 LIBS          = $(SUBLIBS) -lstdc++fs /home/joaoleite/Qt/6.5.0/gcc_64/lib/libQt6Core.so -lpthread   
@@ -61,151 +61,151 @@ OBJECTS       = bin/hilbert2.o \
 		bin/qrc_qmake_qmake_qm_files.o
 DIST          = hermes/gervLib.cflags \
 		hermes/gervLib.cxxflags \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/unix.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/linux.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/sanitize.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/gcc-base.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/gcc-base-unix.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/g++-base.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/g++-unix.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/qconfig.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libjpeg.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libpng.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_harfbuzz_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_jpeg_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_png_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltyperegistrar_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickeffects_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_tools_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandglobal_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt_functions.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt_config.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/spec_post.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/unix.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/linux.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/sanitize.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/gcc-base.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/gcc-base-unix.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/g++-base.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/g++-unix.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/qconfig.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libjpeg.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libpng.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_harfbuzz_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_jpeg_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_png_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltyperegistrar_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickeffects_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_tools_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandglobal_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt_functions.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt_config.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_post.prf \
 		.qmake.stash \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/exclusive_builds.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/toolchain.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/default_pre.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/resolve_config.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/default_post.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/lrelease.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qml_debug.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/warn_on.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/resources.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/moc.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/testcase_targets.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/exceptions.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/lex.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/exclusive_builds.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/toolchain.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/default_pre.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resolve_config.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/default_post.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/lrelease.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qml_debug.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/warn_on.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resources.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/moc.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/testcase_targets.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/exceptions.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/lex.prf \
 		gervLib.pro VpTree/Node/Bucket/Bucket.h \
 		VpTree/Node/Bucket/Pair.h \
 		VpTree/Node/DirectorNode.h \
@@ -277,303 +277,303 @@ bin/gervLib:  $(OBJECTS)
 	@test -d bin/ || mkdir -p bin/
 	$(LINK) $(LFLAGS) -o $(TARGET)  $(OBJECTS) $(OBJCOMP) $(LIBS)
 
-Makefile: gervLib.pro ../../../../Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf ../../../../Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/unix.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/linux.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/sanitize.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/gcc-base.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/gcc-base-unix.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/g++-base.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/common/g++-unix.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/qconfig.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libjpeg.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libpng.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_harfbuzz_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_jpeg_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_png_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltyperegistrar_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickeffects_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_tools_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandglobal_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt_functions.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt_config.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/spec_post.prf \
+Makefile: gervLib.pro /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/unix.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/linux.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/sanitize.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/gcc-base.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/gcc-base-unix.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/g++-base.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/g++-unix.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/qconfig.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libjpeg.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libpng.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_harfbuzz_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_jpeg_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_png_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltyperegistrar_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickeffects_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_tools_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandglobal_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt_functions.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt_config.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_post.prf \
 		.qmake.stash \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/exclusive_builds.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/toolchain.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/default_pre.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/resolve_config.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/default_post.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/lrelease.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qml_debug.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/warn_on.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/resources.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/moc.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/testcase_targets.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/exceptions.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf \
-		../../../../Qt/6.5.0/gcc_64/mkspecs/features/lex.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/exclusive_builds.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/toolchain.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/default_pre.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resolve_config.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/default_post.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/lrelease.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qml_debug.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/warn_on.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resources.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/moc.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/testcase_targets.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/exceptions.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf \
+		/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/lex.prf \
 		gervLib.pro \
 		bin/qmake_qmake_qm_files.qrc \
-		../../../../Qt/6.5.0/gcc_64/lib/libQt6Core.prl
+		/home/joaoleite/Qt/6.5.0/gcc_64/lib/libQt6Core.prl
 	$(QMAKE) -o Makefile gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/unix.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/linux.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/sanitize.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/gcc-base.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/gcc-base-unix.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/g++-base.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/common/g++-unix.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/qconfig.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libjpeg.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libpng.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_harfbuzz_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_jpeg_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_png_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltyperegistrar_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickeffects_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_tools_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandglobal_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml_private.pri:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt_functions.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt_config.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/spec_post.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/unix.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/linux.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/sanitize.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/gcc-base.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/gcc-base-unix.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/g++-base.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/common/g++-unix.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/qconfig.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libjpeg.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_ext_libpng.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designer_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_gui_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_harfbuzz_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_help_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_jpeg_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_png_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlintegration_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmltyperegistrar_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quick_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickeffects_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_sql_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svg_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_tools_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_waylandglobal_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/modules/qt_lib_xml_private.pri:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt_functions.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt_config.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/linux-g++/qmake.conf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/spec_post.prf:
 .qmake.stash:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/exclusive_builds.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/toolchain.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/default_pre.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/resolve_config.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/default_post.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/lrelease.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/qml_debug.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/warn_on.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/qt.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/resources.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/moc.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/testcase_targets.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/exceptions.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf:
-../../../../Qt/6.5.0/gcc_64/mkspecs/features/lex.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/exclusive_builds.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/toolchain.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/default_pre.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resolve_config.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/default_post.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/lrelease.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qml_debug.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/warn_on.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qt.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resources_functions.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/resources.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/moc.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/unix/thread.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/qmake_use.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/file_copies.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/testcase_targets.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/exceptions.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/yacc.prf:
+/home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/lex.prf:
 gervLib.pro:
 bin/qmake_qmake_qm_files.qrc:
-../../../../Qt/6.5.0/gcc_64/lib/libQt6Core.prl:
+/home/joaoleite/Qt/6.5.0/gcc_64/lib/libQt6Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile gervLib.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 
@@ -590,7 +590,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents gervLib_en_US.ts $(DISTDIR)/
 	$(COPY_FILE) --parents bin/qmake_qmake_qm_files.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../../../../Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents VpTree/Node/Bucket/Bucket.h VpTree/Node/Bucket/Pair.h VpTree/Node/DirectorNode.h VpTree/Node/LeafNodeVPTree.h VpTree/Node/Node.h VpTree/QueueItem.h VpTree/VpTree.h btree/btree.h btree/btree_multimap.h config_spb.h experiments/Experiments.h experiments/IndexExperiments.h experiments/MVPExperiments.h experiments/OmniExperiments.h experiments/PMExperiments.h experiments/PivotExperiments.h experiments/SPBExperiments.h experiments/VPExperiments.h hilbert/EquiDepth.h hilbert/Hilbert.h kdtree/DirectoryNodeKdTree.h kdtree/KdTree.h kdtree/LeafNodeKdTree.h kdtree/NodeKdTree.h memory/MemoryManagerUtils.h memory/cache.h memory/cache_policy.h memory/fifo_cache_policy.h memory/lfu_cache_policy.h memory/lru_cache_policy.h mvptree/datapoint.h mvptree/mvpnode.h mvptree/mvptree.h omni/OmniKdTree.h pivots/include/BPPPivots.h pivots/include/Cluster.h pivots/include/ConvexPivots.h pivots/include/FFTPivots.h pivots/include/GnatPivots.h dataset/include/Dataset.h Distance/BasicArrayObject.h pivots/include/HFIPivots.h pivots/include/ISPivots.h pivots/include/Kmedoids.h pivots/include/KmedoidsPivots.h pivots/include/MaxSeparatedPivots.h pivots/include/MaxVariancePivots.h pivots/include/PCAPivots.h pivots/include/Pivot.h pivots/include/Pivots.h pivots/include/RandomPivots.h pivots/include/SSSPivots.h pivots/include/SelectionPivots.h pivots/include/WDRPivots.h pm_tree/PM_Tree.h spb_tree/SPB_Tree.h utils/include/Util.h $(DISTDIR)/
 	$(COPY_FILE) --parents hilbert/hilbert2.cpp main.cpp utils/include/Util.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents gervLib_en_US.ts $(DISTDIR)/
@@ -627,15 +627,15 @@ compiler_rcc_make_all: bin/qrc_qmake_qmake_qm_files.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) bin/qrc_qmake_qmake_qm_files.cpp
 bin/qrc_qmake_qmake_qm_files.cpp: bin/qmake_qmake_qm_files.qrc \
-		../../../../Qt/6.5.0/gcc_64/libexec/rcc \
+		/home/joaoleite/Qt/6.5.0/gcc_64/libexec/rcc \
 		.qm/gervLib_en_US.qm
 	/home/joaoleite/Qt/6.5.0/gcc_64/libexec/rcc -name qmake_qmake_qm_files --no-zstd bin/qmake_qmake_qm_files.qrc -o bin/qrc_qmake_qmake_qm_files.cpp
 
 compiler_moc_predefs_make_all: bin/moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) bin/moc_predefs.h
-bin/moc_predefs.h: ../../../../Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp
-	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o bin/moc_predefs.h ../../../../Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp
+bin/moc_predefs.h: /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp
+	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o bin/moc_predefs.h /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all:
 compiler_moc_header_clean:
@@ -656,130 +656,130 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 bin/hilbert2.o: hilbert/hilbert2.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/hilbert2.o hilbert/hilbert2.cpp
 
-bin/main.o: main.cpp ../../../../Qt/6.5.0/gcc_64/include/QtTest/qtestcase.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtTest/qttestglobal.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtconfigmacros.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtcoreexports.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtpreprocessorsupport.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtnoop.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qassert.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtypes.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtclasshelpermacros.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtversion.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcompare_impl.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qconstructormacros.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qdarwinhelpers.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qexceptionhandling.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qforeach.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtdeprecationmarkers.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qttypetraits.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qfunctionpointer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qmalloc.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qminmax.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qoverload.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qswap.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtenvironmentvariables.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtresource.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qttranslation.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtTest/qttestlib-config.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtTest/qttestexports.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qxptype_traits.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qbytearrayview.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringfwd.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/q20type_traits.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringliteral.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qanystringview.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qutf8stringview.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringtokenizer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcompare.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qiodevicebase.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qfloat16.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qmath.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qiterable.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qmetacontainer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcontainerinfo.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtaggedpointer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qmetaobject.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringconverter_base.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qshareddata_impl.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qtemporarydir.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qdir.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qfile.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qfileinfo.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qdatetime.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qcalendar.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/qxpfunctional.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/q23functional.h \
-		../../../../Qt/6.5.0/gcc_64/include/QtCore/q20functional.h \
+bin/main.o: main.cpp /home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestcase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconfig.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcoreexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtnoop.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qassert.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypes.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversion.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlogging.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qflags.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconstructormacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qexceptionhandling.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qforeach.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttypetraits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfunctionpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmalloc.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qminmax.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qoverload.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qswap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtresource.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttranslation.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestlib-config.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestexports.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpair.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydataops.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxptype_traits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringfwd.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20type_traits.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qanystringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfloat16.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmath.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterable.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetaobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdebug.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterator.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmap.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qset.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhash.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtemporarydir.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdir.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfile.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfiledevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfileinfo.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatetime.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcalendar.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlocale.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthread.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxpfunctional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q23functional.h \
+		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20functional.h \
 		mvptree/mvptree.h \
 		mvptree/mvpnode.h \
 		mvptree/datapoint.h \

@@ -51,7 +51,7 @@ public:
         for(size_t i = 0; i < this->num_query; i++)
         {
 
-            for(size_t k = this->kRange[0]; k < this->kRange[1]; k+= this->kRange[2])
+            for(size_t k = this->kRange[0]; k <= this->kRange[1]; k+= this->kRange[2])
             {
 
                 runQuery(this->test->getInstance(i), k);

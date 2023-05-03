@@ -1754,6 +1754,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
     mvp::MVPNode<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* node = nullptr;
     MVPLeaf<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* leaf;
     MVPInternal<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* internal;
+    size_t cnt = 0;
 
     while(!queue.empty())
     {
@@ -1772,6 +1773,8 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
             {
 
                 if(datapointsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
+                cnt++;
+                std::cout << "ID = " << datapointsLeaf[x].key.getOID() << std::endl;
 
             }
 
@@ -1779,6 +1782,8 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
             {
 
                 if(datavpsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
+                cnt++;
+                std::cout << "ID = " << datapointsLeaf[x].key.getOID() << std::endl;
 
             }
 
@@ -1793,6 +1798,10 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
             if(datavpsInternal[0].key.getOID() == (size_t)0) std::cout << "FIND\n";
             if(datavpsInternal[1].key.getOID() == (size_t)0) std::cout << "FIND\n";
 
+            cnt += 2;
+            std::cout << "ID P = " << datavpsInternal[0].key.getOID() << std::endl;
+            std::cout << "ID P = " << datavpsInternal[1].key.getOID() << std::endl;
+
             if(node->GetChildNode(0) != NULL) queue.push(node->GetChildNode(0));
             if(node->GetChildNode(1) != NULL) queue.push(node->GetChildNode(1));
             if(node->GetChildNode(2) != NULL) queue.push(node->GetChildNode(2));
@@ -1801,6 +1810,8 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
         }
 
     }
+
+    std::cout << "NUM = " << cnt << std::endl;
 
 }
 
