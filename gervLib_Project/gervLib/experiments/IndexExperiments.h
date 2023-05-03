@@ -21,6 +21,13 @@ public:
 
     }
 
+    void runQuery(BasicArrayObject<T>* query, size_t k)
+    {
+
+
+
+    }
+
     void runExperiment() override
     {
 
