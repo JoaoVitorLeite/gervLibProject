@@ -7,12 +7,12 @@ template <class DType>
 class BPPPivots : public Pivot<DType>
 {
 
-//private:
-//    size_t *flg, **rnk;
-//    double** rec;
+private:
+    size_t *flg, **rnk;
+    double** rec;
 
-//    size_t tot(size_t pn);
-//    double cnt(size_t p, size_t pvtSize, size_t candSize);
+    size_t tot(size_t pn);
+    double cnt(size_t p, size_t pvtSize, size_t candSize);
 
 public:
     BPPPivots();
@@ -38,101 +38,101 @@ public:
 
 };
 
-//template <class DType>
-//size_t BPPPivots<DType>::tot(size_t pn)
-//{
+template <class DType>
+size_t BPPPivots<DType>::tot(size_t pn)
+{
 
-//    size_t s = 0;
-//    for(size_t i = 0; i < pn; i++)
-//    {
+    size_t s = 0;
+    for(size_t i = 0; i < pn; i++)
+    {
 
-//        s += flg[i];
+        s += flg[i];
 
-//    }
+    }
 
-//    return s;
+    return s;
 
-//}
+}
 
-//template <class DType>
-//double BPPPivots<DType>::cnt(size_t p, size_t pvtSize, size_t candSize)
-//{
+template <class DType>
+double BPPPivots<DType>::cnt(size_t p, size_t pvtSize, size_t candSize)
+{
 
-//    for(size_t i = 0; i < pvtSize; i++)
-//    {
+    for(size_t i = 0; i < pvtSize; i++)
+    {
 
-//        for(size_t k = 0; k <= p; k++)
-//        {
+        for(size_t k = 0; k <= p; k++)
+        {
 
-//            rec[i][k] = 0;
+            rec[i][k] = 0;
 
-//        }
+        }
 
-//    }
+    }
 
-//    for(size_t k = 0; k < candSize; k++)
-//    {
+    for(size_t k = 0; k < candSize; k++)
+    {
 
-//        size_t j = 0;
+        size_t j = 0;
 
-//        for(size_t i = 0; i < pvtSize; i++)
-//        {
+        for(size_t i = 0; i < pvtSize; i++)
+        {
 
-//            if(flg[rnk[k][i]] == 1)
-//            {
+            if(flg[rnk[k][i]] == 1)
+            {
 
-//                j++;
-//                rec[rnk[k][i]][j]++;
-//                if(j == p) break;
+                j++;
+                rec[rnk[k][i]][j]++;
+                if(j == p) break;
 
-//            }
+            }
 
-//        }
+        }
 
-//    }
+    }
 
-//    for(size_t i = 0; i < pvtSize; i++)
-//    {
+    for(size_t i = 0; i < pvtSize; i++)
+    {
 
-//        if(flg[i])
-//        {
+        if(flg[i])
+        {
 
-//            for(size_t k = 1; k <= p; k++)
-//            {
+            for(size_t k = 1; k <= p; k++)
+            {
 
-//                rec[i][0] += rec[i][k];
+                rec[i][0] += rec[i][k];
 
-//            }
+            }
 
-//            rec[i][0] /= 1.0*p;
+            rec[i][0] /= 1.0*p;
 
-//        }
+        }
 
-//    }
+    }
 
-//    double s = 0;
+    double s = 0;
 
-//    for(size_t i = 0; i < pvtSize; i++)
-//    {
+    for(size_t i = 0; i < pvtSize; i++)
+    {
 
-//        if(flg[i])
-//        {
+        if(flg[i])
+        {
 
-//            for(size_t k = 1; k <= p; k++)
-//            {
+            for(size_t k = 1; k <= p; k++)
+            {
 
-//                s += (rec[i][k] - rec[i][0])*(rec[i][k] - rec[i][0])*1.0/p;
+                s += (rec[i][k] - rec[i][0])*(rec[i][k] - rec[i][0])*1.0/p;
 
-//            }
+            }
 
-//        }
+        }
 
-//    }
+    }
 
-//    s = s*1.0/pvtSize;
-//    return s;
+    s = s*1.0/pvtSize;
+    return s;
 
-//}
+}
 
 template <class DType>
 BPPPivots<DType>::BPPPivots()

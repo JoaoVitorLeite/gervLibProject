@@ -58,20 +58,6 @@ public:
 
     }
 
-    void setNumPerLeafBTree(size_t num)
-    {
-
-        MIN_BTREE_LEAF_NUM = num;
-
-    }
-
-    void setPageSize(size_t num)
-    {
-
-        PAGE_SIZE = num;
-
-    }
-
     std::string indexName()
     {
 

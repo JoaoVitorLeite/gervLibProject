@@ -5,7 +5,7 @@
 #include <OmniKdTree.h>
 
 template <class T>
-class OmniExperiments : IndexExperiments<T>
+class OmniExperiments : public IndexExperiments<T>
 {
 
 private:

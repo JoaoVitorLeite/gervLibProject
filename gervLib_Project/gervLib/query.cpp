@@ -396,9 +396,9 @@ int main(int argc, char *argv[])
             {
                 pvt = new KmedoidsPivots<double>();
             }
-            else if(*pivot_type == "MAXSEPARETED")
+            else if(*pivot_type == "MAXSEPARATED")
             {
-                pvt = new MaxSeparetedPivots<double>();
+                pvt = new MaxSeparatedPivots<double>();
             }
             else if(*pivot_type == "MAXVARIANCE")
             {

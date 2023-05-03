@@ -396,9 +396,9 @@ int main(int argc, char *argv[])
             {
                 pvt = new KmedoidsPivots<double>();
             }
-            else if(*pivot_type == "MAXSEPARETED")
+            else if(*pivot_type == "MAXSEPARATED")
             {
-                pvt = new MaxSeparetedPivots<double>();
+                pvt = new MaxSeparatedPivots<double>();
             }
             else if(*pivot_type == "MAXVARIANCE")
             {
@@ -580,9 +580,7 @@ int main(int argc, char *argv[])
             expt.setDistanceFunctionName(*df_name);
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
-            expt.setNumPerLeafBTree(*num_per_leaf);
             expt.setNumBins(*num_bins);
-            expt.setPageSize((page_size != nullptr ? *page_size : 4096));
             expt.buildIndex();
 
             if(rep == nullptr)
