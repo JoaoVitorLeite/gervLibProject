@@ -10,7 +10,7 @@ class VPExperiments : public IndexExperiments<T>
 
 private:
     VpTree<T, DistanceFunction<BasicArrayObject<T>>>* index;
-    Dataset<T>* ans;
+    Dataset<T>* ans = new Dataset<T>();
 
 public:
     VPExperiments()

@@ -656,131 +656,7 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 bin/hilbert2.o: hilbert/hilbert2.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/hilbert2.o hilbert/hilbert2.cpp
 
-bin/main.o: main.cpp /home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestcase.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestglobal.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconfig.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcore-config.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtconfigmacros.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtcoreexports.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtpreprocessorsupport.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtnoop.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsystemdetection.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qprocessordetection.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompilerdetection.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qassert.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypes.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtclasshelpermacros.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtversion.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtypeinfo.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerfwd.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsysinfo.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlogging.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qflags.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare_impl.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbasicatomic.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qgenericatomic.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qconstructormacros.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdarwinhelpers.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qexceptionhandling.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qforeach.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtdeprecationmarkers.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttypetraits.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfunctionpointer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qglobalstatic.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmalloc.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qminmax.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnumeric.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qoverload.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qswap.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtenvironmentvariables.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtresource.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qttranslation.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestlib-config.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qttestexports.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearray.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qrefcount.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydata.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qpair.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qarraydataops.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainertools_impl.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxptype_traits.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearrayview.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringfwd.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20type_traits.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringliteral.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringalgorithms.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qanystringview.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qutf8stringview.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringtokenizer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringbuilder.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetatype.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcompare.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatastream.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopedpointer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevicebase.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfloat16.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmath.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qalgorithms.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterable.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetacontainer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontainerinfo.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtaggedpointer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmetaobject.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvariant.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdebug.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtextstream.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringconverter_base.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcontiguouscache.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlist.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiterator.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringlist.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qstringmatcher.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qmap.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qshareddata_impl.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qset.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qhash.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qvarlengtharray.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20memory.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcoreevent.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qtemporarydir.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdir.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfile.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfiledevice.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qiodevice.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qfileinfo.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdatetime.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qcalendar.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qlocale.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qthread.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qdeadlinetimer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qelapsedtimer.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/qxpfunctional.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q23functional.h \
-		/home/joaoleite/Qt/6.5.0/gcc_64/include/QtCore/q20functional.h \
-		mvptree/mvptree.h \
+bin/main.o: main.cpp mvptree/mvptree.h \
 		mvptree/mvpnode.h \
 		mvptree/datapoint.h \
 		Distance/BasicArrayObject.h \
@@ -1069,7 +945,9 @@ bin/main.o: main.cpp /home/joaoleite/Qt/6.5.0/gcc_64/include/QtTest/qtestcase.h 
 		btree/btree.h \
 		hilbert/EquiDepth.h \
 		experiments/PivotExperiments.h \
-		experiments/Experiments.h
+		experiments/Experiments.h \
+		experiments/VPExperiments.h \
+		experiments/IndexExperiments.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/main.o main.cpp
 
 bin/Util.o: utils/include/Util.cpp utils/include/Util.h

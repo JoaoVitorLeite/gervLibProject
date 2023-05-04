@@ -164,15 +164,20 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     else
         sample = dataset;
 
-    size_t auxSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
-    size_t pvtSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
-    size_t cand = 2 * this->getNumberOfPivots();
+    //size_t auxSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
+    size_t pvtSize = 2*this->getNumberOfPivots();//std::max((size_t)50, 2 * this->getNumberOfPivots());
+    size_t auxSize = std::min((size_t)sample->getCardinality()/2, pvtSize);
+    size_t cand = pvtSize;
     size_t* pivot_index = uniqueRandomNumber(0, sample->getCardinality(), pvtSize, this->getSeed());
     size_t* aux_index = uniqueRandomNumber(0, sample->getCardinality(), auxSize, this->getSeed()/2);
     bool* bitmap = new bool[pvtSize];
     double** dist = new double*[pvtSize];
     size_t** rank = new size_t*[pvtSize];
     double** pr_mat = new double*[pvtSize];
+
+    for(size_t i = 0; i < pvtSize; i++) std::cout << "P ID = " << pivot_index[i] << std::endl;
+    for(size_t i = 0; i < auxSize; i++) std::cout << "AUX ID = " << pivot_index[i] << std::endl;
+
 
     for(size_t i = 0; i < pvtSize; i++)
     {
@@ -215,6 +220,12 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
         }
 
+    }
+
+    for(size_t i = 0; i < pvtSize; i++){
+        for(size_t j = 0; j < auxSize; j++)
+            std::cout << rank[i][j] << "\t";
+        std::cout << std::endl;
     }
 
     while(cand > this->getNumberOfPivots())

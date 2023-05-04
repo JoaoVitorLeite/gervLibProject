@@ -15,6 +15,7 @@
 #include <SPB_Tree.h>
 #include <PivotExperiments.h>
 #include <experimental/filesystem>
+#include <VPExperiments.h>
 
 using namespace std;
 using namespace mvp;
@@ -38,13 +39,30 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/cities_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/open2/Dataset1.csv", ",");
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    BPPPivots<double> pvt = BPPPivots<double>();
-    pvt.generatePivots(train, df, 50);
+    BPPPivots<double>* pvt = new BPPPivots<double>();
 
-    for(size_t i = 0; i < 50; i++)
-        cout << pvt.get(i).getOID() << endl;
+//    train->printDataset();
+
+//    cout << endl << endl;
+
+//    for(size_t i = 0; i < train->getCardinality(); i++)
+//    {
+
+//        for(size_t j = 0; j < train->getCardinality(); j++)
+//        {
+
+//            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
+//            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
+
+//        }
+
+//        cout << endl;
+
+//    }
+
+    pvt->generatePivots(train, df, 3);
 
     //    cout << "Query: " << test->getFeatureVector(0).toStringWithOID() << endl;
 
