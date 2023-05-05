@@ -188,7 +188,7 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
 
 //    size_t cand_size = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2)), pair_size = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2));
-    size_t cand_size = std::max((size_t)50, 2 * this->getNumberOfPivots());
+    size_t cand_size = std::min(2 * this->getNumberOfPivots(), sample->getCardinality());;
     //size_t pair_size = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2));
     size_t pair_size = 300;
     size_t *cand = uniqueRandomNumber(0, sample->getCardinality(), cand_size, this->getSeed());
@@ -207,7 +207,7 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     for(size_t i = 0; i < pair_size; i++)
     {
 
-        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, this->getSeed());
+        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, this->getSeed()/2);
         pair[i] = new size_t[2];
         pair[i][0] = aux[0];
         pair[i][1] = aux[1];
@@ -242,7 +242,7 @@ void WDRPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     while(iter--)
     {
 
-        std::cout << "ITER = " << iter << std::endl;
+        //std::cout << "ITER = " << iter << std::endl;
 
         flag = true;
 

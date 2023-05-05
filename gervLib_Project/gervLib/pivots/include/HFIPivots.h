@@ -2,6 +2,7 @@
 #define HFIPIVOTS_H
 
 #include <Pivot.h>
+#include <ConvexPivots.h>
 
 template <class DType>
 class HFIPivots : public Pivot<DType>
@@ -390,140 +391,303 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     else
         sample = dataset;
 
-//    size_t num_cand = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2)), pos = 0;
-    size_t num_cand = std::max((size_t)50, 2 * this->getNumberOfPivots()), pos = 0;
-    size_t* cand = new size_t[num_cand];
-    double** O_P_matrix = maxPrunning(sample, df, num_cand, cand);
-    double** Q_O_matrix = new double*[num_cand];
-    double** Q_P_matrix = new double*[num_cand];
-    double** esti = new double*[num_cand];
-    bool* bitmap = new bool[num_cand];
-    double max = std::numeric_limits<double>::min(), d = 0.0;
+    size_t pvtSize = std::min(2 * this->getNumberOfPivots(), sample->getCardinality());
+    size_t cand = pvtSize;
+    //size_t pairSize = 300;
+    size_t pairSize = std::min(300, sample->getCardinality()); //COMENTAR ESSE DEPOIS E DESCOMENTAR A LINHA ACIMA
+    size_t* pivot_index = new size_t[pvtSize];
+    size_t** pairs_index = new size_t*[pairSize];
+    size_t* aux;
+    bool* bitmap = new bool[pvtSize];
+    double* dist_pairs = new double[pairSize];
+    double** dist_pivots_pairs = new double[pvtSize];
 
-    for(size_t x = 0; x < num_cand; x++)
+    ConvexPivots<DType>* convex = new ConvexPivots<DType>();
+    convex->setSeed(this->getSeed());
+    convex->generatePivots(sample, df, pvtSize);
+
+    for(size_t i = 0; i < pvtSize; i++)
     {
 
-        Q_O_matrix[x] = new double[sample->getCardinality()];
-        Q_P_matrix[x] = new double[num_cand];
-        esti[x] = new double[sample->getCardinality()];
-        bitmap[x] = true;
+        pivot_index[i] = convex->get(i).getOID();
+        dist_pivots_pairs[i] = new double[pairSize];
+        bitmap[i] = false;
 
     }
 
-    for(size_t x = 0; x < num_cand; x++)
+    delete convex;
+
+    for(size_t i = 0; i < pair_size; i++)
     {
 
-        for(size_t y = 0; y < sample->getCardinality(); y++)
+        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, this->getSeed()/2);
+        pairs_index[i] = new size_t[2];
+        pairs_index[i][0] = aux[0];
+        pairs_index[i][1] = aux[1];
+        dist_pairs[i] = df->getDistance(*sample->instance(pairs_index[i][0]), *sample->instance(pairs_index[i][1]));
+
+        for(size_t j = 0; j < pvtSize; j++)
         {
 
-            Q_O_matrix[x][y] = df->getDistance(*sample->instance(x), *sample->instance(y));
-            esti[x][y] = 0.0;
+            dist_pivots_pairs[j][i] = fabs(df->getDistance(*sample->instance(pivot_index[j]), *sample->instance(pairs_index[i][0])) -
+                                           df->getDistance(*sample->instance(pivot_index[j]), *sample->instance(pairs_index[i][1])));
 
         }
 
-        for(size_t z = 0; z < num_cand; z++)
-        {
-
-            Q_P_matrix[x][z] = df->getDistance(*sample->instance(x), *sample->instance(cand[z]));
-
-        }
+        delete [] aux;
 
     }
 
-    for(size_t i = 0; i < nPivots; i++)
+    /*
+    bitmap pergunta se elemento esta em P? Nao -> false, Sim -> true
+
+    */
+
+    while(cand > this->getNumberOfPivots())
     {
 
-        pos = UINT_MAX;
-        for(size_t j = 0; j < num_cand; j++)
+        double max = std::numeric_limits<double>::lowest();
+        size_t pos = 0;
+
+        for(size_t x = 0; x < pvtSize; x++)
         {
 
-            if(bitmap[j])
+            if(!bitmap[x])
             {
 
-                d = 0.0;
-                for(size_t m = 0; m < num_cand; m++)
+                bitmap[x] = true;
+
+                double prec = 0.0;
+                double max = std::numeric_limits<double>::min();
+                size_t max_pos = 0;
+
+                for(size_t i = 0; i < pairSize; i++)
                 {
 
-                    for(size_t n = 0; n < sample->getCardinality(); n++)
+                    for(size_t j = 0; j < pvtSize; j++)
                     {
 
-                        if(Q_O_matrix[m][n] != 0.0)
+                        if(dist_pivots_pairs[j][i] > max)
                         {
 
-                            d += (std::max(fabs(Q_P_matrix[m][j] - O_P_matrix[n][j]), esti[m][n]))/Q_O_matrix[m][n];
+                            max = dist_pivots_pairs[j][i];
+                            max_pos = j;
 
                         }
 
                     }
 
+                    prec += dist_pivots_pairs[max_pos][i]/dist_pairs[i];
+
                 }
 
-                d = d/(num_cand*sample->getCardinality());
+                prec /= pairSize;
 
-                if(d > max)
+                if(prec > max)
                 {
 
-                    max = d;
-                    pos = j;
-
+                    max = prec;
+                    pos = x;
 
                 }
 
-            }
 
-        }
-
-        if(pos == UINT_MAX)
-            break;
-
-        bitmap[pos] = false;
-        this->setPivot(sample->instance(cand[pos]), i);
-
-        for(size_t m = 0; m < num_cand; m++)
-        {
-
-            for(size_t n = 0; n < sample->getCardinality(); n++)
-            {
-
-                esti[m][n] = std::max(fabs(Q_P_matrix[m][pos] - O_P_matrix[n][pos]), esti[m][n]);
+                bitmap[x] = false;
 
             }
 
         }
+
+        bitmap[pos] = true;
+        cand--;
 
     }
 
-    for(size_t x = 0; x < sample->getCardinality(); x++)
+    size_t j = 0;
+    for(size_t i = 0; i < pvtSize; i++)
     {
 
-        delete [] O_P_matrix[x];
+        if(bitmap[i])
+        {
+
+            this->setPivot(sample->instance(pivot_index[i]), j++);
+
+        }
 
     }
 
-    delete [] O_P_matrix;
+    delete [] bitmap;
+    delete [] pivot_index;
+
+    for(size_t i = 0; i < pairSize; i++)
+    {
+
+        delete [] pairs_index[i];
+        delete [] dist_pairs[i];
+
+    }
+
+    for(size_t i = 0; i < pvtSize; i++)
+    {
+
+        delete [] dist_pivots_pairs[i];
+
+    }
 
     if(this->sample_size == -1.0)
         sample = nullptr;
 
     delete sample;
-    delete [] cand;
-    delete [] bitmap;
-
-    for(size_t x = 0; x < num_cand; x++)
-    {
-
-        delete [] Q_O_matrix[x];
-        delete [] Q_P_matrix[x];
-        delete [] esti[x];
-
-    }
-
-    delete [] Q_O_matrix;
-    delete [] Q_P_matrix;
-    delete [] esti;
 
     auto end = std::chrono::steady_clock::now();
     this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
+
+
+//*******************************************************************************************************************************
+//    auto start = std::chrono::steady_clock::now();
+
+//    this->setNumberOfPivots(nPivots);
+
+//    Dataset<DType>* sample = nullptr;
+//    if(this->sample_size != -1.0)
+//        sample = dataset->sampleDataset(std::ceil(dataset->getCardinality()*this->sample_size), false, this->getSeed());
+//    else
+//        sample = dataset;
+
+////    size_t num_cand = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2)), pos = 0;
+//    size_t num_cand = std::min(2 * this->getNumberOfPivots(), sample->getCardinality()), pos = 0;
+//    size_t* cand = new size_t[num_cand];
+//    double** O_P_matrix = maxPrunning(sample, df, num_cand, cand);
+//    double** Q_O_matrix = new double*[num_cand];
+//    double** Q_P_matrix = new double*[num_cand];
+//    double** esti = new double*[num_cand];
+//    bool* bitmap = new bool[num_cand];
+//    double max = std::numeric_limits<double>::min(), d = 0.0;
+
+//    for(size_t x = 0; x < num_cand; x++)
+//    {
+
+//        Q_O_matrix[x] = new double[sample->getCardinality()];
+//        Q_P_matrix[x] = new double[num_cand];
+//        esti[x] = new double[sample->getCardinality()];
+//        bitmap[x] = true;
+
+//    }
+
+//    for(size_t x = 0; x < num_cand; x++)
+//    {
+
+//        for(size_t y = 0; y < sample->getCardinality(); y++)
+//        {
+
+//            Q_O_matrix[x][y] = df->getDistance(*sample->instance(x), *sample->instance(y));
+//            esti[x][y] = 0.0;
+
+//        }
+
+//        for(size_t z = 0; z < num_cand; z++)
+//        {
+
+//            Q_P_matrix[x][z] = df->getDistance(*sample->instance(x), *sample->instance(cand[z]));
+
+//        }
+
+//    }
+
+//    for(size_t i = 0; i < nPivots; i++)
+//    {
+
+//        pos = UINT_MAX;
+//        for(size_t j = 0; j < num_cand; j++)
+//        {
+
+//            if(bitmap[j])
+//            {
+
+//                d = 0.0;
+//                for(size_t m = 0; m < num_cand; m++)
+//                {
+
+//                    for(size_t n = 0; n < sample->getCardinality(); n++)
+//                    {
+
+//                        if(Q_O_matrix[m][n] != 0.0)
+//                        {
+
+//                            d += (std::max(fabs(Q_P_matrix[m][j] - O_P_matrix[n][j]), esti[m][n]))/Q_O_matrix[m][n];
+
+//                        }
+
+//                    }
+
+//                }
+
+//                d = d/(num_cand*sample->getCardinality());
+
+//                if(d > max)
+//                {
+
+//                    max = d;
+//                    pos = j;
+
+
+//                }
+
+//            }
+
+//        }
+
+//        if(pos == UINT_MAX)
+//            break;
+
+//        bitmap[pos] = false;
+//        this->setPivot(sample->instance(cand[pos]), i);
+
+//        for(size_t m = 0; m < num_cand; m++)
+//        {
+
+//            for(size_t n = 0; n < sample->getCardinality(); n++)
+//            {
+
+//                esti[m][n] = std::max(fabs(Q_P_matrix[m][pos] - O_P_matrix[n][pos]), esti[m][n]);
+
+//            }
+
+//        }
+
+//    }
+
+//    for(size_t x = 0; x < sample->getCardinality(); x++)
+//    {
+
+//        delete [] O_P_matrix[x];
+
+//    }
+
+//    delete [] O_P_matrix;
+
+//    if(this->sample_size == -1.0)
+//        sample = nullptr;
+
+//    delete sample;
+//    delete [] cand;
+//    delete [] bitmap;
+
+//    for(size_t x = 0; x < num_cand; x++)
+//    {
+
+//        delete [] Q_O_matrix[x];
+//        delete [] Q_P_matrix[x];
+//        delete [] esti[x];
+
+//    }
+
+//    delete [] Q_O_matrix;
+//    delete [] Q_P_matrix;
+//    delete [] esti;
+
+//    auto end = std::chrono::steady_clock::now();
+//    this->setElapsedTime(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count());
 
 //*******************************************************************************************************************************
 //    size_t o_num = sample->getCardinality()/2, num_cand = std::min(o_num, (size_t)300), q_num = num_cand;

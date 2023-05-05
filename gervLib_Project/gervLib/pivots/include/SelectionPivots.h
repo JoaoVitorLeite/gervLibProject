@@ -88,10 +88,10 @@ void SelectionPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFun
     else
         sample = dataset;
 
-    setNumberOfGroups(size_t(0.5*sample->getCardinality()));
+    setNumberOfGroups(size_t(0.5 * sample->getCardinality()));
     this->setNumberOfPivots(nPivots);
 
-    double min = std::numeric_limits<double>::max();
+    double max = std::numeric_limits<double>::lowest();
     double length = ((this->getNumberOfPivots()*(this->getNumberOfPivots()-1))*1.0)/2.0;
     double mean = 0, dist;
     std::vector<BasicArrayObject<DType>*> group = std::vector<BasicArrayObject<DType>*>();
@@ -100,6 +100,7 @@ void SelectionPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFun
 
     for(size_t g = 0; g < getNumberOfGroups(); g++){
 
+        srand(this->getSeed());
         group = sample->sample(this->getNumberOfPivots(), false, rand());
         mean = 0;
 
@@ -121,10 +122,10 @@ void SelectionPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFun
 
         }
 
-        if(mean < min)
+        if(mean > max)
         {
 
-            min = mean;
+            max = mean;
 
             for(size_t k = 0; k < this->getNumberOfPivots(); k++)
             {

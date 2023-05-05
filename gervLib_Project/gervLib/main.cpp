@@ -39,30 +39,34 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/open2/Dataset1.csv", ",");
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/Dataset1.csv", ",");
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    BPPPivots<double>* pvt = new BPPPivots<double>();
+    ConvexPivots<double>* pvt = new ConvexPivots<double>();
+    pvt->setSeed(32393);
+    pvt->generatePivots(train, df, 6);
 
-    train->printDataset();
+    for(size_t i = 0; i < 6; i++)
+        cout << pvt->get(i).getOID() << endl;
 
-    cout << endl << endl;
+//    train->printDataset();
 
-    for(size_t i = 0; i < train->getCardinality(); i++)
-    {
+//    cout << endl << endl;
 
-        for(size_t j = 0; j < train->getCardinality(); j++)
-        {
+//    for(size_t i = 0; i < train->getCardinality(); i++)
+//    {
 
-            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
-            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
+//        for(size_t j = 0; j < train->getCardinality(); j++)
+//        {
 
-        }
+//            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
+//            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
 
-        cout << endl;
+//        }
 
-    }
+//        cout << endl;
 
-    pvt->generatePivots(train, df, 3);
+//    }
+
 
     //    cout << "Query: " << test->getFeatureVector(0).toStringWithOID() << endl;
 

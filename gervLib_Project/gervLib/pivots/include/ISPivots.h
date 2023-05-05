@@ -88,7 +88,7 @@ void ISPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<B
 
 //    size_t pairsSize = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2)), candidatesSize = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2));
     //    size_t cand_size = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2)), pair_size = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2));
-    size_t candidatesSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
+    size_t candidatesSize = std::min(2 * this->getNumberOfPivots(), sample->getCardinality());
     //size_t pair_size = std::max(nPivots, (size_t)std::ceil(sample->getCardinality()/2));
     size_t pairsSize = 300;
     size_t* pvtIndex = new size_t[this->getNumberOfPivots()];
@@ -112,7 +112,7 @@ void ISPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<B
 
         svg[x] = 0.0;
 
-        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, this->getSeed());
+        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, this->getSeed()/2);
         pairs[x] = new size_t[2];
         pairs[x][0] = aux[0];
         pairs[x][1] = aux[1];

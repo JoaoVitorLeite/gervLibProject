@@ -66,7 +66,7 @@ void MaxVariancePivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceF
     else
         sample = dataset;
 
-    std::pair<std::vector<BasicArrayObject<DType>*>, std::vector<BasicArrayObject<DType>*>> split = sample->splitDataset(0.5,0.5, this->getSeed());
+    std::pair<std::vector<BasicArrayObject<DType>*>, std::vector<BasicArrayObject<DType>*>> split = sample->splitDataset(0.5, 0.5, this->getSeed());
 
     double mean, sum;
     std::vector<std::pair<BasicArrayObject<DType>*, double>> v;
