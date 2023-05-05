@@ -176,7 +176,7 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     double** pr_mat = new double*[pvtSize];
 
     for(size_t i = 0; i < pvtSize; i++) std::cout << "P ID = " << pivot_index[i] << std::endl;
-    for(size_t i = 0; i < auxSize; i++) std::cout << "AUX ID = " << pivot_index[i] << std::endl;
+    for(size_t i = 0; i < auxSize; i++) std::cout << "AUX ID = " << aux_index[i] << std::endl;
 
 
     for(size_t i = 0; i < pvtSize; i++)
@@ -192,8 +192,11 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
             dist[i][j] = df->getDistance(*sample->getInstance(pivot_index[i]), *sample->getInstance(aux_index[j]));
             rank[i][j] = 0;
+            std::cout << dist[i][j] << "\t";
 
         }
+
+        std::cout << std::endl;
 
     }
 
@@ -227,6 +230,8 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
             std::cout << rank[i][j] << "\t";
         std::cout << std::endl;
     }
+
+    std::cout << "PR\n\n";
 
     while(cand > this->getNumberOfPivots())
     {
@@ -262,27 +267,38 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
                             }
 
+//                            std::cout << pr << "\t";
+
                             sum += pr;
-                            pr_mat[j][k] = pr;
+                            pr_mat[j][k-1] = pr;
                             pr = 0;
                             k++;
+
+                            //std::cout << pr_mat[j][k-1] << "\t";
 
                         }
 
                         pr_mat[j][cand] = (sum*1.0)/(cand-1);
 
-                        for(size_t x = 0; x < cand; x++)
+                        //std::cout << pr_mat[j][cand] << "\n";
+
+                        for(size_t x = 0; x < cand-1; x++)
                         {
 
+                            std::cout << pr_mat[j][x] << "\t";
                             std += (pr_mat[j][x] - pr_mat[j][cand])*(pr_mat[j][x] - pr_mat[j][cand]);
+                            //std::cout << "STD_PARCIAL(" << std << ")";
 
                         }
+
+                        std::cout << pr_mat[j][cand] << "\n";
 
                     }
 
                 }
 
-                std /= cand*cand;
+                std /= (cand-1)*(cand-1); //talvez seja cand-1
+                std::cout << "P ID = " << pivot_index[i] << " / STD = " << std << std::endl;
 
                 if(std < min)
                 {

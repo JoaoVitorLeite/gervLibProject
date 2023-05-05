@@ -43,24 +43,24 @@ int main(int argc, char *argv[])
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
     BPPPivots<double>* pvt = new BPPPivots<double>();
 
-//    train->printDataset();
+    train->printDataset();
 
-//    cout << endl << endl;
+    cout << endl << endl;
 
-//    for(size_t i = 0; i < train->getCardinality(); i++)
-//    {
+    for(size_t i = 0; i < train->getCardinality(); i++)
+    {
 
-//        for(size_t j = 0; j < train->getCardinality(); j++)
-//        {
+        for(size_t j = 0; j < train->getCardinality(); j++)
+        {
 
-//            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
-//            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
+            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
+            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
 
-//        }
+        }
 
-//        cout << endl;
+        cout << endl;
 
-//    }
+    }
 
     pvt->generatePivots(train, df, 3);
 
