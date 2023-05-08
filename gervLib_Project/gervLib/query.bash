@@ -17,8 +17,8 @@ rep=10
 page_size=4096
 num_bins=200
 #num_query=1000
-num_per_leaf=360 #only omni,kdtree
-path_save_results="../results/"
+num_per_leaf=55 #only omni,kdtree
+path_save_results="../results/tcc_expt/consultas/cities/omni/"
 
 mkdir -p omni/omni_files/
 mkdir -p kdtree/kdtree_files/

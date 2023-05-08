@@ -432,6 +432,10 @@ int main(int argc, char *argv[])
             {
                 pvt = new WDRPivots<double>();
             }
+            else if(*pivot_type == "BPP")
+            {
+            	pvt = new BPPPivots<double>();
+            }
             else
             {
                 throw std::invalid_argument("Pivot selection not find !_! " + *pivot_type);
