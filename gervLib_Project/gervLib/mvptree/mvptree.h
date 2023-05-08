@@ -717,7 +717,7 @@ namespace mvp {
                 points.push_back({static_cast<long long>(x), train->getFeatureVector(x)});
 
             }
-
+            //std::cout << "PTS SIZE = " << points.size() << "\n";
             Add(points);
 
             //m_top->setDistanceFunction(distanceFunction);
@@ -1783,7 +1783,7 @@ void mvp::MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>::test()
 
                 if(datavpsLeaf[x].key.getOID() == (size_t)0) std::cout << "FIND\n";
                 cnt++;
-                std::cout << "ID = " << datapointsLeaf[x].key.getOID() << std::endl;
+                std::cout << "ID = " << datavpsLeaf[x].key.getOID() << std::endl;
 
             }
 

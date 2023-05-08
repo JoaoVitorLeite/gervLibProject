@@ -38,15 +38,13 @@ typedef std::vector<char> str;
 int main(int argc, char *argv[])
 {
 
-    Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/Dataset1.csv", ",");
-    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    ConvexPivots<double>* pvt = new ConvexPivots<double>();
-    pvt->setSeed(32393);
-    pvt->generatePivots(train, df, 6);
+    Dataset<str>* train = new Dataset<str>();
+    Dataset<str>::loadTextDataset(train, "../../gervLib/datasets/sgb-words-30.csv", " ");
+    EditDistance<BasicArrayObject<str>>* df = new EditDistance<BasicArrayObject<str>>();
+    RandomPivots<str>* pvt = new RandomPivots<str>();
 
-    for(size_t i = 0; i < 6; i++)
-        cout << pvt->get(i).getOID() << endl;
+    MVPTREE_STRING_RANDOM mvp = MVPTREE_STRING_RANDOM(df, train);
+    mvp.test();
 
 //    train->printDataset();
 

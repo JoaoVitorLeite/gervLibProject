@@ -394,13 +394,13 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     size_t pvtSize = std::min(2 * this->getNumberOfPivots(), sample->getCardinality());
     size_t cand = pvtSize;
     //size_t pairSize = 300;
-    size_t pairSize = std::min(300, sample->getCardinality()); //COMENTAR ESSE DEPOIS E DESCOMENTAR A LINHA ACIMA
+    size_t pairSize = std::min((size_t)300, (size_t)sample->getCardinality()/2); //COMENTAR ESSE DEPOIS E DESCOMENTAR A LINHA ACIMA
     size_t* pivot_index = new size_t[pvtSize];
     size_t** pairs_index = new size_t*[pairSize];
     size_t* aux;
     bool* bitmap = new bool[pvtSize];
     double* dist_pairs = new double[pairSize];
-    double** dist_pivots_pairs = new double[pvtSize];
+    double** dist_pivots_pairs = new double*[pvtSize];
 
     ConvexPivots<DType>* convex = new ConvexPivots<DType>();
     convex->setSeed(this->getSeed());
@@ -410,6 +410,7 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     {
 
         pivot_index[i] = convex->get(i).getOID();
+        //std::cout << "P ID = " << pivot_index[i] << std::endl;
         dist_pivots_pairs[i] = new double[pairSize];
         bitmap[i] = false;
 
@@ -417,10 +418,11 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     delete convex;
 
-    for(size_t i = 0; i < pair_size; i++)
+    for(size_t i = 0; i < pairSize; i++)
     {
 
-        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, this->getSeed()/2);
+        srand(this->getSeed()/2);
+        aux = uniqueRandomNumber(0, sample->getCardinality(), 2, (this->getSeed()*(i+1))%RAND_MAX);
         pairs_index[i] = new size_t[2];
         pairs_index[i][0] = aux[0];
         pairs_index[i][1] = aux[1];
@@ -438,15 +440,41 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     }
 
-    /*
-    bitmap pergunta se elemento esta em P? Nao -> false, Sim -> true
+//    for(size_t i = 0; i < pairSize; i++)
+//    {
 
-    */
+//        std::cout << "CAND ID = " << pairs_index[i][0] << "/" << pairs_index[i][1] << std::endl;
 
+//    }
+
+//    for(size_t i = 0; i < pairSize; i++)
+//    {
+
+//        std::cout << dist_pairs[i] << "\t";
+
+//    }
+
+//    std::cout << std::endl << std::endl;
+
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
+
+//        for(size_t j = 0; j < pairSize; j++)
+//        {
+
+//            std::cout << dist_pivots_pairs[i][j] << "\t";
+
+//        }
+
+//        std::cout << std::endl;
+
+//    }
+
+    size_t pvtIndex = 0;
     while(cand > this->getNumberOfPivots())
     {
 
-        double max = std::numeric_limits<double>::lowest();
+        double max = std::numeric_limits<double>::min();
         size_t pos = 0;
 
         for(size_t x = 0; x < pvtSize; x++)
@@ -457,20 +485,25 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
                 bitmap[x] = true;
 
+//                std::cout << x << std::endl;
+//                for(size_t z = 0; z < pvtSize; z++) std::cout << bitmap[z] << "\t";
+//                std::cout << "\n";
+
                 double prec = 0.0;
-                double max = std::numeric_limits<double>::min();
-                size_t max_pos = 0;
 
                 for(size_t i = 0; i < pairSize; i++)
                 {
 
+                    double max_p = std::numeric_limits<double>::min();
+                    size_t max_pos = 0;
+
                     for(size_t j = 0; j < pvtSize; j++)
                     {
 
-                        if(dist_pivots_pairs[j][i] > max)
+                        if((bitmap[j] == true) && (dist_pivots_pairs[j][i] > max_p))
                         {
 
-                            max = dist_pivots_pairs[j][i];
+                            max_p = dist_pivots_pairs[j][i];
                             max_pos = j;
 
                         }
@@ -483,6 +516,8 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
                 prec /= pairSize;
 
+//                std::cout << "PREC " << pivot_index[x] << " : " << prec << std::endl;
+
                 if(prec > max)
                 {
 
@@ -491,7 +526,6 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
                 }
 
-
                 bitmap[x] = false;
 
             }
@@ -499,31 +533,32 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
         }
 
         bitmap[pos] = true;
+        this->setPivot(sample->instance(pivot_index[pos]), pvtIndex++);
         cand--;
 
     }
 
-    size_t j = 0;
-    for(size_t i = 0; i < pvtSize; i++)
-    {
+//    size_t j = 0;
+//    for(size_t i = 0; i < pvtSize; i++)
+//    {
 
-        if(bitmap[i])
-        {
+//        if(bitmap[i])
+//        {
 
-            this->setPivot(sample->instance(pivot_index[i]), j++);
+//            this->setPivot(sample->instance(pivot_index[i]), j++);
 
-        }
+//        }
 
-    }
+//    }
 
     delete [] bitmap;
     delete [] pivot_index;
+    delete [] dist_pairs;
 
     for(size_t i = 0; i < pairSize; i++)
     {
 
         delete [] pairs_index[i];
-        delete [] dist_pairs[i];
 
     }
 
