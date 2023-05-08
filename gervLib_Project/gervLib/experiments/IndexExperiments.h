@@ -2,6 +2,7 @@
 #define INDEXEXPERIMENTS_H
 
 #include <Experiments.h>
+#include <config_spb.h>
 
 namespace fs = std::experimental::filesystem;
 
@@ -56,12 +57,14 @@ public:
         }
 
         file << this->calcDist << "," << this->time << "\n";
+        file.close();
 
     }
 
     void runExperiment() override
     {
 
+        deleteIndex();
         buildIndex();
         saveBuildStats();
 
@@ -83,6 +86,10 @@ public:
                  << this->num_query
                  << ","
                  << this->seed
+                 << ","
+                 << PAGE_SIZE;
+                 << ","
+                 << MIN_BTREE_LEAF_NUM
                  << "\n";
 
             file << "k,time,count,disk\n";
@@ -120,6 +127,7 @@ public:
         for(size_t r = 0; r < rep; r++)
         {
 
+            deleteIndex();
             buildIndex();
             saveBuildStats();
 
@@ -142,6 +150,10 @@ public:
                      << this->num_query
                      << ","
                      << this->seed
+                     << ","
+                     << PAGE_SIZE;
+                     << ","
+                     << MIN_BTREE_LEAF_NUM
                      << "\n";
 
                 file << "k,time,count,disk\n";

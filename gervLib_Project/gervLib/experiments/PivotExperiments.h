@@ -143,6 +143,8 @@ public:
 
         }
 
+        file.close();
+
         //std::cout << std::endl; //REMOVER
 
     }
@@ -223,6 +225,8 @@ public:
             //std::cout << std::endl; //REMOVER
 
             repSavePivots = false;
+
+            file.close();
 
         }
 
