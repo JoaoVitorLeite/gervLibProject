@@ -468,6 +468,7 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
             expt.buildIndex();
+            expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -507,6 +508,7 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
             expt.buildIndex();
+            expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -546,6 +548,7 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
             expt.buildIndex();
+            expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -586,6 +589,7 @@ int main(int argc, char *argv[])
             expt.setNumBins(*num_bins);
             expt.setSeed(*seed);
             expt.buildIndex();
+            expt.saveBuildStats();
 
             if(rep == nullptr)
             {

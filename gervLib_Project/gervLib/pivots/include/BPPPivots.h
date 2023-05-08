@@ -166,7 +166,7 @@ void BPPPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     //size_t auxSize = std::max((size_t)50, 2 * this->getNumberOfPivots());
     size_t pvtSize = std::min(2 * this->getNumberOfPivots(), sample->getCardinality());
-    size_t auxSize = std::min((size_t)sample->getCardinality()/2, pvtSize);
+    size_t auxSize = std::min((size_t)300, (size_t)sample->getCardinality()/2);
     size_t cand = pvtSize;
     size_t* pivot_index = uniqueRandomNumber(0, sample->getCardinality(), pvtSize, this->getSeed());
     size_t* aux_index = uniqueRandomNumber(0, sample->getCardinality(), auxSize, this->getSeed()/2);

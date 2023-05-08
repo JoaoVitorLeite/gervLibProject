@@ -28,6 +28,35 @@ public:
 
     }
 
+    void saveBuildStats()
+    {
+
+        std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
+                               fs::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()] + "_stats.csv";
+        std::ofstream file(filePath, std::fstream::app);
+
+        if(fs::file_size(filePath) == 0)
+        {
+
+            file << this->indexName()
+                 << ","
+                 << this->dfName
+                 << ","
+                 << this->names[this->pvt->getPivotType()]
+                 << ","
+                 << this->pvt->getNumberOfPivots()
+                 << ","
+                 << this->seed
+                 << "\n";
+
+            file << "time,count\n";
+
+        }
+
+        file << this->calcDist << "," << this->time << "\n";
+
+    }
+
     void runExperiment() override
     {
 

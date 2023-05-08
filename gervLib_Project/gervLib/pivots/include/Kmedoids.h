@@ -51,7 +51,7 @@ void Kmedoids<DType>::initializeClusters(Dataset<DType>* sample)
 
     for(size_t x = 0; x < getNumberOfClusters(); x++){
         clusters[x]->setMedoid(sample->instance(randomIndex[x]));
-        //std::cout << clusters[x]->getMedoid()->GetOID() << std::endl;
+        //std::cout << "ini: " << clusters[x]->getMedoid()->GetOID() << std::endl;
     }
 
 }
@@ -98,7 +98,7 @@ void Kmedoids<DType>::reCenter(DistanceFunction<BasicArrayObject<DType>>* df)
         }
 
         getCluster(z)->setMedoid(getCluster(z)->getInstance(index));
-        //std::cout << getCluster(z)->getMedoid()->GetOID() << std::endl;
+        //std::cout << "C = " << getCluster(z)->getMedoid()->GetOID() << std::endl;
 
     }
 

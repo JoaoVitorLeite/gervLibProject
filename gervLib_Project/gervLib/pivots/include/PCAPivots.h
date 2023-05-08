@@ -62,7 +62,7 @@ void PCAPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     else
         sample = dataset;
 
-
+    //PRECISA DE AMOSTRA !!!
     Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> A, centered_matrix, covariance_matrix;
     A.resize(sample->getCardinality(), sample->getCardinality());
 

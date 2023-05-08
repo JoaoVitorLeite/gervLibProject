@@ -96,12 +96,9 @@ void SelectionPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFun
     double mean = 0, dist;
     std::vector<BasicArrayObject<DType>*> group = std::vector<BasicArrayObject<DType>*>();
 
-    srand(this->getSeed());
-
     for(size_t g = 0; g < getNumberOfGroups(); g++){
 
-        srand(this->getSeed());
-        group = sample->sample(this->getNumberOfPivots(), false, rand());
+        group = sample->sample(this->getNumberOfPivots(), false, (this->getSeed()*(g+1))%RAND_MAX);
         mean = 0;
 
         for(size_t x = 0; x < this->getNumberOfPivots(); x++)

@@ -9,8 +9,8 @@ class HFIPivots : public Pivot<DType>
 {
 
 
-    private:
-        double** maxPrunning(Dataset<DType> *sample, DistanceFunction<BasicArrayObject<DType>> *df, size_t num_cand, size_t* cand);
+//    private:
+//        double** maxPrunning(Dataset<DType> *sample, DistanceFunction<BasicArrayObject<DType>> *df, size_t num_cand, size_t* cand);
 
     public:
         HFIPivots();
@@ -37,154 +37,154 @@ class HFIPivots : public Pivot<DType>
 
 
 
-template <class DType>
-double** HFIPivots<DType>::maxPrunning(Dataset<DType> *sample, DistanceFunction<BasicArrayObject<DType>> *df, size_t num_cand, size_t* cand)
-{
+//template <class DType>
+//double** HFIPivots<DType>::maxPrunning(Dataset<DType> *sample, DistanceFunction<BasicArrayObject<DType>> *df, size_t num_cand, size_t* cand)
+//{
 
-    bool* bitmap = new bool[sample->getCardinality()];
-    double** distMatrix = new double*[sample->getCardinality()];
-    size_t pos = 0;
-    double max = std::numeric_limits<double>::min(), min = std::numeric_limits<double>::max(), d = 0.0, edge = 0.0;
+//    bool* bitmap = new bool[sample->getCardinality()];
+//    double** distMatrix = new double*[sample->getCardinality()];
+//    size_t pos = 0;
+//    double max = std::numeric_limits<double>::min(), min = std::numeric_limits<double>::max(), d = 0.0, edge = 0.0;
 
-    for(size_t x = 0; x < sample->getCardinality(); x++)
-    {
+//    for(size_t x = 0; x < sample->getCardinality(); x++)
+//    {
 
-        bitmap[x] = true;
+//        bitmap[x] = true;
 
-    }
+//    }
 
-    for(size_t x = 0; x < sample->getCardinality(); x++)
-    {
+//    for(size_t x = 0; x < sample->getCardinality(); x++)
+//    {
 
-        distMatrix[x] = new double[num_cand];
+//        distMatrix[x] = new double[num_cand];
 
-        for(size_t y = 0; y < num_cand; y++)
-        {
+//        for(size_t y = 0; y < num_cand; y++)
+//        {
 
-            distMatrix[x][y] = 0.0;
+//            distMatrix[x][y] = 0.0;
 
-        }
+//        }
 
-    }
+//    }
 
-    //Primeiro pivo
-    for(size_t x = 1; x < sample->getCardinality(); x++)
-    {
+//    //Primeiro pivo
+//    for(size_t x = 1; x < sample->getCardinality(); x++)
+//    {
 
-        d = df->getDistance(*sample->instance(x), *sample->instance(0));
+//        d = df->getDistance(*sample->instance(x), *sample->instance(0));
 
-        if(d > max)
-        {
+//        if(d > max)
+//        {
 
-            max = d;
-            pos = x;
+//            max = d;
+//            pos = x;
 
-        }
+//        }
 
-    }
+//    }
 
-    cand[0] = pos;
-    bitmap[pos] = false;
-    //
+//    cand[0] = pos;
+//    bitmap[pos] = false;
+//    //
 
-    //Segundo pivo
-    max = std::numeric_limits<double>::min();
-    pos = 0;
+//    //Segundo pivo
+//    max = std::numeric_limits<double>::min();
+//    pos = 0;
 
-    for(size_t x = 0; x < sample->getCardinality(); x++)
-    {
+//    for(size_t x = 0; x < sample->getCardinality(); x++)
+//    {
 
-        if(bitmap[x])
-        {
+//        if(bitmap[x])
+//        {
 
-            distMatrix[x][0] = df->getDistance(*sample->instance(x), *sample->instance(cand[0]));
+//            distMatrix[x][0] = df->getDistance(*sample->instance(x), *sample->instance(cand[0]));
 
-            if(distMatrix[x][0] > max)
-            {
+//            if(distMatrix[x][0] > max)
+//            {
 
-                max = distMatrix[x][0];
-                pos = x;
+//                max = distMatrix[x][0];
+//                pos = x;
 
-            }
+//            }
 
-        }
+//        }
 
-    }
+//    }
 
-    cand[1] = pos;
-    bitmap[pos] = false;
-    //
+//    cand[1] = pos;
+//    bitmap[pos] = false;
+//    //
 
-    edge = d;
+//    edge = d;
 
-    for(size_t x = 2; x < num_cand; x++)
-    {
+//    for(size_t x = 2; x < num_cand; x++)
+//    {
 
-        min = std::numeric_limits<double>::max();
-        pos = 0;
+//        min = std::numeric_limits<double>::max();
+//        pos = 0;
 
-        for(size_t y = 0; y < sample->getCardinality(); y++)
-        {
+//        for(size_t y = 0; y < sample->getCardinality(); y++)
+//        {
 
-            if(bitmap[y])
-            {
+//            if(bitmap[y])
+//            {
 
-                d = 0.0;
+//                d = 0.0;
 
-                for(size_t z = 0; z < x-1; z++)
-                {
+//                for(size_t z = 0; z < x-1; z++)
+//                {
 
-                    d += fabs(edge - distMatrix[y][z]);
+//                    d += fabs(edge - distMatrix[y][z]);
 
-                }
+//                }
 
-                distMatrix[y][x-1] = df->getDistance(*sample->instance(y), *sample->instance(cand[x-1]));
-                d += fabs(edge - distMatrix[y][x-1]);
+//                distMatrix[y][x-1] = df->getDistance(*sample->instance(y), *sample->instance(cand[x-1]));
+//                d += fabs(edge - distMatrix[y][x-1]);
 
-                if(d < min)
-                {
+//                if(d < min)
+//                {
 
-                    min = d;
-                    pos = y;
+//                    min = d;
+//                    pos = y;
 
-                }
+//                }
 
-            }
+//            }
 
-        }
+//        }
 
-        cand[x] = pos;
-        bitmap[pos] = false;
+//        cand[x] = pos;
+//        bitmap[pos] = false;
 
-    }
+//    }
 
-    for(size_t x = 0; x < sample->getCardinality(); x++)
-    {
+//    for(size_t x = 0; x < sample->getCardinality(); x++)
+//    {
 
-        if(bitmap[x])
-        {
+//        if(bitmap[x])
+//        {
 
-            distMatrix[x][num_cand-1] = df->getDistance(*sample->instance(x), *sample->instance(cand[num_cand-1]));
+//            distMatrix[x][num_cand-1] = df->getDistance(*sample->instance(x), *sample->instance(cand[num_cand-1]));
 
-        }
+//        }
 
-    }
+//    }
 
-    for(size_t x = 0; x < num_cand; x++)
-    {
+//    for(size_t x = 0; x < num_cand; x++)
+//    {
 
-        for(size_t y = x+1; y < num_cand; y++)
-        {
+//        for(size_t y = x+1; y < num_cand; y++)
+//        {
 
-            distMatrix[cand[x]][y] = df->getDistance(*sample->instance(cand[x]), *sample->instance(cand[y]));
+//            distMatrix[cand[x]][y] = df->getDistance(*sample->instance(cand[x]), *sample->instance(cand[y]));
 
-        }
+//        }
 
-    }
+//    }
 
-    delete [] bitmap;
+//    delete [] bitmap;
 
-    return distMatrix;
+//    return distMatrix;
 
 //    bool *indicator = new bool[num];
 
@@ -358,7 +358,7 @@ double** HFIPivots<DType>::maxPrunning(Dataset<DType> *sample, DistanceFunction<
 
 //    return distMatrix;
 
-}
+//}
 
 
 template <class DType>
@@ -393,8 +393,7 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
 
     size_t pvtSize = std::min(2 * this->getNumberOfPivots(), sample->getCardinality());
     size_t cand = pvtSize;
-    //size_t pairSize = 300;
-    size_t pairSize = std::min((size_t)300, (size_t)sample->getCardinality()/2); //COMENTAR ESSE DEPOIS E DESCOMENTAR A LINHA ACIMA
+    size_t pairSize = std::min((size_t)300, (size_t)sample->getCardinality()/2);
     size_t* pivot_index = new size_t[pvtSize];
     size_t** pairs_index = new size_t*[pairSize];
     size_t* aux;
@@ -421,7 +420,6 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     for(size_t i = 0; i < pairSize; i++)
     {
 
-        srand(this->getSeed()/2);
         aux = uniqueRandomNumber(0, sample->getCardinality(), 2, (this->getSeed()*(i+1))%RAND_MAX);
         pairs_index[i] = new size_t[2];
         pairs_index[i][0] = aux[0];

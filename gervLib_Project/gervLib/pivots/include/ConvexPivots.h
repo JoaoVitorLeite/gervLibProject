@@ -74,7 +74,7 @@ void ConvexPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFuncti
     aux = uniqueRandomNumber(0, sample->getCardinality(), 1, this->getSeed());
     p1 = aux[0];
 
-//    std::cout << "AUX: " << p1 << std::endl;
+    //std::cout << "AUX: " << p1 << std::endl;
 
     //Inicializa bitmap
     for (size_t x = 0; x < sample->getCardinality(); x++)
@@ -108,7 +108,7 @@ void ConvexPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFuncti
     pvtIndex[currentPivot] = pos;
     currentPivot++;
 
-//    std::cout << "AUX: " << pos << std::endl;
+    //std::cout << "AUX: " << pos << std::endl;
 
     max = std::numeric_limits<double>::min();
     pos = 0;
@@ -134,7 +134,7 @@ void ConvexPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFuncti
     pvtIndex[currentPivot] = pos;
     currentPivot++;
 
-//    std::cout << "AUX: " << pos << std::endl;
+    //std::cout << "AUX: " << pos << std::endl;
 
     //Definição da primeira aresta
     double edge = df->getDistance(*sample->instance(pvtIndex[0]), *sample->instance(pvtIndex[1]));

@@ -1,17 +1,19 @@
 #!/bin/bash
 
 index="OMNIKDTREE"
-dataset_train="../datasets/train_nasa.csv"
+dataset_train="../datasets/train_cities_norm.csv"
 separator_train=","
-dataset_test="../datasets/test_nasa.csv"
+dataset_test="../datasets/test_cities_norm.csv"
 separator_test=","
 distance_function="EUCLIDEAN"
-pivot_type=("RANDOM" "GNAT" "CONVEX" "KMEDOIDS" "MAXSEPARATED" "MAXVARIANCE" "SELECTION" "PCA" "SSS" "HFI" "IS" "WDR")
-sample_size=(1.0 1.0 1.0 0.2 1.0 0.3 0.3 0.01 0.03 1.0 0.5 0.5 0.5)
+#pivot_type=("RANDOM" "GNAT" "CONVEX" "KMEDOIDS" "MAXSEPARATED" "MAXVARIANCE" "SELECTION" "PCA" "SSS" "HFI" "IS" "WDR")
+pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS")
+#sample_size=(1.0 1.0 1.0 0.2 1.0 0.3 0.3 0.01 0.03 1.0 0.5 0.5 0.5)
+sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.5 1.0 1.0 1.0 1.0 1.0)
 num_pivots=2
 seed=($(shuf -i 0-500000 -n 13))
 k_max=100
-rep=1
+rep=10
 page_size=4096
 num_bins=200
 #num_query=1000

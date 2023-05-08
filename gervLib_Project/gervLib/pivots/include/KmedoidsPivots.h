@@ -77,6 +77,7 @@ void KmedoidsPivots<DType>::generatePivots(Dataset<DType>* dataset, DistanceFunc
     auto start = std::chrono::steady_clock::now();
 
     this->setNumberOfPivots(nPivots);
+    this->setNumberOfIterations(std::max((size_t)500, nPivots));
 
     Dataset<DType>* sample = nullptr;
     if(this->sample_size != -1.0)

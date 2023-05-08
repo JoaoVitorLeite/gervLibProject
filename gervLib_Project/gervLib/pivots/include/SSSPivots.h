@@ -14,13 +14,13 @@ class SSSPivots : public Pivot<DType>
     public:
 
         SSSPivots();
-        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, double alpha = 0.15) : Pivot<DType>(){
+        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, double alpha = 0.0015) : Pivot<DType>(){
 
             this->setPivotType(PIVOT_TYPE::SSS);
             generatePivots(sample,function,nPivots,alpha);
 
         }
-        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, size_t seed, double alpha = 0.15) : Pivot<DType>(){
+        SSSPivots(Dataset<DType>* sample, DistanceFunction<BasicArrayObject<DType>>* function, size_t nPivots, size_t seed, double alpha = 0.0015) : Pivot<DType>(){
 
             this->setPivotType(PIVOT_TYPE::SSS);
             this->setSeed(seed);
@@ -85,6 +85,8 @@ void SSSPivots<DType>::generatePivots(Dataset<DType>* dataset, DistanceFunction<
         sample = dataset->sampleDataset(std::ceil(dataset->getCardinality()*this->sample_size), false, this->getSeed());
     else
         sample = dataset;
+
+    //std::cout << alpha << "\n";
 
     size_t drop = 2, currentPivot = 0, p1, index = 0, count = 0;
     size_t* pvtIndex = new size_t[this->getNumberOfPivots()+drop];

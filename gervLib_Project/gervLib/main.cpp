@@ -38,32 +38,32 @@ typedef std::vector<char> str;
 int main(int argc, char *argv[])
 {
 
-    Dataset<str>* train = new Dataset<str>();
-    Dataset<str>::loadTextDataset(train, "../../gervLib/datasets/sgb-words-30.csv", " ");
-    EditDistance<BasicArrayObject<str>>* df = new EditDistance<BasicArrayObject<str>>();
-    RandomPivots<str>* pvt = new RandomPivots<str>();
+    Dataset<double>* train = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/ulcer_norm.csv", ",");
+    cout << "DIM = " << train->getDimensionality() << endl;
+    cout << "CARD = " << train->getCardinality() << endl;
 
-    MVPTREE_STRING_RANDOM mvp = MVPTREE_STRING_RANDOM(df, train);
-    mvp.test();
+    //    MVPTREE_STRING_RANDOM mvp = MVPTREE_STRING_RANDOM(df, train);
+    //    mvp.test();
 
-//    train->printDataset();
+    //    train->printDataset();
 
-//    cout << endl << endl;
+    //    cout << endl << endl;
 
-//    for(size_t i = 0; i < train->getCardinality(); i++)
-//    {
+    //    for(size_t i = 0; i < train->getCardinality(); i++)
+    //    {
 
-//        for(size_t j = 0; j < train->getCardinality(); j++)
-//        {
+    //        for(size_t j = 0; j < train->getCardinality(); j++)
+    //        {
 
-//            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
-//            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
+    //            //cout << "d(" << i << "," << j << ")" << " = " << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << endl;
+    //            cout << df->getDistance(*train->getInstance(i), *train->getInstance(j)) << "\t";
 
-//        }
+    //        }
 
-//        cout << endl;
+    //        cout << endl;
 
-//    }
+    //    }
 
 
     //    cout << "Query: " << test->getFeatureVector(0).toStringWithOID() << endl;
