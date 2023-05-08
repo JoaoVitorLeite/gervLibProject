@@ -29,7 +29,11 @@ public:
 
     }
 
-    virtual void deleteIndex() = 0;
+    void deleteIndex()
+    {
+
+
+    }
 
     void saveBuildStats()
     {
@@ -65,7 +69,7 @@ public:
     {
 
         deleteIndex();
-        buildIndex();
+        this->buildIndex();
         saveBuildStats();
 
         std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
@@ -87,7 +91,7 @@ public:
                  << ","
                  << this->seed
                  << ","
-                 << PAGE_SIZE;
+                 << PAGE_SIZE
                  << ","
                  << MIN_BTREE_LEAF_NUM
                  << "\n";
@@ -128,7 +132,7 @@ public:
         {
 
             deleteIndex();
-            buildIndex();
+            this->buildIndex();
             saveBuildStats();
 
             std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
@@ -151,7 +155,7 @@ public:
                      << ","
                      << this->seed
                      << ","
-                     << PAGE_SIZE;
+                     << PAGE_SIZE
                      << ","
                      << MIN_BTREE_LEAF_NUM
                      << "\n";
