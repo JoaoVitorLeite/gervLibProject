@@ -9,7 +9,7 @@ class VPExperiments : public IndexExperiments<T>
 {
 
 private:
-    VpTree<T, DistanceFunction<BasicArrayObject<T>>>* index;
+    VpTree<T, DistanceFunction<BasicArrayObject<T>>>* index = nullptr;
     Dataset<T>* ans = new Dataset<T>();
 
 public:
@@ -21,6 +21,14 @@ public:
     ~VPExperiments()
     {
 
+
+    }
+
+    void deleteIndex()
+    {
+
+        if(index != nullptr)
+            delete index;
 
     }
 

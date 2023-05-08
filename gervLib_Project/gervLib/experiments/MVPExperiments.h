@@ -11,7 +11,7 @@ class MVPExperiments : public IndexExperiments<DType>
 {
 
 private:
-    MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* index;
+    MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* index = nullptr;
     std::vector<KnnEntryMVP<T>> ans;
 
 public:
@@ -22,6 +22,14 @@ public:
 
     ~MVPExperiments()
     {
+
+    }
+
+    void deleteIndex()
+    {
+
+        if(index != nullptr)
+            delete index;
 
     }
 

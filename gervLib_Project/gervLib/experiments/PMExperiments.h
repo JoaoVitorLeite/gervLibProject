@@ -9,7 +9,7 @@ class PMExperiments : public IndexExperiments<T>
 {
 
 private:
-    PM_Tree<T>* index;
+    PM_Tree<T>* index = nullptr;
     std::vector<KnnEntry<T>> ans;
 
 public:
@@ -20,6 +20,14 @@ public:
 
     ~PMExperiments()
     {
+
+    }
+
+    void deleteIndex()
+    {
+
+        if(index != nullptr)
+            delete index;
 
     }
 

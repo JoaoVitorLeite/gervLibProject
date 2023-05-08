@@ -28,6 +28,8 @@ public:
 
     }
 
+    virtual void deleteIndex() = 0;
+
     void saveBuildStats()
     {
 
@@ -59,6 +61,9 @@ public:
 
     void runExperiment() override
     {
+
+        buildIndex();
+        saveBuildStats();
 
         std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
                 fs::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()] + ".csv";
@@ -114,6 +119,9 @@ public:
 
         for(size_t r = 0; r < rep; r++)
         {
+
+            buildIndex();
+            saveBuildStats();
 
             std::string filePath = this->outputPath.substr(0, this->outputPath.find_last_of(fs::path::preferred_separator)) +
                     fs::path::preferred_separator + this->indexName() + "_" + this->names[this->pvt->getPivotType()]

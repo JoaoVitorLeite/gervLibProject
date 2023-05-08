@@ -9,7 +9,7 @@ class SPBExperiments : public IndexExperiments<T>
 {
 
 private:
-    SPBTree<T>* index;
+    SPBTree<T>* index = nullptr;
     unsigned long long num_bins;
     std::vector<KnnSPB<T>> ans;
 
@@ -22,6 +22,14 @@ public:
     ~SPBExperiments()
     {
 
+
+    }
+
+    void deleteIndex()
+    {
+
+        if(index != nullptr)
+            delete index;
 
     }
 

@@ -9,7 +9,7 @@ class OmniExperiments : public IndexExperiments<T>
 {
 
 private:
-    OmniKdTree<T>* index;
+    OmniKdTree<T>* index = nullptr;
     std::vector<PairResult> ans;
 
 public:
@@ -20,6 +20,14 @@ public:
 
     ~OmniExperiments()
     {
+
+    }
+
+    void deleteIndex()
+    {
+
+        if(index != nullptr)
+            delete index;
 
     }
 
