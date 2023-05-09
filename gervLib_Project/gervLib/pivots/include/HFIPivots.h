@@ -401,9 +401,21 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     double* dist_pairs = new double[pairSize];
     double** dist_pivots_pairs = new double*[pvtSize];
 
+    std::vector<BasicArrayObject<DType>> vec;
+    size_t id = 0;
+
+    for(size_t i = 0; i < sample->getCardinality(); i++)
+    {
+
+        vec.push_back(sample->getFeatureVector(i));
+        vec[i].setOID(id++);
+
+    }
+
+    Dataset<DType> *data_aux = new Dataset<DType>(vec, vec.size(), vec[0].size());
     ConvexPivots<DType>* convex = new ConvexPivots<DType>();
     convex->setSeed(this->getSeed());
-    convex->generatePivots(sample, df, pvtSize);
+    convex->generatePivots(data_aux, df, pvtSize);
 
     for(size_t i = 0; i < pvtSize; i++)
     {
@@ -416,6 +428,8 @@ void HFIPivots<DType>::generatePivots(Dataset<DType> *dataset, DistanceFunction<
     }
 
     delete convex;
+    vec.clear();
+    delete data_aux;
 
     for(size_t i = 0; i < pairSize; i++)
     {

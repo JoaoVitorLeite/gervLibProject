@@ -39,18 +39,20 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/Dataset1.csv", " ");
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_cities_norm.csv", ",");
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
-    pvt->setSeed(200);
-    VpTree<double, DistanceFunction<BasicArrayObject<double>>>* index = new VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
-    Node<BasicArrayObject<double>>* root = index->getRoot();
-    Dataset<double>* ans = new Dataset<double>();
-    BasicArrayObject<double> b = BasicArrayObject<double>(-1, {6.0, 3.0});
-    index->kNNInc(b, 3, root, ans, df);
+    HFIPivots<double>* pvt = new HFIPivots<double>();
+    PM_Tree<double> pm = PM_Tree<double>(train, df, pvt, 55, 2);
 
-    for(size_t i = 0; i < 3; i++)
-        cout << ans->getFeatureVector(i).toStringWithOID() << "\t" << df->getDistance(ans->getFeatureVector(i), b) << endl;
+//    pvt->setSeed(200);
+//    VpTree<double, DistanceFunction<BasicArrayObject<double>>>* index = new VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
+//    Node<BasicArrayObject<double>>* root = index->getRoot();
+//    Dataset<double>* ans = new Dataset<double>();
+//    BasicArrayObject<double> b = BasicArrayObject<double>(-1, {6.0, 3.0});
+//    index->kNNInc(b, 3, root, ans, df);
+
+//    for(size_t i = 0; i < 3; i++)
+//        cout << ans->getFeatureVector(i).toStringWithOID() << "\t" << df->getDistance(ans->getFeatureVector(i), b) << endl;
 
     //    MVPTREE_STRING_RANDOM mvp = MVPTREE_STRING_RANDOM(df, train);
     //    mvp.test();
