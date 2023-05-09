@@ -24,11 +24,13 @@ public:
 
     }
 
-    void deleteIndex()
+    void clean()
     {
 
         if(index != nullptr)
             delete index;
+        buildIndex();
+        this->saveBuildStats();
 
     }
 
@@ -36,7 +38,7 @@ public:
     {
 
         auto start = std::chrono::steady_clock::now();
-        index = new VpTree<T, DistanceFunction<BasicArrayObject<T>>>(false, 0.0, this->numPerLeaf, this->pvt, this->train, this->df);
+        index = new VpTree<T, DistanceFunction<BasicArrayObject<T>>>(false, 0.0, this->numPerLeaf, this->pvt, new Dataset<T>(this->train->getElements(), this->train->getCardinality(), this->train->getDimensionality()), this->df);
         auto end = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
         this->time = elapsed.count();

@@ -23,11 +23,13 @@ public:
 
     }
 
-    void deleteIndex()
+    void clean()
     {
 
         if(index != nullptr)
             delete index;
+        buildIndex();
+        this->saveBuildStats();
 
     }
 

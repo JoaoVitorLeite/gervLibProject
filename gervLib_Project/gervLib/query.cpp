@@ -17,7 +17,7 @@ using namespace mvp;
 
 const int BF = 2;   //branchfactor
 const int PL = 8;   // pathlength
-const int LC = -1; // leafcap
+const int LC = 55; // leafcap
 const int LPN = 2;  // levelspernode
 const int FO = 4; //fanout bf^lpn
 const int NS = 2; //numsplits (bf-1)^lpn
@@ -434,7 +434,7 @@ int main(int argc, char *argv[])
             }
             else if(*pivot_type == "BPP")
             {
-            	pvt = new BPPPivots<double>();
+                pvt = new BPPPivots<double>();
             }
             else
             {
@@ -471,8 +471,6 @@ int main(int argc, char *argv[])
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
-            //expt.buildIndex();
-            //expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -511,8 +509,6 @@ int main(int argc, char *argv[])
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
-            //expt.buildIndex();
-            //expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -551,8 +547,6 @@ int main(int argc, char *argv[])
             expt.setNumQuery(test->getCardinality());
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
-            //expt.buildIndex();
-            //expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -592,8 +586,6 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setNumBins(*num_bins);
             expt.setSeed(*seed);
-            //expt.buildIndex();
-            //expt.saveBuildStats();
 
             if(rep == nullptr)
             {
@@ -608,7 +600,6 @@ int main(int argc, char *argv[])
 
             }
 
-
         }
         else
         {
@@ -622,4 +613,5 @@ int main(int argc, char *argv[])
     return 0;
 
 }
+
 

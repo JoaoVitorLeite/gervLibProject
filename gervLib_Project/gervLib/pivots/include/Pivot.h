@@ -101,7 +101,7 @@ Pivot<DType>::Pivot()
     this->nPivots = 0;
     this->pivotType = PIVOT_TYPE::RANDOM;
     this->pivots = new Dataset<DType>();
-    this->seed = 7;
+    this->seed = 0;
 
 }
 

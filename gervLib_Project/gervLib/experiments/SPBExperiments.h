@@ -25,11 +25,13 @@ public:
 
     }
 
-    void deleteIndex()
+    void clean()
     {
 
         if(index != nullptr)
             delete index;
+        buildIndex();
+        this->saveBuildStats();
 
     }
 
@@ -44,7 +46,7 @@ public:
     {
 
         auto start = std::chrono::steady_clock::now();
-        index = new SPBTree<T>(this->train, this->df, this->pvt, this->pivot_num, this->num_bins);
+        index = new SPBTree<T>(new Dataset<T>(this->train->getElements(), this->train->getCardinality(), this->train->getDimensionality()), this->df, this->pvt, this->pivot_num, this->num_bins);
         auto end = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
         this->time = elapsed.count();
