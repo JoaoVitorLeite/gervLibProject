@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
     HFIPivots<double>* pvt = new HFIPivots<double>();
     PM_Tree<double> pm = PM_Tree<double>(train, df, pvt, 55, 2);
 
+    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << "\n";
+
 //    pvt->setSeed(200);
 //    VpTree<double, DistanceFunction<BasicArrayObject<double>>>* index = new VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
 //    Node<BasicArrayObject<double>>* root = index->getRoot();
