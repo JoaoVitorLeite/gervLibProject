@@ -284,7 +284,7 @@ int main(int argc, char *argv[])
         expt.setSampleSize(*sample_size_pivot);
         expt.modifySeed();
         expt.modifySampleSize();
-        expt.setPivotNum({5, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500});
+        expt.setPivotNum({100, 200, 300, 400, 500});
         expt.setSavePivot(true);
         if(*rep == 1)
             expt.runExperiment();
