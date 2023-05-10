@@ -6,8 +6,8 @@ separator_train=","
 dataset_test="../datasets/test_cities_norm.csv"
 separator_test=","
 distance_function="EUCLIDEAN"
-pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS")
-sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
+pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS" "RANDOM")
+sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
 num_pivots=2
 seed=($(shuf -i 0-500000 -n 13))
 k_max=100
@@ -26,8 +26,8 @@ mkdir -p results/
 cp query.cpp main.cpp
 
 sed -i "s/const int LC = -1/const int LC = "${num_per_leaf}"/g" main.cpp
-sed -i '20s/.*/static const size_t PAGE_SIZE = '${page_size}'/' config_spb.h
-sed -i '22s/.*/static const size_t MIN_BTREE_LEAF_NUM = '${num_per_leaf}'/' config_spb.h
+sed -i '20s/.*/static const size_t PAGE_SIZE = '${page_size}';/' config_spb.h
+sed -i '22s/.*/static const size_t MIN_BTREE_LEAF_NUM = '${num_per_leaf}';/' config_spb.h
 #sed -i "s/static const size_t PAGE_SIZE = -1/static const size_t PAGE_SIZE = "${page_size}"/g" config_spb.h
 #sed -i "s/static const size_t MIN_BTREE_LEAF_NUM = -1/static const size_t MIN_BTREE_LEAF_NUM = "${num_per_leaf}"/g" config_spb.h
 
