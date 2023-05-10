@@ -1,12 +1,12 @@
 #!/bin/bash
 
-dataset_train="../datasets/train_cities_norm.csv"
+dataset_train="../datasets/train_avila_norm.csv"
 separator_train=","
 distance_function="EUCLIDEAN"
 pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS" "RANDOM")
-sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
+sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.2 1.0 1.0 1.0 1.0 1.0 1.0)
 seed=($(shuf -i 0-500000 -n 13))
-path_save_results="../results/tcc_expt/pivos/"
+path_save_results="../results/tcc_expt/pivos/avila/"
 rep=10
 
 cp pivot_expt.cpp main.cpp

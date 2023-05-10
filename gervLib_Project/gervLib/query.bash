@@ -1,21 +1,21 @@
 #!/bin/bash
 
 index="OMNIKDTREE"
-dataset_train="../datasets/train_cities_norm.csv"
+dataset_train="../datasets/train_avila_norm.csv"
 separator_train=","
-dataset_test="../datasets/test_cities_norm.csv"
+dataset_test="../datasets/test_avila_norm.csv"
 separator_test=","
 distance_function="EUCLIDEAN"
 pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS" "RANDOM")
-sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
+sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.2 1.0 1.0 1.0 1.0 1.0 1.0)
 num_pivots=2
 seed=($(shuf -i 0-500000 -n 13))
 k_max=100
 rep=10
-page_size=2220
+page_size=32604
 num_bins=256
-num_per_leaf=55
-path_save_results="../results/tcc_expt/consultas/cities/omni/"
+num_per_leaf=209
+path_save_results="../results/tcc_expt/consultas/avila/omni/"
 
 mkdir -p omni/omni_files/
 mkdir -p kdtree/kdtree_files/
