@@ -148,12 +148,13 @@
 
 //PM - NUM
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/cities_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_cities_norm.csv", ",");
     Dataset<double>* test = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(test, "../../gervLib/datasets/cities_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(test, "../../gervLib/datasets/test_cities_norm.csv", ",");
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    RandomPivots<double>* pvt = new RandomPivots<double>();
-    size_t k = 5, numPerLeaf = 55;
+    WDRPivots<double>* pvt = new WDRPivots<double>();
+    pvt->setSeed(351927);
+    size_t k = 100, numPerLeaf = 55;
     std::vector<KnnEntry<double>> ans;
     PM_Tree<double> index = PM_Tree<double>(train, df, pvt, numPerLeaf, 2);
 
@@ -163,8 +164,8 @@
         ans.clear();
         index.kNN(test->getFeatureVector(x), k, ans);
         std::vector<double> dist;
-        for(size_t i = 0; i < test->getCardinality(); i++)
-            dist.push_back(df->getDistance(*test->instance(x), *test->instance(i)));
+        for(size_t i = 0; i < train->getCardinality(); i++)
+            dist.push_back(df->getDistance(*test->instance(x), *train->instance(i)));
 
         sort(dist.begin(), dist.end());
 

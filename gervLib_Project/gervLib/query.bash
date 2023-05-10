@@ -1,6 +1,6 @@
 #!/bin/bash
 
-index="VPTREE"
+index="OMNIKDTREE"
 dataset_train="../datasets/train_cities_norm.csv"
 separator_train=","
 dataset_test="../datasets/test_cities_norm.csv"
@@ -15,7 +15,7 @@ rep=10
 page_size=2220
 num_bins=256
 num_per_leaf=55
-path_save_results="../results/"
+path_save_results="../results/tcc_expt/consultas/cities/omni/"
 
 mkdir -p omni/omni_files/
 mkdir -p kdtree/kdtree_files/
