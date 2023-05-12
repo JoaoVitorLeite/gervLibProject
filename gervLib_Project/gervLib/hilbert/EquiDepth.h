@@ -53,7 +53,7 @@ public:
     bool isInterval(double test)
     {
 
-        return ((test >= min) && (test < max));
+        return ((test >= min) && (test <= max));
 
     }
 

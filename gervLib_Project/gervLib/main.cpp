@@ -16,6 +16,7 @@
 #include <PivotExperiments.h>
 #include <experimental/filesystem>
 #include <VPExperiments.h>
+#include <SPB_Tree.h>
 
 using namespace std;
 using namespace mvp;
@@ -40,9 +41,14 @@ int main(int argc, char *argv[])
 
     Dataset<double>* train = new Dataset<double>();
     Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_card_norm.csv", ",");
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    Pivot<double>* pvt = new HFIPivots<double>();
+    SPBTree<double> spb = SPBTree<double>(train, df, pvt, 3, 256);
+    spb.dumpEquiDepth();
 
-    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
-    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
+
+//    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
+//    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
 
 //    pvt->setSeed(200);
 //    VpTree<double, DistanceFunction<BasicArrayObject<double>>>* index = new VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
