@@ -1,21 +1,21 @@
 #!/bin/bash
 
 index="OMNIKDTREE"
-dataset_train="../datasets/train_card_norm.csv"
+dataset_train="../datasets/train_nasa_norm.csv"
 separator_train=","
-dataset_test="../datasets/test_card_norm.csv"
+dataset_test="../datasets/test_nasa_norm.csv"
 separator_test=","
 distance_function="EUCLIDEAN"
 pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS" "RANDOM")
-sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.15 1.0 1.0 1.0 1.0 1.0 1.0)
-num_pivots=3
+sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.1 1.0 1.0 1.0 1.0 1.0 1.0)
+num_pivots=6
 seed=($(shuf -i 0-500000 -n 13))
 k_max=100
 rep=10
-page_size=62192
+page_size=73968
 num_bins=256
-num_per_leaf=299
-path_save_results="../results/tcc_expt/consultas/card/omni/"
+num_per_leaf=402
+path_save_results="../results/tcc_expt/consultas/nasa/omni/"
 
 mkdir -p omni/omni_files/
 mkdir -p kdtree/kdtree_files/
