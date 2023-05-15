@@ -40,10 +40,15 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_nasa_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/Dataset1.csv", " ");
+    Pivot<double>* pvt = new MaxVariancePivots<double>();
+    //pvt->setSeed(200);
+    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    PM_Tree<double> pm = PM_Tree<double>(train, df, pvt, 5, 2);
+    pm.get_root();
 
-    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
-    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
+//    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
+//    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
 
 //    pvt->setSeed(200);
 //    VpTree<double, DistanceFunction<BasicArrayObject<double>>>* index = new VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 5, pvt, train, df);
