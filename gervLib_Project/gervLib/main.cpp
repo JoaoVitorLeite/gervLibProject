@@ -23,7 +23,7 @@ using namespace mvp;
 
 const int BF = 2;   //branchfactor
 const int PL = 8;   // pathlength
-const int LC = 55; // leafcap
+const int LC = 5; // leafcap
 const int LPN = 2;  // levelspernode
 const int FO = 4; //fanout bf^lpn
 const int NS = 2; //numsplits (bf-1)^lpn
@@ -39,13 +39,63 @@ typedef std::vector<char> str;
 int main(int argc, char *argv[])
 {
 
+//    Dataset<str>* train = new Dataset<str>();
+//    Dataset<str>::loadTextDataset(train, "../../gervLib/datasets/sgb-words.csv", " ");
+//    //cout << "CARD = " << train->getCardinality() << "\n";
+//    Dataset<str>* test = new Dataset<str>();
+//    Dataset<str>::loadTextDataset(test, "../../gervLib/datasets/sgb-words.csv", " ");
+//    EditDistance<BasicArrayObject<str>>* df = new EditDistance<BasicArrayObject<str>>();
+//    RandomPivots<str>* pvt = new RandomPivots<str>();
+//    size_t k = 100, numPerLeaf = 55;
+//    MVPTree<BasicArrayObject<str>, EditDistance<BasicArrayObject<str>>, RandomPivots<str>, Dataset<str>, BF,PL,LC,LPN,FO,NS> index
+//        = MVPTree<BasicArrayObject<str>, EditDistance<BasicArrayObject<str>>, RandomPivots<str>, Dataset<str>, BF,PL,LC,LPN,FO,NS>(df, train);
+//    std::vector<KnnEntryMVP<BasicArrayObject<str>>> ans;
+
+//    for(size_t x = 0; x < test->getCardinality(); x++)
+//    {
+
+//        ans.clear();
+//        index.knn(test->getFeatureVector(x), k, ans);
+//        std::vector<double> dist;
+//        for(size_t i = 0; i < train->getCardinality(); i++)
+//            dist.push_back(df->getDistance(*test->instance(x), *train->instance(i)));
+
+//        sort(dist.begin(), dist.end());
+
+//        for(size_t z = 0; z < k; z++)
+//            if(dist[z] != ans[z].distance)
+//                cout << "ERRO EM: " << x << endl;
+
+//    }
+
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/Dataset1.csv", " ");
-    Pivot<double>* pvt = new MaxVariancePivots<double>();
-    //pvt->setSeed(200);
-    DistanceFunction<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    PM_Tree<double> pm = PM_Tree<double>(train, df, pvt, 5, 2);
-    pm.get_root();
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/cities_norm.csv", ",");
+    Dataset<double>* test = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(test, "../../gervLib/datasets/cities_norm.csv", ",");
+    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    RandomPivots<double>* pvt = new RandomPivots<double>();
+    size_t k = 100, numPerLeaf = 55;
+    MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> index
+        = MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS>(df, train);
+    std::vector<KnnEntryMVP<BasicArrayObject<double>>> ans;
+
+    for(size_t x = 0; x < test->getCardinality(); x++)
+    {
+
+        ans.clear();
+        index.knn(test->getFeatureVector(x), k, ans);
+        std::vector<double> dist;
+        for(size_t i = 0; i < train->getCardinality(); i++)
+            dist.push_back(df->getDistance(*test->instance(x), *train->instance(i)));
+
+        sort(dist.begin(), dist.end());
+
+        for(size_t z = 0; z < k; z++)
+            if(dist[z] != ans[z].distance)
+                cout << "ERRO EM: " << x << endl;
+
+    }
+
 
 //    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
 //    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
