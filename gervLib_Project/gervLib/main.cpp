@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_ulcer_norm.csv", ",");
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_mnist_norm.csv", ",");
 
     cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
     cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
