@@ -872,6 +872,8 @@
 #include <VpTree/Node/LeafNodeVPTree.h>
 #include <VpTree/Node/DirectorNode.h>
 #include <Pivots.h>
+#include <config_spb.h>
+#include <MemoryManagerUtils.h>
 
 template <class type, class DistanceFunction>
 class VpTree{
@@ -939,6 +941,74 @@ class VpTree{
                                         std::less<QueueItem<BasicArrayObject<type>>>> *queue,
                     std::vector<std::pair<int, double>> *pivotVec,
                     DistanceFunction *df);
+
+        void initDisk()
+        {
+
+            baseFilePath = "../VpTree/vp_files";
+            setBaseFilePath("VPfiles");
+
+            std::queue<Node<BasicArrayObject<type>>*> queue;
+            queue.push(getRoot());
+            size_t id = 0;
+
+            while(!queue.empty())
+            {
+
+                Node<BasicArrayObject<type>>* curr = queue.front();
+                queue.pop();
+
+                LeafNodeVPTree<BasicArrayObject<type>> *leaf = dynamic_cast<LeafNodeVPTree<BasicArrayObject<type>> *>(curr);
+
+                if(leaf != nullptr)
+                {
+
+                    leaf->setPageID(id++);
+                    saveLeafNode(curr);
+
+                }
+                else
+                {
+
+                    DirectorNode<BasicArrayObject<type>> *dirNode = dynamic_cast<DirectorNode<BasicArrayObject<type>> *>(curr);
+                    if(dirNode->getLeftNode() != nullptr) queue.push(dirNode->getLeftNode());
+                    if(dirNode->getRightNode() != nullptr) queue.push(dirNode->getRightNode());
+
+                }
+
+            }
+
+        }
+
+        void saveLeafNode(Node<BasicArrayObject<type>>* curr)
+        {
+
+            std::vector<BasicArrayObject<type>> data;
+            LeafNodeVPTree<BasicArrayObject<type>> *leaf = dynamic_cast<LeafNodeVPTree<BasicArrayObject<type>> *>(curr);
+
+            for (int i = 0; i < leaf->numberOfElements(); i++)
+            {
+
+                data.push_back(leaf->getPair(i).first());
+
+            }
+
+            leaf->resetBucket();
+
+            Dataset<type>* datasetLeaf = new Dataset<type>(data, data.size(), data[0].size());
+            write_dataset_to_disk(datasetLeaf, curr->getPageID());
+            delete datasetLeaf;
+
+        }
+
+        Dataset<type>* readLeafNode(Node<BasicArrayObject<type>>* curr)
+        {
+
+            Dataset<type>* datasetLeaf = new Dataset<type>();
+            read_dataset_from_disk(datasetLeaf, curr->getPageID());
+            return datasetLeaf;
+
+        }
 
 //        void updateProgress(QProgressBar *progressBar);
 
@@ -1015,6 +1085,9 @@ IMPL_TEMPL VpTree<type, DistanceFunction>::VpTree(bool balance,
     root = buildTree(false, threshold, maxElements, previousPivots, distanceVector, dataset, df/*, progressBar*/);
 
     if (balance) { balanceTree(); }
+
+    initDisk();
+
 }
 
 IMPL_TEMPL Node<BasicArrayObject<type>> *VpTree<type, DistanceFunction>::buildTree(const bool isCircunscribed,
@@ -1534,6 +1607,8 @@ IMPL_TEMPL void VpTree<type, DistanceFunction>::kNNIncWalk(const BasicArrayObjec
 
     nodeQueue.push(tree);
 
+    Dataset<type>* datasetLeaf;
+
     // Não completou resultado && há nós ou elementos a serem obtidos.
     while (resultQueue->size() < k && !(nodeQueue.empty() && elementQueue.empty())){
 
@@ -1549,15 +1624,28 @@ IMPL_TEMPL void VpTree<type, DistanceFunction>::kNNIncWalk(const BasicArrayObjec
             if (leaf != nullptr) {
 
                 leafNodeAccess++;
-                // Insere os elementos do folha no elementQueue
-                for (int i = 0; i < leaf->numberOfElements(); i++){
-                    BasicArrayObject<type> leafElement = leaf->getPair(i).first();
-                    double dist = df->getDistance(leafElement, qElement);
-                    QueueItem<BasicArrayObject<type>> qi = QueueItem<BasicArrayObject<type>>(dist, leafElement);
+
+                datasetLeaf = readLeafNode(node);
+
+                for(size_t i = 0; i < datasetLeaf->getCardinality(); i++)
+                {
+
+                    QueueItem<BasicArrayObject<type>> qi = QueueItem<BasicArrayObject<type>>(df->getDistance(qElement, datasetLeaf->getFeatureVector(i)), datasetLeaf->getFeatureVector(i));
                     elementQueue.push(qi);
+
                 }
 
-                // Seta variável para verificarmos quais partições foram visitadas.
+                delete datasetLeaf;
+
+                // Insere os elementos do folha no elementQueue
+//                for (int i = 0; i < leaf->numberOfElements(); i++){
+//                    BasicArrayObject<type> leafElement = leaf->getPair(i).first();
+//                    double dist = df->getDistance(leafElement, qElement);
+//                    QueueItem<BasicArrayObject<type>> qi = QueueItem<BasicArrayObject<type>>(dist, leafElement);
+//                    elementQueue.push(qi);
+//                }
+
+//                // Seta variável para verificarmos quais partições foram visitadas.
                 node->wasVisited = true;
 
             } else {
@@ -1588,13 +1676,26 @@ IMPL_TEMPL void VpTree<type, DistanceFunction>::kNNIncWalk(const BasicArrayObjec
             if (leaf != nullptr) {
 
                 leafNodeAccess++;
-                // Insere os elementos do folha no elementQueue
-                for (size_t i = 0; i < leaf->numberOfElements(); i++){
-                    BasicArrayObject<type> leafElement = leaf->getPair(i).first();
-                    double dist = df->getDistance(leafElement, qElement);
-                    QueueItem<BasicArrayObject<type>> qi = QueueItem<BasicArrayObject<type>>(dist, leafElement);
+
+                datasetLeaf = readLeafNode(node);
+
+                for(size_t i = 0; i < datasetLeaf->getCardinality(); i++)
+                {
+
+                    QueueItem<BasicArrayObject<type>> qi = QueueItem<BasicArrayObject<type>>(df->getDistance(qElement, datasetLeaf->getFeatureVector(i)), datasetLeaf->getFeatureVector(i));
                     elementQueue.push(qi);
+
                 }
+
+                delete datasetLeaf;
+
+                // Insere os elementos do folha no elementQueue
+//                for (size_t i = 0; i < leaf->numberOfElements(); i++){
+//                    BasicArrayObject<type> leafElement = leaf->getPair(i).first();
+//                    double dist = df->getDistance(leafElement, qElement);
+//                    QueueItem<BasicArrayObject<type>> qi = QueueItem<BasicArrayObject<type>>(dist, leafElement);
+//                    elementQueue.push(qi);
+//                }
 
                 // Seta variável para verificarmos quais partições foram visitadas.
                 node->wasVisited = true;

@@ -72,6 +72,8 @@
 //template <class DType>
 //double Node<DType>::getCoverage() { return coverage; }
 
+#include <limits.h>
+
 template <class DType>
 class Node{
     private:
@@ -80,6 +82,7 @@ class Node{
         double dMin;
         double dMax;
         double coverage;
+        size_t pageID = std::numeric_limits<size_t>::max();
 
     public:
         virtual ~Node() = default;
@@ -100,6 +103,20 @@ class Node{
 
         void setCoverage(double maxDistFromPivot);
         double getCoverage();
+
+        void setPageID(size_t page)
+        {
+
+            pageID = page;
+
+        }
+
+        size_t getPageID()
+        {
+
+            return pageID;
+
+        }
 
         bool operator <(const Node &node) const{
             //return dMin < node.dMin;
