@@ -1,6 +1,5 @@
-#include "mvptree.h"
+#include <MVPTree.h>
 #include <iostream>
-#include <datapoint.h>
 #include <Hermes.h>
 #include <Pivots.h>
 #include <Dataset.h>
@@ -19,19 +18,19 @@
 #include <SPB_Tree.h>
 
 using namespace std;
-using namespace mvp;
+//using namespace mvp;
 
-const int BF = 2;   //branchfactor
-const int PL = 8;   // pathlength
-const int LC = 5; // leafcap
-const int LPN = 2;  // levelspernode
-const int FO = 4; //fanout bf^lpn
-const int NS = 2; //numsplits (bf-1)^lpn
+//const int BF = 2;   //branchfactor
+//const int PL = 8;   // pathlength
+//const int LC = 5; // leafcap
+//const int LPN = 2;  // levelspernode
+//const int FO = 4; //fanout bf^lpn
+//const int NS = 2; //numsplits (bf-1)^lpn
 
-typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_RANDOM;
-typedef MVPTree<BasicArrayObject<vector<char>>, EditDistance<BasicArrayObject<vector<char>>>, RandomPivots<vector<char>>, Dataset<vector<char>>, BF,PL,LC,LPN,FO,NS> MVPTREE_STRING_RANDOM;
-typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparatedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_MAXSEPARETED;
-typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_KMEDOIDS;
+//typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, RandomPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_RANDOM;
+//typedef MVPTree<BasicArrayObject<vector<char>>, EditDistance<BasicArrayObject<vector<char>>>, RandomPivots<vector<char>>, Dataset<vector<char>>, BF,PL,LC,LPN,FO,NS> MVPTREE_STRING_RANDOM;
+//typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, MaxSeparatedPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_MAXSEPARETED;
+//typedef MVPTree<BasicArrayObject<double>, EuclideanDistance<BasicArrayObject<double>>, KmedoidsPivots<double>, Dataset<double>, BF,PL,LC,LPN,FO,NS> MVPTREE_DOUBLE_KMEDOIDS;
 
 typedef std::vector<char> str;
 
@@ -43,30 +42,56 @@ int main(int argc, char *argv[])
     Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_cities_norm.csv", ",");
     Dataset<double>* test = new Dataset<double>();
     Dataset<double>::loadNumericDataset(test, "../../gervLib/datasets/train_cities_norm.csv", ",");
-    Dataset<double>* ans = new Dataset<double>();
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
     MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
-    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 55, pvt, train, df);
+    MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 55, 2, 4, 2);
+    std::vector<KnnEntryMVP<double>> ans;
     size_t k = 100;
 
-    for(size_t x = 0; x < test->getCardinality(); x++)
+    for(size_t i = 0; i < test->getCardinality(); i++)
     {
 
-        ans->clear();
-        index.kNNInc(test->getFeatureVector(x), k, index.getRoot(), ans, df);
+        BasicArrayObject<double> query = test->getFeatureVector(i);
+
         std::vector<double> dist;
         for(size_t i = 0; i < test->getCardinality(); i++)
-            dist.push_back(df->getDistance(*test->instance(x), *test->instance(i)));
+            dist.push_back(df->getDistance(query, *test->instance(i)));
 
         sort(dist.begin(), dist.end());
 
-        for(size_t z = 0; z < k; z++)
-            if(dist[z] != df->getDistance(ans->getFeatureVector(z), test->getFeatureVector(x)))
-                cout << "ERRO EM: " << x << endl;
+        ans.clear();
+        mvp.knn(query, k, ans);
 
-        cout << index.getLeafNodeAccess() << endl;
+        for(size_t z = 0; z < k; z++)
+            if(dist[z] != ans[z].distance)
+                cout << "ERRO EM: " << i << endl;
 
     }
+
+
+//    VpTree<double, DistanceFunction<BasicArrayObject<double>>> index = VpTree<double, DistanceFunction<BasicArrayObject<double>>>(false, 0.0, 55, pvt, train, df);
+//    size_t k = 100;
+//    Dataset<double>* ans = new Dataset<double>();
+
+
+//    for(size_t x = 0; x < test->getCardinality(); x++)
+//    {
+
+//        ans->clear();
+//        index.kNNInc(test->getFeatureVector(x), k, index.getRoot(), ans, df);
+//        std::vector<double> dist;
+//        for(size_t i = 0; i < test->getCardinality(); i++)
+//            dist.push_back(df->getDistance(*test->instance(x), *test->instance(i)));
+
+//        sort(dist.begin(), dist.end());
+
+//        for(size_t z = 0; z < k; z++)
+//            if(dist[z] != df->getDistance(ans->getFeatureVector(z), test->getFeatureVector(x)))
+//                cout << "ERRO EM: " << x << endl;
+
+//        cout << index.getLeafNodeAccess() << endl;
+
+//    }
 
 //    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
 //    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;

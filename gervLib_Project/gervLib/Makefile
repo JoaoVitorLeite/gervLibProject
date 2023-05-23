@@ -236,9 +236,9 @@ DIST          = hermes/gervLib.cflags \
 		memory/fifo_cache_policy.h \
 		memory/lfu_cache_policy.h \
 		memory/lru_cache_policy.h \
-		mvptree/datapoint.h \
-		mvptree/mvpnode.h \
-		mvptree/mvptree.h \
+		mvptree/MVPData.h \
+		mvptree/MVPNode.h \
+		mvptree/MVPTree.h \
 		omni/OmniKdTree.h \
 		pivots/include/BPPPivots.h \
 		pivots/include/Cluster.h \
@@ -591,7 +591,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents gervLib_en_US.ts $(DISTDIR)/
 	$(COPY_FILE) --parents bin/qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/joaoleite/Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents VpTree/Node/Bucket/Bucket.h VpTree/Node/Bucket/Pair.h VpTree/Node/DirectorNode.h VpTree/Node/LeafNodeVPTree.h VpTree/Node/Node.h VpTree/QueueItem.h VpTree/VpTree.h btree/btree.h btree/btree_multimap.h config_spb.h experiments/Experiments.h experiments/IndexExperiments.h experiments/MVPExperiments.h experiments/OmniExperiments.h experiments/PMExperiments.h experiments/PivotExperiments.h experiments/SPBExperiments.h experiments/VPExperiments.h hilbert/EquiDepth.h hilbert/Hilbert.h kdtree/DirectoryNodeKdTree.h kdtree/KdTree.h kdtree/LeafNodeKdTree.h kdtree/NodeKdTree.h memory/MemoryManagerUtils.h memory/cache.h memory/cache_policy.h memory/fifo_cache_policy.h memory/lfu_cache_policy.h memory/lru_cache_policy.h mvptree/datapoint.h mvptree/mvpnode.h mvptree/mvptree.h omni/OmniKdTree.h pivots/include/BPPPivots.h pivots/include/Cluster.h pivots/include/ConvexPivots.h pivots/include/FFTPivots.h pivots/include/GnatPivots.h dataset/include/Dataset.h Distance/BasicArrayObject.h pivots/include/HFIPivots.h pivots/include/ISPivots.h pivots/include/Kmedoids.h pivots/include/KmedoidsPivots.h pivots/include/MaxSeparatedPivots.h pivots/include/MaxVariancePivots.h pivots/include/PCAPivots.h pivots/include/Pivot.h pivots/include/Pivots.h pivots/include/RandomPivots.h pivots/include/SSSPivots.h pivots/include/SelectionPivots.h pivots/include/WDRPivots.h pm_tree/PM_Tree.h spb_tree/SPB_Tree.h utils/include/Util.h $(DISTDIR)/
+	$(COPY_FILE) --parents VpTree/Node/Bucket/Bucket.h VpTree/Node/Bucket/Pair.h VpTree/Node/DirectorNode.h VpTree/Node/LeafNodeVPTree.h VpTree/Node/Node.h VpTree/QueueItem.h VpTree/VpTree.h btree/btree.h btree/btree_multimap.h config_spb.h experiments/Experiments.h experiments/IndexExperiments.h experiments/MVPExperiments.h experiments/OmniExperiments.h experiments/PMExperiments.h experiments/PivotExperiments.h experiments/SPBExperiments.h experiments/VPExperiments.h hilbert/EquiDepth.h hilbert/Hilbert.h kdtree/DirectoryNodeKdTree.h kdtree/KdTree.h kdtree/LeafNodeKdTree.h kdtree/NodeKdTree.h memory/MemoryManagerUtils.h memory/cache.h memory/cache_policy.h memory/fifo_cache_policy.h memory/lfu_cache_policy.h memory/lru_cache_policy.h mvptree/MVPData.h mvptree/MVPNode.h mvptree/MVPTree.h omni/OmniKdTree.h pivots/include/BPPPivots.h pivots/include/Cluster.h pivots/include/ConvexPivots.h pivots/include/FFTPivots.h pivots/include/GnatPivots.h dataset/include/Dataset.h Distance/BasicArrayObject.h pivots/include/HFIPivots.h pivots/include/ISPivots.h pivots/include/Kmedoids.h pivots/include/KmedoidsPivots.h pivots/include/MaxSeparatedPivots.h pivots/include/MaxVariancePivots.h pivots/include/PCAPivots.h pivots/include/Pivot.h pivots/include/Pivots.h pivots/include/RandomPivots.h pivots/include/SSSPivots.h pivots/include/SelectionPivots.h pivots/include/WDRPivots.h pm_tree/PM_Tree.h spb_tree/SPB_Tree.h utils/include/Util.h $(DISTDIR)/
 	$(COPY_FILE) --parents hilbert/hilbert2.cpp main.cpp utils/include/Util.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents gervLib_en_US.ts $(DISTDIR)/
 
@@ -656,11 +656,9 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 bin/hilbert2.o: hilbert/hilbert2.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bin/hilbert2.o hilbert/hilbert2.cpp
 
-bin/main.o: main.cpp mvptree/mvptree.h \
-		mvptree/mvpnode.h \
-		mvptree/datapoint.h \
-		Distance/BasicArrayObject.h \
+bin/main.o: main.cpp mvptree/MVPTree.h \
 		dataset/include/Dataset.h \
+		Distance/BasicArrayObject.h \
 		Distance/DistanceFunction.h \
 		utils/include/Util.h \
 		Distance/Hermes.h \
@@ -924,6 +922,8 @@ bin/main.o: main.cpp mvptree/mvptree.h \
 		pivots/include/ISPivots.h \
 		pivots/include/WDRPivots.h \
 		pivots/include/BPPPivots.h \
+		mvptree/MVPData.h \
+		mvptree/MVPNode.h \
 		omni/OmniKdTree.h \
 		kdtree/KdTree.h \
 		kdtree/NodeKdTree.h \
@@ -936,9 +936,9 @@ bin/main.o: main.cpp mvptree/mvptree.h \
 		VpTree/Node/Bucket/Bucket.h \
 		VpTree/Node/Bucket/Pair.h \
 		VpTree/Node/DirectorNode.h \
-		pm_tree/PM_Tree.h \
-		memory/MemoryManagerUtils.h \
 		config_spb.h \
+		memory/MemoryManagerUtils.h \
+		pm_tree/PM_Tree.h \
 		spb_tree/SPB_Tree.h \
 		hilbert/Hilbert.h \
 		btree/btree_multimap.h \

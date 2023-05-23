@@ -998,6 +998,7 @@ class VpTree{
             Dataset<type>* datasetLeaf = new Dataset<type>(data, data.size(), data[0].size());
             write_dataset_to_disk(datasetLeaf, curr->getPageID());
             delete datasetLeaf;
+            data.clear();
 
         }
 

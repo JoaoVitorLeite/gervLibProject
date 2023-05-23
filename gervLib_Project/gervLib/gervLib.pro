@@ -65,9 +65,12 @@ HEADERS += \
         memory/fifo_cache_policy.h \
         memory/lfu_cache_policy.h \
         memory/lru_cache_policy.h \
-        mvptree/datapoint.h \
-        mvptree/mvpnode.h \
-        mvptree/mvptree.h \
+        mvptree/MVPData.h \
+        mvptree/MVPNode.h \
+        mvptree/MVPTree.h \
+        #mvptree/datapoint.h \
+        #mvptree/mvpnode.h \
+        #mvptree/mvptree.h \
         omni/OmniKdTree.h \
         pivots/include/BPPPivots.h \
         pivots/include/Cluster.h \

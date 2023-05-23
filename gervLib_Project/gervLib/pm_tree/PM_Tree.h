@@ -1094,6 +1094,7 @@ void PM_Tree<DType>::saveLeafNode(PM_Node<DType>* cur_node_)
     Dataset<DType>* datasetLeaf = new Dataset<DType>(data, data.size(), data[0].size());
     write_dataset_to_disk(datasetLeaf, cur_node_->pageID);
     delete datasetLeaf;
+    data.clear();
 
 }
 
