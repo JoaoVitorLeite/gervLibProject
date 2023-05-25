@@ -54,7 +54,7 @@ private:
 
             }
 
-            x[i] = std::stoll(ss.str(), NULL, 2);
+            x[i] = std::stoull(ss.str(), NULL, 2);
             ss.str(std::string());
 
         }
@@ -89,7 +89,7 @@ private:
 
         }
 
-        return std::stoll(ss.str(), NULL, 2);
+        return std::stoull(ss.str(), NULL, 2);
 
     }
 
@@ -226,7 +226,8 @@ public:
     ull distance_from_point(std::vector<ull> point)
     {
 
-        ull m = 1 << (p-1);
+        ull one = (ull)1;
+        ull m = one << (p-one);
         ull q = m, _p, t;
 
         while(q > 1)

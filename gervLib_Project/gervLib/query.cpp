@@ -11,6 +11,7 @@
 #include <VPExperiments.h>
 #include <PMExperiments.h>
 #include <SPBExperiments.h>
+#include <MVPExperiments.h>
 
 using namespace std;
 
@@ -472,7 +473,7 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
 
-            if(rep == nullptr)
+            if(rep == nullptr && rep_name == nullptr)
             {
 
                 expt.runExperiment();
@@ -516,7 +517,7 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
 
-            if(rep == nullptr)
+            if(rep == nullptr && rep_name == nullptr)
             {
 
                 expt.runExperiment();
@@ -560,7 +561,7 @@ int main(int argc, char *argv[])
             expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
             expt.setSeed(*seed);
 
-            if(rep == nullptr)
+            if(rep == nullptr && rep_name == nullptr)
             {
 
                 expt.runExperiment();
@@ -605,7 +606,51 @@ int main(int argc, char *argv[])
             expt.setNumBins(*num_bins);
             expt.setSeed(*seed);
 
-            if(rep == nullptr)
+            if(rep == nullptr && rep_name == nullptr)
+            {
+
+                expt.runExperiment();
+
+            }
+            else if(rep_name != nullptr)
+            {
+
+                expt.runExperiment(*rep_name);
+
+            }
+            else
+            {
+
+                expt.runExperimentWithRepetitions(*rep);
+
+            }
+
+        }
+        else if(*index == "MVPTREE")
+        {
+
+            if(num_per_leaf == nullptr)
+            {
+
+                *num_per_leaf = (size_t)std::ceil(0.1*train->getCardinality());
+
+            }
+
+            MVPExperiments<double> expt = MVPExperiments<double>();
+
+            expt.setTrainDataset(train);
+            expt.setTestDataset(test);
+            expt.setDistanceFunction(df);
+            expt.setPivotMethod(pvt);
+            expt.setNumPerLeaf(*num_per_leaf);
+            expt.setNumPivots(*num_pivots);
+            expt.setOutputPath(*path_save_results);
+            expt.setDistanceFunctionName(*df_name);
+            expt.setNumQuery(test->getCardinality());
+            expt.setKRange(5, (k_max != nullptr ? *k_max : 100), 5);
+            expt.setSeed(*seed);
+
+            if(rep == nullptr && rep_name == nullptr)
             {
 
                 expt.runExperiment();

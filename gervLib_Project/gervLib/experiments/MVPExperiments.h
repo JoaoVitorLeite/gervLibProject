@@ -2,16 +2,14 @@
 #define MVPEXPERIMENTS_H
 
 #include <IndexExperiments.h>
-#include <mvptree.h>
+#include <MVPTree.h>
 
-using namespace mvp;
-
-template <class DType, typename T,class F,class PVT,class DT,int BF,int PL, int LC, int LPN, int FO, int NS>
-class MVPExperiments : public IndexExperiments<DType>
+template <class T>
+class MVPExperiments : public IndexExperiments<T>
 {
 
 private:
-    MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>* index = nullptr;
+    MVPTree<T>* index = nullptr;
     std::vector<KnnEntryMVP<T>> ans;
 
 public:
@@ -25,11 +23,21 @@ public:
 
     }
 
-    void deleteIndex()
+//    void deleteIndex()
+//    {
+
+//        if(index != nullptr)
+//            delete index;
+
+//    }
+
+    void clean()
     {
 
         if(index != nullptr)
             delete index;
+        buildIndex();
+        this->saveBuildStats();
 
     }
 
@@ -37,7 +45,7 @@ public:
     {
 
         auto start = std::chrono::steady_clock::now();
-        index = new MVPTree<T,F,PVT,DT,BF,PL,LC,LPN,FO,NS>((F*)this->df, this->train);
+        index = new MVPTree<T>(this->train, this->df, this->pvt, 2, 8, this->numPerLeaf, 2, 4, 2);
         auto end = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
         this->time = elapsed.count();

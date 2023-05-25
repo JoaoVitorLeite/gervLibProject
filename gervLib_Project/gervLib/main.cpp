@@ -38,19 +38,28 @@ typedef std::vector<char> str;
 int main(int argc, char *argv[])
 {
 
-    Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/Dataset1.csv", " ");
-    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
-    pvt->setSeed(256);
-    MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 5, 2, 4, 2);
-    BasicArrayObject<double> basic = BasicArrayObject<double>(-1, {6.0, 3.0});
-    std::vector<KnnEntryMVP<double>> ans;
-    mvp.knn(basic, 3, ans);
-    cout << mvp.getLeafNodeAccess() << endl;
+    //    Dataset<double>* train = new Dataset<double>();
+    //    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_mnist_norm.csv", ",");
+    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    RandomPivots<double>* pvt = new RandomPivots<double>();
+    //    SPBTree<double> spb = SPBTree<double>(train, df, pvt, 12, 10);
 
-    for(auto i : ans)
-        cout << i.element.toStringWithOID() << endl;
+
+    //    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
+    //    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
+
+
+    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    //    MaxVariancePivots<double>* pvt = new MaxVariancePivots<double>();
+    //    pvt->setSeed(256);
+    //    MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 5, 2, 4, 2);
+    //    BasicArrayObject<double> basic = BasicArrayObject<double>(-1, {6.0, 3.0});
+    //    std::vector<KnnEntryMVP<double>> ans;
+    //    mvp.knn(basic, 3, ans);
+    //    cout << mvp.getLeafNodeAccess() << endl;
+
+    //    for(auto i : ans)
+    //        cout << i.element.toStringWithOID() << endl;
 
 
 
@@ -107,8 +116,6 @@ int main(int argc, char *argv[])
 
     //    }
 
-    //    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
-    //    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
 
     //    Dataset<str>* train = new Dataset<str>();
     //    Dataset<str>::loadTextDataset(train, "../../gervLib/datasets/sgb-words.csv", " ");
