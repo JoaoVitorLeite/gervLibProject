@@ -10,6 +10,8 @@ pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" 
 sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.1 1.0 1.0 1.0 1.0 1.0 1.0)
 num_pivots=4
 seed=($(shuf -i 0-500000 -n 13))
+#seed=()
+rep_name=0
 k_max=100
 rep=5
 page_size=53880
@@ -38,17 +40,30 @@ cd bin/
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-for((i=0; i<9; i++));
+#for((i=0; i<9; i++));
+#do
+#    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+#done
+
+#wait
+
+#for((i=9; i<13; i++));
+#do
+#    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+#done
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+for((i=0; i<13; i++));
 do
-    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP_NAME ${rep_name} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
 done
 
-wait
+#wait
 
-for((i=9; i<13; i++));
-do
-    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
-done
-
+#for((i=9; i<13; i++));
+#do
+#    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP_NAME ${rep_name} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+#done
 
 

@@ -5,7 +5,7 @@
 #include <OmniKdTree.h>
 #include <VpTree.h>
 #include <PM_Tree.h>
-#include <mvptree.h>
+#include <MVPTree.h>
 #include <chrono>
 #include <OmniExperiments.h>
 #include <VPExperiments.h>
@@ -13,14 +13,6 @@
 #include <SPBExperiments.h>
 
 using namespace std;
-using namespace mvp;
-
-const int BF = 2;   //branchfactor
-const int PL = 8;   // pathlength
-const int LC = 55; // leafcap
-const int LPN = 2;  // levelspernode
-const int FO = 4; //fanout bf^lpn
-const int NS = 2; //numsplits (bf-1)^lpn
 
 /*Keywords
 
@@ -44,6 +36,7 @@ const int NS = 2; //numsplits (bf-1)^lpn
     -NUM_PER_LEAF => Quantidade máxima de elementos por nó folha
     -NUM_BINS => Quantidade de Bins
     -REP => Quantidade de repetições
+    -REP_NUM => Numero da repetição
     -PAGE_SIZE => Tamanho da página !DEFAULT = 4096
     -PATH_SAVE_RESULTS => Caminho para salvar os arquivos gerados !DEFAULT = ../results/
 
@@ -91,7 +84,8 @@ int main(int argc, char *argv[])
                                         *num_per_leaf = nullptr,
                                             *num_bins = nullptr,
                                                 *rep = nullptr,
-                                                    *page_size = nullptr;
+                                                    *rep_name = nullptr,
+                                                        *page_size = nullptr;
 
         double *sample_size_pivot = nullptr;
 
@@ -229,6 +223,12 @@ int main(int argc, char *argv[])
             {
 
                 rep = new size_t(std::stoi(value));
+
+            }
+            else if(key == "-REP_NAME")
+            {
+
+                rep_name = new size_t(std::stoi(value));
 
             }
             else if(key == "-PAGE_SIZE")
@@ -478,6 +478,12 @@ int main(int argc, char *argv[])
                 expt.runExperiment();
 
             }
+            else if(rep_name != nullptr)
+            {
+
+                expt.runExperiment(*rep_name);
+
+            }
             else
             {
 
@@ -514,6 +520,12 @@ int main(int argc, char *argv[])
             {
 
                 expt.runExperiment();
+
+            }
+            else if(rep_name != nullptr)
+            {
+
+                expt.runExperiment(*rep_name);
 
             }
             else
@@ -554,6 +566,12 @@ int main(int argc, char *argv[])
                 expt.runExperiment();
 
             }
+            else if(rep_name != nullptr)
+            {
+
+                expt.runExperiment(*rep_name);
+
+            }
             else
             {
 
@@ -591,6 +609,12 @@ int main(int argc, char *argv[])
             {
 
                 expt.runExperiment();
+
+            }
+            else if(rep_name != nullptr)
+            {
+
+                expt.runExperiment(*rep_name);
 
             }
             else

@@ -73,6 +73,7 @@ public:
     virtual void runQuery(BasicArrayObject<T>* query, size_t k) = 0;
     virtual std::string indexName() = 0;
     virtual void runExperiment() = 0;
+    virtual void runExperiment(size_t rep_name) = 0;
     virtual void runExperimentWithRepetitions(size_t rep) = 0;
 
     void setKRange(size_t min, size_t max, size_t step)
