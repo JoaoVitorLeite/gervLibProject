@@ -38,11 +38,11 @@ typedef std::vector<char> str;
 int main(int argc, char *argv[])
 {
 
-    //    Dataset<double>* train = new Dataset<double>();
-    //    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_mnist_norm.csv", ",");
-    //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    //    RandomPivots<double>* pvt = new RandomPivots<double>();
-    //    SPBTree<double> spb = SPBTree<double>(train, df, pvt, 12, 10);
+    Dataset<double>* train = new Dataset<double>();
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_synthetic_norm.csv", ",");
+    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+    RandomPivots<double>* pvt = new RandomPivots<double>();
+    SPBTree<double> spb = SPBTree<double>(train, df, pvt, 7, 256);
 
 
     //    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;

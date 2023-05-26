@@ -313,6 +313,7 @@ public:
     {
 
         auto start = std::chrono::steady_clock::now();
+        pivot_num = std::min((ull)7, pivot_num);
 
         baseFilePath = "../spb_tree/spb_files";
         setBaseFilePath();

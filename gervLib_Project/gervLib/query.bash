@@ -1,28 +1,30 @@
 #!/bin/bash
 
-index="OMNIKDTREE"
-dataset_train="../datasets/train_ulcer_norm.csv"
+index="VPTREE"
+dataset_train="../datasets/train_cities_norm.csv"
 separator_train=","
-dataset_test="../datasets/test_ulcer_norm.csv"
+dataset_test="../datasets/test_cities_norm.csv"
 separator_test=","
 distance_function="EUCLIDEAN"
 pivot_type=("BPP" "CONVEX" "GNAT" "SSS" "MAXSEPARATED" "MAXVARIANCE" "PCA" "IS" "HFI" "WDR" "SELECTION" "KMEDOIDS" "RANDOM")
-sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 0.1 1.0 1.0 1.0 1.0 1.0 1.0)
-num_pivots=4
+sample_size=(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
+num_pivots=2
 seed=($(shuf -i 0-500000 -n 13))
 #seed=()
 rep_name=0
 k_max=100
-rep=5
-page_size=53880
+rep=3
+page_size=2220
 num_bins=256
-num_per_leaf=449
-path_save_results="../results/tcc_expt/consultas/ulcer/omni/"
+num_per_leaf=55
+path_save_results="../results/tcc_expt/consultas/cities/vp/"
 
 mkdir -p omni/omni_files/
 mkdir -p kdtree/kdtree_files/
 mkdir -p pm_tree/pm_files/
 mkdir -p spb_tree/spb_files/
+mkdir -p VpTree/vp_files/
+mkdir -p mvptree/mvp_files/
 mkdir -p results/
 
 cp query.cpp main.cpp
@@ -40,24 +42,24 @@ cd bin/
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#for((i=0; i<9; i++));
-#do
-#    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
-#done
+for((i=0; i<9; i++));
+do
+    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+done
 
-#wait
+wait
 
-#for((i=9; i<13; i++));
-#do
-#    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
-#done
+for((i=9; i<13; i++));
+do
+    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP ${rep} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+done
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-for((i=0; i<13; i++));
-do
-    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP_NAME ${rep_name} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
-done
+#for((i=0; i<13; i++));
+#do
+#    nohup ./gervLib -INDEX ${index} -DATASET_TRAIN ${dataset_train} -DATASET_TRAIN_SEPARATOR ${separator_train} -DATASET_TEST ${dataset_test} -DATASET_TEST_SEPARATOR ${separator_test} -DISTANCE_FUNCTION ${distance_function} -PIVOT_TYPE ${pivot_type[$i]} -SAMPLE_SIZE_PIVOT ${sample_size[$i]} -NUM_PIVOTS ${num_pivots} -SEED ${seed[$i]} -K_MAX ${k_max} -PATH_SAVE_RESULTS ${path_save_results} -NUM_PER_LEAF ${num_per_leaf} -REP_NAME ${rep_name} -PAGE_SIZE ${page_size} -NUM_BINS ${num_bins} &
+#done
 
 #wait
 
