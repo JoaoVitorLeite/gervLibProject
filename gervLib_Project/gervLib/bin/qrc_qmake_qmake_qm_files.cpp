@@ -1,13 +1,13 @@
 /****************************************************************************
 ** Resource object code
 **
-** Created by: The Resource Compiler for Qt version 6.5.0
+** Created by: The Resource Compiler for Qt version 6.0.1
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 static const unsigned char qt_resource_data[] = {
-  // /home/joaoleite/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/.qm/gervLib_en_US.qm
+  // /home/joaovictor/Documents/TCC/Code/gervLibProject/gervLib_Project/gervLib/.qm/gervLib_en_US.qm
   0x0,0x0,0x0,0x22,
   0x3c,
   0xb8,0x64,0x18,0xca,0xef,0x9c,0x95,0xcd,0x21,0x1c,0xbf,0x60,0xa1,0xbd,0xdd,0xa7,
@@ -39,7 +39,7 @@ static const unsigned char qt_resource_struct[] = {
 0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
   // :/i18n/gervLib_en_US.qm
   0x0,0x0,0x0,0xe,0x0,0x0,0x0,0x0,0x0,0x1,0x0,0x0,0x0,0x0,
-0x0,0x0,0x1,0x88,0xb,0x84,0x23,0xa6,
+0x0,0x0,0x1,0x86,0x3b,0x99,0xb3,0xd1,
 
 };
 
@@ -84,18 +84,9 @@ int QT_RCC_MANGLE_NAMESPACE(qCleanupResources_qmake_qmake_qm_files)()
     return 1;
 }
 
-#ifdef __clang__
-#   pragma clang diagnostic push
-#   pragma clang diagnostic ignored "-Wexit-time-destructors"
-#endif
-
 namespace {
    struct initializer {
        initializer() { QT_RCC_MANGLE_NAMESPACE(qInitResources_qmake_qmake_qm_files)(); }
        ~initializer() { QT_RCC_MANGLE_NAMESPACE(qCleanupResources_qmake_qmake_qm_files)(); }
    } dummy;
 }
-
-#ifdef __clang__
-#   pragma clang diagnostic pop
-#endif

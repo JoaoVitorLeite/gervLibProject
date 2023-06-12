@@ -39,17 +39,17 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_sift_norm.csv", ",");
-    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    SSSPivots<double>* pvt = new SSSPivots<double>();
-    pvt->setSampleSize(0.75);
-    pvt->setSeed(378584);
-    VpTree<double, EuclideanDistance<BasicArrayObject<double>>> pm = VpTree<double, EuclideanDistance<BasicArrayObject<double>>>(false, 0.0, 1400, pvt, train, df);
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_cophir_s_norm.csv", ",");
+//    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    SSSPivots<double>* pvt = new SSSPivots<double>();
+//    pvt->setSampleSize(0.75);
+//    pvt->setSeed(378584);
+//    VpTree<double, EuclideanDistance<BasicArrayObject<double>>> pm = VpTree<double, EuclideanDistance<BasicArrayObject<double>>>(false, 0.0, 1400, pvt, train, df);
 
 //    SPBTree<double> spb = SPBTree<double>(train, df, pvt, 7, 256);
 
-    //    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
-    //    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
+    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
+    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
 
 
     //    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
