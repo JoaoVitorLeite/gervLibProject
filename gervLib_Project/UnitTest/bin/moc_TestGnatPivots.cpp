@@ -1,63 +1,126 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'TestGnatPivots.h'
 **
-** Created by: The Qt Meta Object Compiler version 68 (Qt 6.0.1)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.5.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "../TestGnatPivots.h"
-#include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+
+#if __has_include(<QtCore/qtmochelpers.h>)
+#include <QtCore/qtmochelpers.h>
+#else
+QT_BEGIN_MOC_NAMESPACE
+#endif
+
+
+#include <memory>
+
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'TestGnatPivots.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
-#error "This file was generated using the moc from 6.0.1. It"
+#error "This file was generated using the moc from 6.5.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
-QT_BEGIN_MOC_NAMESPACE
+#ifndef Q_CONSTINIT
+#define Q_CONSTINIT
+#endif
+
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_TestGnatPivots_t {
-    const uint offsetsAndSize[32];
-    char stringdata0[120];
+QT_WARNING_DISABLE_GCC("-Wuseless-cast")
+namespace {
+
+#ifdef QT_MOC_HAS_STRINGDATA
+struct qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS_t {};
+static constexpr auto qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS = QtMocHelpers::stringData(
+    "TestGnatPivots",
+    "initTestCase",
+    "",
+    "cleanupTestCase",
+    "test1",
+    "test2",
+    "test3",
+    "test4",
+    "test5",
+    "test6",
+    "test7",
+    "test8",
+    "test9",
+    "test10",
+    "test11",
+    "test12"
+);
+#else  // !QT_MOC_HAS_STRING_DATA
+struct qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS_t {
+    uint offsetsAndSizes[32];
+    char stringdata0[15];
+    char stringdata1[13];
+    char stringdata2[1];
+    char stringdata3[16];
+    char stringdata4[6];
+    char stringdata5[6];
+    char stringdata6[6];
+    char stringdata7[6];
+    char stringdata8[6];
+    char stringdata9[6];
+    char stringdata10[6];
+    char stringdata11[6];
+    char stringdata12[6];
+    char stringdata13[7];
+    char stringdata14[7];
+    char stringdata15[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
-    uint(offsetof(qt_meta_stringdata_TestGnatPivots_t, stringdata0) + ofs), len 
-static const qt_meta_stringdata_TestGnatPivots_t qt_meta_stringdata_TestGnatPivots = {
+    uint(sizeof(qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS_t::offsetsAndSizes) + ofs), len 
+Q_CONSTINIT static const qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS_t qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS = {
     {
-QT_MOC_LITERAL(0, 14), // "TestGnatPivots"
-QT_MOC_LITERAL(15, 12), // "initTestCase"
-QT_MOC_LITERAL(28, 0), // ""
-QT_MOC_LITERAL(29, 15), // "cleanupTestCase"
-QT_MOC_LITERAL(45, 5), // "test1"
-QT_MOC_LITERAL(51, 5), // "test2"
-QT_MOC_LITERAL(57, 5), // "test3"
-QT_MOC_LITERAL(63, 5), // "test4"
-QT_MOC_LITERAL(69, 5), // "test5"
-QT_MOC_LITERAL(75, 5), // "test6"
-QT_MOC_LITERAL(81, 5), // "test7"
-QT_MOC_LITERAL(87, 5), // "test8"
-QT_MOC_LITERAL(93, 5), // "test9"
-QT_MOC_LITERAL(99, 6), // "test10"
-QT_MOC_LITERAL(106, 6), // "test11"
-QT_MOC_LITERAL(113, 6) // "test12"
-
+        QT_MOC_LITERAL(0, 14),  // "TestGnatPivots"
+        QT_MOC_LITERAL(15, 12),  // "initTestCase"
+        QT_MOC_LITERAL(28, 0),  // ""
+        QT_MOC_LITERAL(29, 15),  // "cleanupTestCase"
+        QT_MOC_LITERAL(45, 5),  // "test1"
+        QT_MOC_LITERAL(51, 5),  // "test2"
+        QT_MOC_LITERAL(57, 5),  // "test3"
+        QT_MOC_LITERAL(63, 5),  // "test4"
+        QT_MOC_LITERAL(69, 5),  // "test5"
+        QT_MOC_LITERAL(75, 5),  // "test6"
+        QT_MOC_LITERAL(81, 5),  // "test7"
+        QT_MOC_LITERAL(87, 5),  // "test8"
+        QT_MOC_LITERAL(93, 5),  // "test9"
+        QT_MOC_LITERAL(99, 6),  // "test10"
+        QT_MOC_LITERAL(106, 6),  // "test11"
+        QT_MOC_LITERAL(113, 6)   // "test12"
     },
-    "TestGnatPivots\0initTestCase\0\0"
-    "cleanupTestCase\0test1\0test2\0test3\0"
-    "test4\0test5\0test6\0test7\0test8\0test9\0"
-    "test10\0test11\0test12"
+    "TestGnatPivots",
+    "initTestCase",
+    "",
+    "cleanupTestCase",
+    "test1",
+    "test2",
+    "test3",
+    "test4",
+    "test5",
+    "test6",
+    "test7",
+    "test8",
+    "test9",
+    "test10",
+    "test11",
+    "test12"
 };
 #undef QT_MOC_LITERAL
+#endif // !QT_MOC_HAS_STRING_DATA
+} // unnamed namespace
 
-static const uint qt_meta_data_TestGnatPivots[] = {
+Q_CONSTINIT static const uint qt_meta_data_CLASSTestGnatPivotsENDCLASS[] = {
 
  // content:
-       9,       // revision
+      11,       // revision
        0,       // classname
        0,    0, // classinfo
       14,   14, // methods
@@ -68,20 +131,20 @@ static const uint qt_meta_data_TestGnatPivots[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   98,    2, 0x08,    0 /* Private */,
-       3,    0,   99,    2, 0x08,    1 /* Private */,
-       4,    0,  100,    2, 0x08,    2 /* Private */,
-       5,    0,  101,    2, 0x08,    3 /* Private */,
-       6,    0,  102,    2, 0x08,    4 /* Private */,
-       7,    0,  103,    2, 0x08,    5 /* Private */,
-       8,    0,  104,    2, 0x08,    6 /* Private */,
-       9,    0,  105,    2, 0x08,    7 /* Private */,
-      10,    0,  106,    2, 0x08,    8 /* Private */,
-      11,    0,  107,    2, 0x08,    9 /* Private */,
-      12,    0,  108,    2, 0x08,   10 /* Private */,
-      13,    0,  109,    2, 0x08,   11 /* Private */,
-      14,    0,  110,    2, 0x08,   12 /* Private */,
-      15,    0,  111,    2, 0x08,   13 /* Private */,
+       1,    0,   98,    2, 0x08,    1 /* Private */,
+       3,    0,   99,    2, 0x08,    2 /* Private */,
+       4,    0,  100,    2, 0x08,    3 /* Private */,
+       5,    0,  101,    2, 0x08,    4 /* Private */,
+       6,    0,  102,    2, 0x08,    5 /* Private */,
+       7,    0,  103,    2, 0x08,    6 /* Private */,
+       8,    0,  104,    2, 0x08,    7 /* Private */,
+       9,    0,  105,    2, 0x08,    8 /* Private */,
+      10,    0,  106,    2, 0x08,    9 /* Private */,
+      11,    0,  107,    2, 0x08,   10 /* Private */,
+      12,    0,  108,    2, 0x08,   11 /* Private */,
+      13,    0,  109,    2, 0x08,   12 /* Private */,
+      14,    0,  110,    2, 0x08,   13 /* Private */,
+      15,    0,  111,    2, 0x08,   14 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -101,6 +164,47 @@ static const uint qt_meta_data_TestGnatPivots[] = {
 
        0        // eod
 };
+
+Q_CONSTINIT const QMetaObject TestGnatPivots::staticMetaObject = { {
+    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS.offsetsAndSizes,
+    qt_meta_data_CLASSTestGnatPivotsENDCLASS,
+    qt_static_metacall,
+    nullptr,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS_t,
+        // Q_OBJECT / Q_GADGET
+        QtPrivate::TypeAndForceComplete<TestGnatPivots, std::true_type>,
+        // method 'initTestCase'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'cleanupTestCase'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test1'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test2'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test3'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test4'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test5'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test6'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test7'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test8'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test9'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test10'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test11'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'test12'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
+    >,
+    nullptr
+} };
 
 void TestGnatPivots::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
@@ -128,22 +232,6 @@ void TestGnatPivots::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     (void)_a;
 }
 
-const QMetaObject TestGnatPivots::staticMetaObject = { {
-    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
-    qt_meta_stringdata_TestGnatPivots.offsetsAndSize,
-    qt_meta_data_TestGnatPivots,
-    qt_static_metacall,
-    nullptr,
-qt_incomplete_metaTypeArray<qt_meta_stringdata_TestGnatPivots_t
-
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
-
-
->,
-    nullptr
-} };
-
-
 const QMetaObject *TestGnatPivots::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
@@ -152,7 +240,7 @@ const QMetaObject *TestGnatPivots::metaObject() const
 void *TestGnatPivots::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_TestGnatPivots.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_CLASSTestGnatPivotsENDCLASS.stringdata0))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
@@ -174,4 +262,3 @@ int TestGnatPivots::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     return _id;
 }
 QT_WARNING_POP
-QT_END_MOC_NAMESPACE
