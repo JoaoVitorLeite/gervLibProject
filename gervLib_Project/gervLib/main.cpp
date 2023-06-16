@@ -43,41 +43,41 @@ int main(int argc, char *argv[])
     EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
     RandomPivots<double>* pvt = new RandomPivots<double>();
     MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 1200, 2, 4, 2);
+//    size_t k = 5;
+
+//    for(size_t z = 0; z < train->getCardinality(); z++){
+
+//        BasicArrayObject<double> basic = train->getFeatureVector(z);
+//        std::vector<KnnEntryMVP<double>> ans;
+//        mvp.knn(basic, k, ans);
+
+//        std::vector<double> v;
+//        for(size_t x = 0; x < train->getCardinality(); x++)
+//            v.push_back(df->getDistance(basic, train->getFeatureVector(x)));
+//        std::sort(v.begin(), v.end());
+
+//        for(size_t i = 0; i < k; i++)
+//            if(v[i] != ans[i].distance){
+//                cout << "Erro: " << z << endl;
+//                break;
+//            }
+
+//    }
+
+    cout << "SQCASE\tNODECASE\n";
     size_t k = 5;
+    BasicArrayObject<double> basic = train->getFeatureVector(35);
+    std::vector<KnnEntryMVP<double>> ans;
+    mvp.knn(basic, k, ans);
 
-    for(size_t z = 0; z < train->getCardinality(); z++){
+    std::vector<double> v;
+    for(size_t x = 0; x < train->getCardinality(); x++)
+        v.push_back(df->getDistance(basic, train->getFeatureVector(x)));
+    std::sort(v.begin(), v.end());
 
-        BasicArrayObject<double> basic = train->getFeatureVector(z);
-        std::vector<KnnEntryMVP<double>> ans;
-        mvp.knn(basic, k, ans);
-
-        std::vector<double> v;
-        for(size_t x = 0; x < train->getCardinality(); x++)
-            v.push_back(df->getDistance(basic, train->getFeatureVector(x)));
-        std::sort(v.begin(), v.end());
-
-        for(size_t i = 0; i < k; i++)
-            if(v[i] != ans[i].distance){
-                cout << "Erro: " << z << endl;
-                break;
-            }
-
-    }
-
-//    cout << "SQCASE\tNODECASE\n";
-//    size_t k = 100;
-//    BasicArrayObject<double> basic = train->getFeatureVector(1035);
-//    std::vector<KnnEntryMVP<double>> ans;
-//    mvp.knn(basic, k, ans);
-
-//    std::vector<double> v;
-//    for(size_t x = 0; x < train->getCardinality(); x++)
-//        v.push_back(df->getDistance(basic, train->getFeatureVector(x)));
-//    std::sort(v.begin(), v.end());
-
-//    cout << "\n\n";
-//    for(size_t i = 0; i < k; i++)
-//        cout << v[i] << "\t" << ans[i].distance << endl;
+    cout << "\n\n";
+    for(size_t i = 0; i < k; i++)
+        cout << v[i] << "\t" << ans[i].distance << endl;
 
 
 

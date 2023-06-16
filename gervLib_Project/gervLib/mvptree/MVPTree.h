@@ -496,13 +496,58 @@ double MVPTree<T>::minDist(cases sqCase, cases nodeCase, double d_sq_p1, double 
 
     std::cout << "MIN : " << sqCase << "\t" << nodeCase << "\n";
 
+    enum formatPartition{form_mu2_1, form_mu2_2, form_m3_1, form_mu3_2, form_mu3_3};
+    enum formatMu2_1{mu3_sob, mu3_ext_mu1};
+    enum formatMu2_2{mu3_ext_mu1, mu3_menor_mu2, mu3_maior_mu2, mu3_contain_mu1};
+    enum formatMu3_1{mu2_maior_mu3};
+    enum formatMu3_2{mu3_menor_mu2, mu3_maior_mu2, mu3_contain_mu2};
+    enum formatMu3_3{mu3_contain_mu1_contain_mu2, mu3_maior_mu2};
+
+    formatPartition partitionType;
+
+    if(d_sq_p2 <= m2 && (d_sq_p2 + mu2) <= fabs(d_sq_p1 - mu1))
+    {
+
+        partitionType = formatMu2_1;
+
+    }
+    else
+    {
+
+        partitionType = formatMu2_2;
+
+    }
+
+    if(d_sq_p2 > mu3 && (fabs(d_sq_p1 - mu1) + fabs(d_sq_p2 - mu3)) < (mu1 + mu3))
+    {
+
+        partitionType = formatMu3_1;
+
+    }
+    else
+    {
+
+        if(d_sq_p1 + mu1 <= fabs(d_sq_p2 - mu3))
+        {
+
+            partitionType = formatMu3_3;
+
+        }
+        else
+        {
+
+            partitionType = formatMu3_1;
+
+        }
+
+    }
+
     switch(sqCase)
     {
 
     case R0:{
 
-        switch(nodeCase)
-        {
+        switch (nodeCase){
 
         case R0:{
             ans = 0.0;
@@ -516,170 +561,301 @@ double MVPTree<T>::minDist(cases sqCase, cases nodeCase, double d_sq_p1, double 
 
         case R2:{
 
+            if(partitionType == formatMu2_1)
+            {
+
+                if((d_sq_p2 + mu2) <= (fabs(d_sq_p2 - mu3))) //Externo
+                {
+
+                    ans = std::max(fabs(d_sq_p2 - mu3), fabs(d_sq_p1 - mu1));
+
+                }
+                else //Sob
+                {
+
+                    ans = fabs(d_sq_p1 - mu1);
+
+                }
+
+            }
+            else
+            {
+
+                //mu3_ext_mu1, mu3_menor_mu2, mu3_maior_mu2, mu3_contain_mu1
+
+                //mu3_ext_mu1
+                if(d_sq_p2 > mu3 && (fabs(d_sq_p1 - mu1) + fabs(d_sq_p2 - mu3)) < (mu1 + mu3)) //Externo
+                {
+
+                    ans = fabs(d_sq_p2 - mu3);
+
+                }
+                else
+                {
+
+                    //mu3_menor_mu2
+                    if(fabs(d_sq_p2 - mu3) > fabs(d_sq_p2 - mu2))
+                    {
+
+                        ans = std::max(fabs(d_sq_p2 - mu3), fabs(d_sq_p1 - mu1));
+
+                    }
+                    else
+                    {
+
+                        ans = fabs(d_sq_p1 - mu1);
+
+                    }
+
+                }
+
+            }
+
+            break;
+        }
+
+        case R3:{
+
+            if(partitionType == formatMu2_1)
+            {
+
+                ans = std::max(fabs(d_sq_p2 - mu3), fabs(d_sq_p1 - mu1));
+
+            }
+            else
+            {
+
+                //mu3_ext_mu1, mu3_menor_mu2, mu3_maior_mu2, mu3_contain_mu1
+
+                //mu3_ext_mu1
+                if(d_sq_p2 > mu3 && (fabs(d_sq_p1 - mu1) + fabs(d_sq_p2 - mu3)) < (mu1 + mu3)) //Externo
+                {
+
+                    ans = fabs(d_sq_p1 - mu1);
+
+                }
+                else
+                {
+
+                    //mu3_maior_mu2
+                    if(fabs(d_sq_p2 - mu3) < fabs(d_sq_p2 - mu2))
+                    {
+
+                        ans = std::max(fabs(d_sq_p2 - mu3), fabs(d_sq_p1 - mu1));
+
+                    }
+                    else
+                    {
+
+                        ans = fabs(d_sq_p2 - mu3);
+
+                    }
+
+                }
+
+            }
+
+            break;
+        }
+
+
+        break;
+
+    }
+
+    }
+
+//    switch(sqCase)
+//    {
+
+//    case R0:{
+
+//        switch(nodeCase)
+//        {
+
+//        case R0:{
+//            ans = 0.0;
+//            break;
+//        }
+
+//        case R1:{
+//            ans = fabs(d_sq_p2 - mu2);
+//            break;
+//        }
+
+//        case R2:{
+
 //            if ((d_sq_p2 >  mu3) && (fabs(d_sq_p2 - d_sq_p1) > fabs(mu1 - mu3))){
 //                ans = fabs(d_sq_p2 - mu3);
 //            } else {
 //                ans = fabs(d_sq_p1 - mu1);
 //            }
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//            break;
+//        }
 
-        case R3:{
+//        case R3:{
 //            if (fabs(d_sq_p2 - mu3) > (d_sq_p1 + mu1)){
 //                ans = fabs(d_sq_p2 - mu3);
 //            } else {
 //                ans = fabs(d_sq_p1 - mu1);
 //            }
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//            break;
+//        }
 
-        }
-        break;
-    }
+//        }
+//        break;
+//    }
 
-    case R1:{
+//    case R1:{
 
-        switch(nodeCase)
-        {
+//        switch(nodeCase)
+//        {
 
-        case R0:{
-            ans = fabs(d_sq_p2 - mu2);
-            break;
-        }
+//        case R0:{
+//            ans = fabs(d_sq_p2 - mu2);
+//            break;
+//        }
 
-        case R1:{
-            ans = 0.0;
-            break;
-        }
+//        case R1:{
+//            ans = 0.0;
+//            break;
+//        }
 
-        case R2:{
+//        case R2:{
 
 //            if ((d_sq_p2 >  mu3) && (fabs(d_sq_p2 - d_sq_p1) > fabs(mu1 - mu3))){
 //                ans = fabs(d_sq_p2 - mu3);
 //            } else {
 //                ans = fabs(d_sq_p1 - mu1);
 //            }
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//            break;
+//        }
 
-        case R3:{
+//        case R3:{
 //            if (fabs(d_sq_p2 - mu3) > (d_sq_p1 + mu1)){
 //                ans = fabs(d_sq_p2 - mu3);
 //            } else {
 //                ans = fabs(d_sq_p1 - mu1);
 //            }
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//            break;
+//        }
 
-        }
-        break;
-    }
+//        }
+//        break;
+//    }
 
-    case R2:{
+//    case R2:{
 
-        switch(nodeCase)
-        {
-
-        case R0:{
-//            if ((d_sq_p1 >  mu1) && (fabs(d_sq_p2 - d_sq_p1) > fabs(mu1 - mu3))){
-//                ans = fabs(d_sq_p1 - mu3);
+//        switch(nodeCase)
+//        {
+//        case R0:{
+//            if ((d_sq_p2 + mu2) < fabs(d_sq_p1 - mu1)){
+//                ans = fabs(d_sq_p2 - mu2);
 //            } else {
-//                ans = fabs(d_sq_p2 - mu1);
+//                ans = fabs(d_sq_p1 - mu1);
 //            }
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//            break;
+//        }
 
-        case R1:{
-//            if ((d_sq_p1 >  mu1) && (fabs(d_sq_p2 - d_sq_p1) > fabs(mu1 - mu3))){
-//                ans = fabs(d_sq_p1 - mu3);
+//        case R1:{
+//            if ((d_sq_p2 + mu2) < fabs(d_sq_p1 - mu1)){
+//                ans = fabs(d_sq_p1 - mu1);
 //            } else {
-//                ans = fabs(d_sq_p2 - mu1);
+//                ans = fabs(d_sq_p2 - mu2);
 //            }
-            ans = fabs(d_sq_p1 - mu1);
-            break;
+//            break;
+//        }
 
-        }
+//        case R2:{
+//            ans = 0.0;
+//            break;
+//        }
 
-        case R2:{
+//        case R3:{
+//            ans = fabs(d_sq_p2 - mu3);
+//            break;
+//        }
 
-            ans = 0.0;
-            break;
-        }
+//        }
+//        break;
+//    }
 
-        case R3:{
-            ans = fabs(d_sq_p2 - mu3);
-            break;
-        }
+//    case R3:{
 
-        }
-        break;
-    }
+//        switch(nodeCase)
+//        {
 
-    case R3:{
+//        case R0:{
+//            if ((d_sq_p2 + mu2) < fabs(d_sq_p1 - mu1)){
+//                ans = fabs(d_sq_p2 - mu2);
+//            } else {
+//                if (fabs(d_sq_p2 - mu2) > fabs(d_sq_p2 - mu3)){
+//                    ans = fabs(d_sq_p1 - mu1);
+//                } else {
+//                    ans = fabs(d_sq_p2 - mu2);
+//                }
+//            }
+//            break;
+//        }
 
-        switch(nodeCase)
-        {
+//        case R1:{
+//            if ((d_sq_p2 + mu2) < fabs(d_sq_p1 - mu1)){
+//                ans = fabs(d_sq_p1 - mu1);
+//            } else {
+//                if (fabs(d_sq_p2 - mu2) > fabs(d_sq_p2 - mu3)){
+//                    ans = fabs(d_sq_p2 - mu2);
+//                } else {
+//                    ans = fabs(d_sq_p1 - mu1);
+//                }
+//            }
+//            break;
+//        }
 
-        case R0:{
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//        case R2:{
 
-        case R1:{
-            ans = fabs(d_sq_p1 - mu1);
-            break;
-        }
+//            ans = fabs(d_sq_p2 - mu3);
+//            break;
+//        }
 
-        case R2:{
+//        case R3:{
+//            ans = 0.0;
+//            break;
+//        }
 
-            ans = fabs(d_sq_p2 - mu3);
-            break;
-        }
+//        }
+//        break;
+//    }
+//    case R4:{
 
-        case R3:{
-            ans = 0.0;
-            break;
-        }
+//        switch(nodeCase)
+//        {
 
-        }
-        break;
-    }
-    case R4:{
+//        case R0:{
+//            ans = std::min(fabs(d_sq_p1 - mu1), fabs(d_sq_p2 - mu2));
+//            break;
+//        }
 
-        switch(nodeCase)
-        {
+//        case R1:{
+//            ans = fabs(d_sq_p1 - mu1);
+//            break;
+//        }
 
-        case R0:{
-            ans = std::min(fabs(d_sq_p1 - mu1), fabs(d_sq_p2 - mu2));
-            break;
-        }
+//        case R2:{
+//            ans = std::max(fabs(d_sq_p1 - M), fabs(d_sq_p2 - mu3));
+//            break;
+//        }
 
-        case R1:{
-            ans = std::min(fabs(d_sq_p1 - mu1), fabs(d_sq_p2 - mu2));
-            break;
-        }
+//        case R3:{
+//            ans = fabs(d_sq_p1 - M);
+//            break;
+//        }
 
-        case R2:{
-            ans = std::max(fabs(d_sq_p1 - M), fabs(d_sq_p2 - mu3));
-            break;
-        }
+//        }
+//        break;
 
-        case R3:{
-            ans = fabs(d_sq_p1 - M);
-            break;
-        }
+//    }
 
-        }
-        break;
-
-    }
-
-    }
+//    }
 
     std::cout << "DIST = " << ans << "\n";
     return ans;
