@@ -39,30 +39,41 @@ int main(int argc, char *argv[])
 {
 
     Dataset<double>* train = new Dataset<double>();
-    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/internet_firewall_norm.csv", ",");
-    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
-    RandomPivots<double>* pvt = new RandomPivots<double>();
-    MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 572, 2, 4, 2);
+    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/train_mnist_s2_norm.csv", ",");
 
-    size_t k = 100;
-    for(size_t z = 0; z < train->getCardinality(); z++){
+    cout << train->getCardinality() << "\t" << train->getDimensionality() << endl;
+    cout << train->getFeatureVector(0).getSerializedSize() + sizeof(size_t) << endl;
 
-        BasicArrayObject<double> basic = train->getFeatureVector(z);
-        std::vector<KnnEntryMVP<double>> ans;
-        mvp.knn(basic, k, ans);
+//    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    ConvexPivots<double>* pvt = new ConvexPivots<double>();
+//    pvt->setSeed(375629);
+//    MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 55, 2, 4, 2);
 
-        std::vector<double> v;
-        for(size_t x = 0; x < train->getCardinality(); x++)
-            v.push_back(df->getDistance(basic, train->getFeatureVector(x)));
-        std::sort(v.begin(), v.end());
+//    Dataset<double>* train = new Dataset<double>();
+//    Dataset<double>::loadNumericDataset(train, "../../gervLib/datasets/internet_firewall_norm.csv", ",");
+//    EuclideanDistance<BasicArrayObject<double>>* df = new EuclideanDistance<BasicArrayObject<double>>();
+//    RandomPivots<double>* pvt = new RandomPivots<double>();
+//    MVPTree<double> mvp = MVPTree<double>(train, df, pvt, 2, 8, 572, 2, 4, 2);
 
-        for(size_t i = 0; i < k; i++)
-            if(v[i] != ans[i].distance){
-                cout << "Erro: " << z << endl;
-                break;
-            }
+//    size_t k = 100;
+//    for(size_t z = 0; z < train->getCardinality(); z++){
 
-    }
+//        BasicArrayObject<double> basic = train->getFeatureVector(z);
+//        std::vector<KnnEntryMVP<double>> ans;
+//        mvp.knn(basic, k, ans);
+
+//        std::vector<double> v;
+//        for(size_t x = 0; x < train->getCardinality(); x++)
+//            v.push_back(df->getDistance(basic, train->getFeatureVector(x)));
+//        std::sort(v.begin(), v.end());
+
+//        for(size_t i = 0; i < k; i++)
+//            if(v[i] != ans[i].distance){
+//                cout << "Erro: " << z << endl;
+//                break;
+//            }
+
+//    }
 
 //    cout << "SQCASE\tNODECASE\n";
 //    size_t k = 100;
